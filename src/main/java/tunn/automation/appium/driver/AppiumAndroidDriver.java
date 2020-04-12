@@ -20,12 +20,15 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 	private static Properties browser_configuration;
 	private static Properties appium_configuration;
 	private static Properties sauce_configuration;
+	private static Properties browserstack_configuration;
 
 	public AppiumAndroidDriver() throws Exception {
 		android_configuration = PropertiesLoader.getPropertiesLoader().apppium_android_configuration;
 		appium_configuration = PropertiesLoader.getPropertiesLoader().appium_appium_configuration;
 		browser_configuration = PropertiesLoader.getPropertiesLoader().appium_browser_configuration;
 		sauce_configuration = PropertiesLoader.getPropertiesLoader().saucelabs_configuration;
+		browserstack_configuration = PropertiesLoader.getPropertiesLoader().browserstack_configuration;
+
 	}
 	
 	
@@ -61,19 +64,18 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 		String strMobileAndroidApp = FilePaths.getResourcePath("/"+android_configuration.getProperty("appium.android.app"));
 		String strMobileAppPackage = android_configuration.getProperty("appium.android.appPackage");
 		String strMobileAppActivity = android_configuration.getProperty("appium.android.appActivity");
-		
-		capabilities.setCapability(MobileCapabilityType.APP, strMobileAndroidApp);
-		
-		if (!(strMobileAppPackage == null || strMobileAppPackage.equals(""))) {
-			
-			capabilities.setCapability("appPackage", strMobileAppPackage);
-			
+
+		if (capabilities.getCapability(MobileCapabilityType.APP) == null){
+			capabilities.setCapability(MobileCapabilityType.APP, strMobileAndroidApp);
 		}
-		
-		if (!(strMobileAppActivity == null || strMobileAppActivity.equals(""))) {
-			
+
+		if(capabilities.getCapability("appPackage") == null && !(strMobileAppPackage == null || strMobileAppPackage.equals(""))){
+			capabilities.setCapability("appPackage", strMobileAppPackage);
+		}
+
+
+		if(capabilities.getCapability("appActivity") == null && !(strMobileAppActivity == null || strMobileAppActivity.equals(""))){
 			capabilities.setCapability("appActivity", strMobileAppActivity);
-			
 		}
 	}
 	
@@ -95,9 +97,7 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 	/**
 	 * This method is used to open a appium driver, use configuration.property to
 	 * create driver
-	 * 
-	 * @author tunn6
-	 * @param deviceInfo
+	 *
 	 * @return AppiumDriver driver
 	 * @throws Exception
 	 */
@@ -110,15 +110,27 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 			setAppiumCapabilities(capabilities);
 			
 			// Use SauceLab remote server instead of local Appium server if configured
-			if (Boolean.parseBoolean(sauce_configuration.getProperty("appium.saucelab.enable"))) {
-				String strSauceAndroidApp = appium_configuration.getProperty("appium.saucelab.androidApp");
-				String strSauceRemoteUrl = appium_configuration.getProperty("appium.saucelab.remoteUrl");
-				String strSauceUserName = appium_configuration.getProperty("appium.saucelab.username");
-				String strSauceAccessKey = appium_configuration.getProperty("appium.saucelab.accessKey");
+			if (platform.contains("SauceLabs")) {
+				String strSauceAndroidApp = sauce_configuration.getProperty("appium.saucelab.androidApp");
+				String strSauceRemoteUrl = sauce_configuration.getProperty("appium.saucelab.remoteUrl");
+				String strSauceUserName = sauce_configuration.getProperty("appium.saucelab.username");
+				String strSauceAccessKey = sauce_configuration.getProperty("appium.saucelab.accessKey");
 				strAppiumServer = "https://" + strSauceUserName + ":" + strSauceAccessKey + "@" + strSauceRemoteUrl;
 				capabilities.setCapability(MobileCapabilityType.APP, strSauceAndroidApp);
 			}
+			// Use SauceLab remote server instead of local Appium server if configured
+			else if (platform.contains("BrowserStack")) {
+				String strBrowserStackAndroidApp = browserstack_configuration.getProperty("appium.browserstack.androidApp");
+				String strBrowserStackurl = browserstack_configuration.getProperty("appium.browserstack.remoteUrl");
+				String strBrowserStackUserName = browserstack_configuration.getProperty("appium.browserstack.username");
+				String strBrowserStackAccessKey = browserstack_configuration.getProperty("appium.browserstack.accessKey");
+				String strBrowserStackDeviceName= browserstack_configuration.getProperty("appium.browserstack.andrDeviceName");
+				strAppiumServer = "https://" + strBrowserStackUserName + ":" + strBrowserStackAccessKey + strBrowserStackurl;
 
+				capabilities.setCapability(MobileCapabilityType.APP, strBrowserStackAndroidApp);
+				capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, strBrowserStackDeviceName);
+
+			}
 
 			// check if test on mobile browser
 			if (Boolean.getBoolean(appium_configuration.getProperty("appium.browser.enable"))) {
@@ -134,7 +146,7 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 			driver = new AndroidDriver<WebElement>(new URL(strAppiumServer), capabilities);
 			Log.info("Starting remote Android driver for: " + capabilities.toString());
 		} catch (Exception e) {
-			Log.error("Can't start the webdriver locally !!! : \n" + e.getMessage());
+			Log.error("Can't start webdriver!!! : \n" + e.getMessage());
 			throw (e);
 		}
 	}
@@ -143,8 +155,7 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 	 * This method is used to open a appium driver, use configuration.property to
 	 * create driver
 	 * 
-	 * @author tunn6
-	 * @param deviceInfo
+	 *
 	 * @return AppiumDriver driver
 	 * @throws Exception
 	 */

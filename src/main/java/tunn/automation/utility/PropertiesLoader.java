@@ -18,6 +18,7 @@ public class PropertiesLoader {
 	public Properties selenium_environment_variable;
 	public Properties general_configuration;
 	public Properties saucelabs_configuration;
+	public Properties browserstack_configuration;
 	public Properties test_variables;
 	
 	
@@ -28,7 +29,10 @@ public class PropertiesLoader {
 		appium_browser_configuration = readResourceProperties("/config/appium/browser.properties");
 		appium_appium_configuration = readResourceProperties("/config/appium/appium.properties");
 		saucelabs_configuration = readResourceProperties("/config/appium/saucelabs.properties");
+		browserstack_configuration = readResourceProperties("/config/appium/browserstack.properties");
+
 		selenium_configuration = readResourceProperties("/config/selenium/selenium.properties");
+
 		String seleniumEnvironment = selenium_configuration.getProperty("selenium.environment");
 		if(seleniumEnvironment != null && !seleniumEnvironment.equalsIgnoreCase("")) {
 			selenium_environment_variable = readResourceProperties("/config/selenium/environment_properties/" + seleniumEnvironment + ".properties");

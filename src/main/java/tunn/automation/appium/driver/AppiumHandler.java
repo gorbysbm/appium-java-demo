@@ -25,11 +25,11 @@ public class AppiumHandler {
 				throw new Exception(String.format("The platform [%s] is not supported", awsPlatform));
 			}
 		} else {
-			if (platform.equalsIgnoreCase(MobilePlatform.ANDROID)) {
+			if (platform.contains("Android")) {
 				AppiumAndroidDriver android = new AppiumAndroidDriver();
 				android.createDriver();
 				driver = android;
-			} else if (platform.equalsIgnoreCase(MobilePlatform.IOS)) {
+			} else if (platform.contains("iOS")) {
 				AppiumIOsDriver ios = new AppiumIOsDriver();
 				ios.createDriver();
 				driver = ios;

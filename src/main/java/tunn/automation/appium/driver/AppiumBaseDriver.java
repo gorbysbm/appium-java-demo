@@ -49,6 +49,8 @@ public class AppiumBaseDriver {
 		DOWN, UP, LEFT, RIGHT;
 	}
 
+	protected String platform = System.getProperty("platform");
+
 	protected AppiumDriver<WebElement> driver;
 
 	private final int DEFAULT_WAITTIME_SECONDS = 30;

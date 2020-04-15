@@ -70,14 +70,12 @@ public class LoginPage {
 	public void doSuccessLogin(String email, String code) throws Exception {
 		login(email, code);
 		if (driver.isIOSDriver()) {
-			driver.setImplicitWaitTime(10);
 			if (driver.isElementDisplayed(savePass_NotNow)) {
 				driver.click(savePass_NotNow);
 			}
 			if (driver.isElementDisplayed(touchID_DontSave)) {
 				driver.click(touchID_DontSave);
 			}
-			driver.setDefaultImplicitWaitTime();
 		}
 	}
 }

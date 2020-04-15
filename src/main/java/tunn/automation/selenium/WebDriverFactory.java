@@ -26,7 +26,6 @@ import tunn.automation.utility.PropertiesLoader;
 
 public class WebDriverFactory {
 
-	private static final int IMPLICIT_WAIT_TIME = 10;
 
 	public static class BrowserType {
 		public static final String IE = "IE";
@@ -134,7 +133,6 @@ public class WebDriverFactory {
 			Log.error("Can't start the webdriver for " + browser + "\n" + e);
 			throw (e);
 		}
-		driver.manage().timeouts().implicitlyWait(IMPLICIT_WAIT_TIME, TimeUnit.SECONDS);
 		setBrowserSizeToMaximum();
 	}
 

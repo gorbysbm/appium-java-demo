@@ -23,8 +23,13 @@ public class TipCalculatorTests extends MobileTestSetup {
 	}
 
 	@Test
-	public void tipCalculate() throws Exception {
+	public void tipCalculate1() throws Exception {
 		tipCalculatePage.enterTip("55");
+	}
+
+	@Test
+	public void tipCalculate2() throws Exception {
+		tipCalculatePage.enterTip("66");
 	}
 
 }

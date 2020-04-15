@@ -8,4 +8,15 @@
             <class name="tunn.automation.tests.TipCalculatorTests"/>
         </classes>
     </test>
+
+
+    <test name="Single iOS Device Test">
+        <parameter name="config" value="conf/local/localios.conf.json"/>
+        <parameter name="environment" value="LocaliOS"/>
+        <classes>
+            <class name="tunn.automation.tests.TipCalculatorTests"/>
+        </classes>
+    </test>
+
+
 </suite>

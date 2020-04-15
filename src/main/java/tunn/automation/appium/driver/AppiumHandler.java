@@ -1,9 +1,10 @@
 package tunn.automation.appium.driver;
 
+
 public class AppiumHandler {
 
 	public AppiumBaseDriver startDriver(String configFile, String environment) throws Exception {
-		AppiumBaseDriver driver; 
+		AppiumBaseDriver driver;
 
 		if (environment.contains("Android")) {
 			AppiumAndroidDriver android = new AppiumAndroidDriver();
@@ -18,7 +19,7 @@ public class AppiumHandler {
 			throw new Exception(String.format("The environment [%s] is not supported", environment));
 		}
 
-		driver.setDefaultImplicitWaitTime();
-		return driver;
+		AppiumDriverManager.setDriver(driver);
+		return AppiumDriverManager.getDriver();
 	}
 }

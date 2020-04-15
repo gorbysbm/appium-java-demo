@@ -201,13 +201,6 @@ public class AppiumBaseDriver {
 		return driver;
 	}
 
-	public void setDefaultImplicitWaitTime() {
-		driver.manage().timeouts().implicitlyWait(DEFAULT_WAITTIME_SECONDS, TimeUnit.SECONDS);
-	}
-	
-	public void setImplicitWaitTime(int time) {
-		driver.manage().timeouts().implicitlyWait(time, TimeUnit.SECONDS);
-	}
 
 	public boolean isIOSDriver() {
 		return driver instanceof IOSDriver<?> ? true : false;
@@ -272,20 +265,15 @@ public class AppiumBaseDriver {
 
 	/**
 	 * This method is used to close a webdriver
-	 * 
+	 *
 	 * @author tunn6
 	 * @return None
 	 * @throws Exception
 	 */
-	public void closeDriver() throws Exception {
-		try {
-			if (driver != null) {
-				driver.quit();
-				Log.info("The webdriver is closed!!!");
-			}
-		} catch (Exception e) {
-			Log.error("The webdriver is not closed!!! " + e.getMessage());
-			throw (e);
+	public void quitDriver() throws Exception {
+		if (driver != null) {
+			driver.quit();
+			Log.info("The webdriver is closed!!!");
 		}
 	}
 

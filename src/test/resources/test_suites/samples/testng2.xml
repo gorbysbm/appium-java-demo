@@ -3,7 +3,7 @@
 <suite name="Suite" parallel="true" thread-count="2">
 	<test name="My Test">
 		<classes>
-			<class name="tunn.automation.tests.Appium_LoginTest" />
+			<class name="tunn.automation.tests.TipCalculatorTests" />
 		</classes>
 	</test> <!-- Test -->
 </suite> <!-- Suite -->

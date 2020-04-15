@@ -1,0 +1,18 @@
+{
+  "server": "hub-cloud.browserstack.com",
+  "user": "BROWSERSTACK_USERNAME",
+  "key": "BROWSERSTACK_ACCESS_KEY",
+
+  "capabilities": {
+    "build": "testng-browserstack",
+    "name": "single_appium_test",
+    "browserstack.debug": true,
+    "app": "bs://f299fe70047eb0d4f553aab6f6b5fe2d1e51575f"
+  },
+
+  "environments": {
+    "BS_Android_pixel": {
+      "device": "Google Pixel 3"
+    }
+  }
+}

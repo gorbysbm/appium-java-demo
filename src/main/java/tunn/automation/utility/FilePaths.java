@@ -47,13 +47,7 @@ public class FilePaths {
 		} else {
 			REPORT_FOLDER = getRootProject() + File.separator + strReportFolderName;
 			SCREENSHOT_FOLDER = REPORT_FOLDER + File.separator + strScreenshotFolderName + File.separator;
-			if (PropertiesLoader.getPropertiesLoader().general_configuration.getProperty("report.addTimeStamp")
-					.equalsIgnoreCase("true")) {
-				REPORT_FILE_PATH = REPORT_FOLDER + File.separator + "Report_"
-						+ FilePaths.getCurrentDateTimeString("dd-MM-yyyy HHmmss") + ".html";
-			} else {
-				REPORT_FILE_PATH = REPORT_FOLDER + File.separator + "Report.html";
-			}
+			REPORT_FILE_PATH = REPORT_FOLDER + File.separator + "Report.html";
 		}
 		createDirectory(REPORT_FOLDER);
 		createDirectory(SCREENSHOT_FOLDER);

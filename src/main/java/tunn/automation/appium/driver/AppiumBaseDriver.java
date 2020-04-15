@@ -3,14 +3,14 @@ package tunn.automation.appium.driver;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
+import com.browserstack.local.Local;
 import org.apache.commons.io.FileUtils;
+import org.json.simple.JSONObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -21,6 +21,8 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
@@ -44,16 +46,156 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
 public class AppiumBaseDriver {
+	protected Local browserStackLocal;
+	protected AppiumDriver driver;
+	private final int DEFAULT_WAITTIME_SECONDS = 30;
+	private WebDriverWait wait;
+	int EXPLICIT_WAIT_DEFAULT_TIMEOUT = 5;
 
-	public enum DIRECTION {
-		DOWN, UP, LEFT, RIGHT;
+	protected DesiredCapabilities getDesiredCapabilities(String environment, JSONObject config) {
+		JSONObject envs = (JSONObject) config.get("environments");
+		DesiredCapabilities capabilities = new DesiredCapabilities();
+
+		Map<String, String> envCapabilities = (Map<String, String>) envs.get(environment);
+		Iterator it = envCapabilities.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
+		}
+
+		Map<String, String> commonCapabilities = (Map<String, String>) config.get("capabilities");
+		it = commonCapabilities.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			if (capabilities.getCapability(pair.getKey().toString()) == null) {
+				capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
+			}
+		}
+		return capabilities;
 	}
 
-	protected String platform = System.getProperty("platform");
 
-	protected AppiumDriver<WebElement> driver;
 
-	private final int DEFAULT_WAITTIME_SECONDS = 30;
+//	public void clearAndTypeText(By elementBy, String text) {
+//		waitForPresenceOfElement(elementBy);
+//		driver.findElement(elementBy).clear();
+//		driver.findElement(elementBy).sendKeys(text);
+//	}
+
+	//Wait for presence of elements before proceeding with action
+	public List<WebElement> waitForPresenceOfAllElements(By elementBy) {
+		return getExplicitWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(elementBy));
+	}
+
+	//Wait for presence of element before proceeding with action
+	public WebElement waitForPresenceOfElement(By elementBy) {
+		return getExplicitWait().until(ExpectedConditions.presenceOfElementLocated(elementBy));
+	}
+
+	//Wait for Visibility of element before proceeding with action
+	public List<WebElement> waitForVisibilityOfAllElements(By elementBy) {
+		return getExplicitWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(elementBy));
+	}
+
+	public WebElement waitForVisibilityOfElement(By elementBy) {
+		return getExplicitWait().until(ExpectedConditions.visibilityOfElementLocated(elementBy));
+	}
+
+	public void waitForInvincibility(By elementBy){
+		getExplicitWait().until(ExpectedConditions.invisibilityOfElementLocated(elementBy));
+	}
+
+	//Wait for Clickability of element before proceeding with action
+	public void waitForClickable(By elementBy) {
+		getExplicitWait().until(ExpectedConditions.elementToBeClickable(elementBy));
+	}
+
+	public void waitForClickable(WebElement element) {
+		getExplicitWait().until(ExpectedConditions.elementToBeClickable(element));
+	}
+
+	public void waitForSelected(WebElement element){
+		getExplicitWait().until(ExpectedConditions.elementToBeSelected(element));
+	}
+
+	public Boolean waitForTextUpdate(By elementBy, String expectedText){
+		return getExplicitWait().until(ExpectedConditions.textToBe(elementBy, expectedText));
+	}
+
+	public void click (By elementBy) {
+		waitForClickable(elementBy);
+		driver.findElement(elementBy).click();
+	}
+
+	public void click (WebElement element) {
+		waitForClickable(element);
+		element.click();
+	}
+
+	public void mouseOver (By elementBy) {
+		Actions action = new Actions(driver);
+		WebElement we = driver.findElement(elementBy);
+		action.moveToElement(we).build().perform();
+	}
+
+	public WebElement getPresentElement(By elementBy){
+		waitForPresenceOfAllElements(elementBy);
+		return driver.findElement(elementBy);
+	}
+
+
+	public List<WebElement> getAllElementsPresent(By elementBy){
+		waitForPresenceOfAllElements(elementBy);
+		return driver.findElements(elementBy);
+	}
+
+	public boolean isElementPresent(By locatorKey) {
+		try {
+			waitForPresenceOfElement(locatorKey);
+			return true;
+		} catch (NoSuchElementException | TimeoutException e) {
+			return false;
+		}
+	}
+
+	public List<WebElement> getAllElementsVisible(By elementBy){
+		waitForVisibilityOfAllElements(elementBy);
+		return driver.findElements(elementBy);
+	}
+
+	public WebElement getVisibleElement(By elementBy) {
+		return waitForVisibilityOfElement(elementBy);
+	}
+
+	//fix occasional: stale element reference: element is not attached to the page
+	public void waitForStalenessOfElement(WebElement element) {
+		try{
+			getExplicitWait().until(ExpectedConditions.stalenessOf(element));
+		}catch (TimeoutException e){
+
+		}
+	}
+
+	public void waitForRefreshElement(WebElement element, By elementBy ){
+		waitForStalenessOfElement(element);
+		waitForPresenceOfAllElements(elementBy);
+	}
+
+	public void clickWithJavascript(By elementBy){
+		waitForPresenceOfAllElements(elementBy);
+		JavascriptExecutor executor = (JavascriptExecutor)driver;
+		executor.executeScript("arguments[0].click();", driver.findElement(elementBy));
+	}
+
+	public void selectFromDropdown(By elementBy, String itemName){
+		Select dropdown = new Select(driver.findElement(elementBy));
+		dropdown.selectByValue(itemName);
+	}
+
+
+
+
+
 
 	public AppiumDriver<WebElement> getDriver() {
 		return driver;
@@ -74,7 +216,13 @@ public class AppiumBaseDriver {
 	public boolean isAndroidDriver() {
 		return driver instanceof AndroidDriver<?> ? true : false;
 	}
-	
+
+	/////////////////////////////OLDER HELPERS////////////////////////
+
+	public enum DIRECTION {
+		DOWN, UP, LEFT, RIGHT;
+	}
+
 	public void scrollUntillViewText(String text) {
 		if (isAndroidDriver()) {
 			String locator = String.format(
@@ -126,7 +274,6 @@ public class AppiumBaseDriver {
 	 * This method is used to close a webdriver
 	 * 
 	 * @author tunn6
-	 * @param None
 	 * @return None
 	 * @throws Exception
 	 */
@@ -185,7 +332,7 @@ public class AppiumBaseDriver {
 	 * @throws Exception
 	 *             The exception is throws if input text not success
 	 */
-	public void inputTextWithClear(WebElement element, String text) throws Exception {
+	public void clearAndTypeText(WebElement element, String text) throws Exception {
 		try {
 			element = findElement(element);
 			element.clear();
@@ -321,18 +468,18 @@ public class AppiumBaseDriver {
 
 	}
 
-	public void click(WebElement element) throws Exception {
-		try {
-			element = findElement(element);
-			waitForElementClickable(element, DEFAULT_WAITTIME_SECONDS);
-			element.click();
-			HtmlReporter.pass(String.format("Click on the element [%s]", element.toString()));
-		} catch (Exception e) {
-			HtmlReporter.fail(String.format("Can't click on the element [%s]", element.toString()));
-			throw (e);
-
-		}
-	}
+//	public void click(WebElement element) throws Exception {
+//		try {
+//			element = findElement(element);
+//			waitForElementClickable(element, DEFAULT_WAITTIME_SECONDS);
+//			element.click();
+//			HtmlReporter.pass(String.format("Click on the element [%s]", element.toString()));
+//		} catch (Exception e) {
+//			HtmlReporter.fail(String.format("Can't click on the element [%s]", element.toString()));
+//			throw (e);
+//
+//		}
+//	}
 
 	public void clickByPosition(WebElement element, String clickPosition) throws Exception {
 		try {
@@ -576,10 +723,10 @@ public class AppiumBaseDriver {
 		return result;
 	}
 
-	public WebElement isElementPresented(By element, int time) {
+	public WebElement findElement(By element, int timeOut) {
 		WebElement e = null;
 		try {
-			WebDriverWait wait = new WebDriverWait(driver, time);
+			WebDriverWait wait = new WebDriverWait(driver, timeOut);
 			e = wait.until(ExpectedConditions.presenceOfElementLocated(element));
 			HtmlReporter.info(String.format("Element: [%s] is presented", element.toString()));
 			return e;
@@ -784,7 +931,6 @@ public class AppiumBaseDriver {
 	 * This method is used to capture a screenshot with Ashot
 	 * 
 	 * @author tunn6
-	 * @param filename
 	 * @return The screenshot path
 	 * @throws Exception
 	 */
@@ -813,7 +959,6 @@ public class AppiumBaseDriver {
 	 * This method is used to capture an element's screenshot with Ashot
 	 * 
 	 * @author tunn6
-	 * @param filename
 	 * @return The screenshot path
 	 * @throws Exception
 	 */
@@ -840,7 +985,6 @@ public class AppiumBaseDriver {
 	 * This method is used to re-launch application
 	 * 
 	 * @author tunn6
-	 * @param None
 	 * @return None
 	 * @throws Exception
 	 */
@@ -869,8 +1013,7 @@ public class AppiumBaseDriver {
 	 * This method is used to reset application state before new test case run
 	 * 
 	 * @author tunn6
-	 * @param None
-	 * @return None
+	 *  @return None
 	 * @throws Exception
 	 * @throws Exception
 	 */
@@ -886,5 +1029,17 @@ public class AppiumBaseDriver {
 			throw e;
 		}
 	}
+
+	public void setExplicitWait(int explicitWait) {
+		wait = new WebDriverWait(driver, explicitWait);
+	}
+	public WebDriverWait getExplicitWait() {
+		return wait;
+	}
+
+	public void setExplicitWaitToDefault() {
+		setExplicitWait(EXPLICIT_WAIT_DEFAULT_TIMEOUT);
+	}
+
 
 }

@@ -1,0 +1,20 @@
+{
+  "server":"http://127.0.0.1:4723/wd/hub",
+  "user": "",
+  "key": "",
+
+  "capabilities": {
+    "build": "",
+    "name": "",
+    "platformName": "iOS",
+    "udid": "6FBA90B0-08A6-44D3-87BB-0257F1566DAA",
+    "automationName": "XCUITest",
+    "app": "FasTip.app"
+  },
+
+  "environments": {
+    "LocaliOS": {
+      "device": "iPhone XR (12.1)"
+    }
+  }
+}

@@ -5,8 +5,6 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import tunn.automation.appium.driver.AppiumBaseDriver;
 
-import static tunn.automation.utility.Assertion.*;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
@@ -64,8 +62,8 @@ public class LoginPage {
 	}
 
 	public void login(String email, String code) throws Exception {
-		driver.inputTextWithClear(emailAddress, email);
-		driver.inputTextWithClear(accessCode, code);
+		driver.clearAndTypeText(emailAddress, email);
+		driver.clearAndTypeText(accessCode, code);
 		driver.click(submit);
 	}
 

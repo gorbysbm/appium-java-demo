@@ -1,0 +1,18 @@
+{
+  "server":"http://127.0.0.1:4723/wd/hub",
+  "user": "",
+  "key": "",
+
+  "capabilities": {
+    "build": "",
+    "name": "",
+    "browserstack.local": "",
+    "app": "FasTip.apk"
+  },
+
+  "environments": {
+    "LocalAndroid": {
+      "device": "Android Device"
+    }
+  }
+}

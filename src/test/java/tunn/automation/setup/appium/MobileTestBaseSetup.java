@@ -17,10 +17,37 @@ import tunn.automation.report.HtmlReporter;
 import tunn.automation.utility.Common;
 import tunn.automation.utility.FilePaths;
 
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Properties;
+
+import com.browserstack.local.Local;
+import io.appium.java_client.remote.MobilePlatform;
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.DesiredCapabilities;
+
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.remote.MobileCapabilityType;
+import tunn.automation.report.Log;
+import tunn.automation.utility.FilePaths;
+import tunn.automation.utility.PropertiesLoader;
+
+
 public class MobileTestBaseSetup {
 
 	// Web driver
 	public static AppiumBaseDriver driver;
+	protected Local browserStackLocal;
 	// hashmap contains device infor like: platform, deviceName, uuid,
 	// browser...... etc
 	public HashMap<String, String> deviceInfo;
@@ -30,7 +57,7 @@ public class MobileTestBaseSetup {
 		/*********** Init Html reporter *************************/
 		FilePaths.initReportFolder();
 		HtmlReporter.setReporter(FilePaths.getReportFilePath());
-		driver = new AppiumHandler().startDriver();
+
 	}
 
 	@BeforeClass
@@ -39,9 +66,11 @@ public class MobileTestBaseSetup {
 		Common.currentTest = this.getClass().getSimpleName();
 	}
 
-	@BeforeMethod
-	public void beforeMethod(Method method) throws Exception {
+	@BeforeMethod(alwaysRun=true)
+	@org.testng.annotations.Parameters(value={"config", "environment"})
+	public void beforeMethod(String config_file, String environment, Method method) throws Exception {
 		HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName(), "");
+		driver = new AppiumHandler().startDriver(config_file, environment);
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -69,6 +98,7 @@ public class MobileTestBaseSetup {
 		}
 		finally {
 			driver.resetApp();
+			if(browserStackLocal != null) browserStackLocal.stop();
 		}
 		
 	}

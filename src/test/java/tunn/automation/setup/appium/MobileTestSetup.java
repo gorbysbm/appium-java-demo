@@ -15,9 +15,6 @@ import tunn.automation.report.Log;
 
 public class MobileTestSetup extends MobileTestBaseSetup {
 
-	public static String LOGIN_EMAIL_ADDRESS;
-	public static String LOGIN_ACCESS_CODE;
-
 	public Object[][] getTestProvider(String filepPath, String sheetName) throws Exception {
 		// return the data from excel file
 		Object[][] data = ExcelHelper.getTableArray(filepPath, sheetName);
@@ -36,8 +33,9 @@ public class MobileTestSetup extends MobileTestBaseSetup {
 	}
 
 	@BeforeMethod
-	public void beforeMethod(Method method) throws Exception {
-		super.beforeMethod(method);
+	@org.testng.annotations.Parameters(value={"config", "environment"})
+	public void beforeMethod(String config_file, String environment, Method method) throws Exception {
+		super.beforeMethod(config_file, environment, method);
 		Log.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
 		Log.info("+++++++++ Start testing: " + method.getName() + " ++++++++++++++");
 		Log.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");

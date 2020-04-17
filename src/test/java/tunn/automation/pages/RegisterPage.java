@@ -31,11 +31,11 @@ public class RegisterPage {
 		this.driver = driver;
 		PageFactory.initElements(new AppiumFieldDecorator(driver.getDriver()), this);
 	}
-
-	public LoginPage toLoginPage() throws Exception {
-		driver.clickByPosition(loginPageLink, "right");
-		return new LoginPage(driver);
-	}
+//
+//	public LoginPage toLoginPage() throws Exception {
+//		driver.clickByPosition(loginPageLink, "right");
+//		return new LoginPage(driver);
+//	}
 
 	public boolean isActive() throws Exception {
 		return driver.isElementDisplayed(agreement);

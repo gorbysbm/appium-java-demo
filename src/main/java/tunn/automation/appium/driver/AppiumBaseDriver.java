@@ -10,16 +10,8 @@ import javax.imageio.ImageIO;
 import com.browserstack.local.Local;
 import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONObject;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebElement;
@@ -302,8 +294,7 @@ public class AppiumBaseDriver {
 	 * @throws Exception
 	 *             The exception is throws if input text not success
 	 */
-	public void clearAndTypeText(WebElement element, String text) throws Exception {
-		try {
+	public void clearAndTypeText(WebElement element, String text) {
 			element = findElement(element);
 			element.clear();
 			if (!text.equalsIgnoreCase("")) {
@@ -311,10 +302,6 @@ public class AppiumBaseDriver {
 				hideKeyboard();
 			}
 			HtmlReporter.pass(String.format("Input text [%s] to element [%s]", text, element.toString()));
-		} catch (Exception e) {
-			HtmlReporter.fail(String.format("Can't input text [%s] to element [%s]", text, element.toString()));
-			throw e;
-		}
 	}
 
 	/**
@@ -705,33 +692,8 @@ public class AppiumBaseDriver {
 		}
 	}
 
-	public boolean isAlertPresent() {
-		try {
-
-			driver.switchTo().alert();
-			return true;
-
-		} catch (Exception Ex) {
-
-			return false;
-
-		}
-	}
-
-	public void acceptAlert() {
-
-		if (isAlertPresent()) {
-			driver.switchTo().alert().accept();
-		}
-
-	}
-
-	public void dismissAlert() {
-
-		if (isAlertPresent()) {
-			driver.switchTo().alert().dismiss();
-		}
-
+	public Alert waitForAlert() {
+		return getExplicitWait().until(ExpectedConditions.alertIsPresent());
 	}
 
 	public void swipe(DIRECTION direction) {

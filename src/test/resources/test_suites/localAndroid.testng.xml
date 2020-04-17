@@ -5,7 +5,7 @@
         <parameter name="config" value="conf/local/localandroid.conf.json"/>
         <parameter name="environment" value="LocalAndroid"/>
         <classes>
-            <class name="tunn.automation.tests.TipCalculatorTests"/>
+            <class name="tunn.automation.tests.ExperiBankTests"/>
         </classes>
     </test>
 </suite>

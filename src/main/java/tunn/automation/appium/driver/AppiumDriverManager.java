@@ -1,13 +1,15 @@
 package tunn.automation.appium.driver;
 
-public class AppiumDriverManager {
-    private static ThreadLocal<AppiumBaseDriver> driver = new ThreadLocal<>();
+import io.appium.java_client.AppiumDriver;
 
-    public static AppiumBaseDriver getDriver(){
+public class AppiumDriverManager {
+    private static ThreadLocal<AppiumDriver> driver = new ThreadLocal<>();
+
+    public static AppiumDriver getDriver(){
         return driver.get();
     }
 
-    public static void setDriver(AppiumBaseDriver driver) {
+    public static void setDriver(AppiumDriver driver) {
         AppiumDriverManager.driver.set(driver);
     }
 }

@@ -4,7 +4,6 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 import javax.imageio.ImageIO;
 
@@ -47,32 +46,15 @@ import io.appium.java_client.touch.offset.PointOption;
 
 public class AppiumBaseDriver {
 	protected Local browserStackLocal;
-	protected AppiumDriver driver;
-	private final int DEFAULT_WAITTIME_SECONDS = 30;
+	protected AppiumDriver driver = AppiumDriverManager.getDriver();
 	private WebDriverWait wait;
-	int EXPLICIT_WAIT_DEFAULT_TIMEOUT = 5;
+	int EXPLICIT_WAIT_TIMEOUT = 6;
 
-	protected DesiredCapabilities getDesiredCapabilities(String environment, JSONObject config) {
-		JSONObject envs = (JSONObject) config.get("environments");
-		DesiredCapabilities capabilities = new DesiredCapabilities();
-
-		Map<String, String> envCapabilities = (Map<String, String>) envs.get(environment);
-		Iterator it = envCapabilities.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry pair = (Map.Entry) it.next();
-			capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
-		}
-
-		Map<String, String> commonCapabilities = (Map<String, String>) config.get("capabilities");
-		it = commonCapabilities.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry pair = (Map.Entry) it.next();
-			if (capabilities.getCapability(pair.getKey().toString()) == null) {
-				capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
-			}
-		}
-		return capabilities;
+	//Wait for presence of element before proceeding with action
+	public Boolean waitForPresenceOfTextinElement(WebElement el, String text) {
+		return getExplicitWait().until(ExpectedConditions.textToBePresentInElement(el, text));
 	}
+
 
 
 
@@ -273,7 +255,7 @@ public class AppiumBaseDriver {
 	public void quitDriver() throws Exception {
 		if (driver != null) {
 			driver.quit();
-			Log.info("The webdriver is closed!!!");
+			Log.info(">>Exiting Appium session ID: "+ driver.hashCode());
 		}
 	}
 
@@ -683,7 +665,6 @@ public class AppiumBaseDriver {
 	public boolean isElementDisplayed(WebElement element) {
 		boolean result;
 		try {
-			// element = findElement(element);
 			result = element.isDisplayed();
 			if (result) {
 				HtmlReporter.info(String.format("Element: [%s] is displayed", element.toString()));
@@ -1018,6 +999,7 @@ public class AppiumBaseDriver {
 		}
 	}
 
+	//Explicit wait. Used to wait a specific time for slow elements in DOM to load
 	public void setExplicitWait(int explicitWait) {
 		wait = new WebDriverWait(driver, explicitWait);
 	}
@@ -1026,8 +1008,28 @@ public class AppiumBaseDriver {
 	}
 
 	public void setExplicitWaitToDefault() {
-		setExplicitWait(EXPLICIT_WAIT_DEFAULT_TIMEOUT);
+		setExplicitWait(EXPLICIT_WAIT_TIMEOUT);
 	}
 
+	protected DesiredCapabilities getDesiredCapabilities(String environment, JSONObject config) {
+		JSONObject envs = (JSONObject) config.get("environments");
+		DesiredCapabilities capabilities = new DesiredCapabilities();
 
+		Map<String, String> envCapabilities = (Map<String, String>) envs.get(environment);
+		Iterator it = envCapabilities.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
+		}
+
+		Map<String, String> commonCapabilities = (Map<String, String>) config.get("capabilities");
+		it = commonCapabilities.entrySet().iterator();
+		while (it.hasNext()) {
+			Map.Entry pair = (Map.Entry) it.next();
+			if (capabilities.getCapability(pair.getKey().toString()) == null) {
+				capabilities.setCapability(pair.getKey().toString(), pair.getValue().toString());
+			}
+		}
+		return capabilities;
+	}
 }

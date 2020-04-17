@@ -25,11 +25,11 @@ public class TipCalculatorTests extends MobileTestSetup {
 		tipCalculatePage.verifyCalculatedTipAmount(tipAmount);
 	}
 
-	@Test
-	public void tipCalculate2() throws Exception {
-		double tipAmount = 50;
-		tipCalculatePage.enterTip(String.valueOf(tipAmount));
-		tipCalculatePage.clickCalculateTipButton();
-		tipCalculatePage.verifyCalculatedTipAmount(tipAmount);
-	}
+//	@Test
+//	public void tipCalculate2() throws Exception {
+//		double tipAmount = 50;
+//		tipCalculatePage.enterTip(String.valueOf(tipAmount));
+//		tipCalculatePage.clickCalculateTipButton();
+//		tipCalculatePage.verifyCalculatedTipAmount(tipAmount);
+//	}
 }

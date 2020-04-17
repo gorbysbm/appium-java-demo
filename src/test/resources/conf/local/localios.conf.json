@@ -7,14 +7,14 @@
     "build": "",
     "name": "",
     "platformName": "iOS",
-    "udid": "6FBA90B0-08A6-44D3-87BB-0257F1566DAA",
+    "udid": "FDEF2ABF-ACDF-4ADA-9B44-3FFFD44BDFBF",
     "automationName": "XCUITest",
-    "app": "FasTip.app"
+    "app": "BookStore.app"
   },
 
   "environments": {
     "LocaliOS": {
-      "device": "iPhone XR (12.1)"
+      "device": "iPhone XR (12.2)"
     }
   }
 }

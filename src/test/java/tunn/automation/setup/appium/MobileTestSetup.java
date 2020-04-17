@@ -4,6 +4,7 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import com.browserstack.local.Local;
+import io.appium.java_client.AppiumDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -13,10 +14,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
 import tunn.automation.appium.driver.AppiumBaseDriver;
-import tunn.automation.appium.driver.AppiumHandler;
 import tunn.automation.appium.driver.AppiumDriverManager;
+import tunn.automation.appium.driver.AppiumHandler;
 import tunn.automation.excelhelper.ExcelHelper;
 import tunn.automation.report.HtmlReporter;
+import tunn.automation.report.Log;
 import tunn.automation.utility.Common;
 import tunn.automation.utility.FilePaths;
 
@@ -29,10 +31,8 @@ public class MobileTestSetup {
 	}
 
 	// Web driver
-	public static AppiumBaseDriver driver;
 	protected Local browserStackLocal;
-	// hashmap contains device infor like: platform, deviceName, uuid,
-	// browser...... etc
+	// hashmap contains device infor like: platform, deviceName, uuid, browser...... etc
 	public HashMap<String, String> deviceInfo;
 
 	@BeforeSuite
@@ -40,7 +40,6 @@ public class MobileTestSetup {
 		/*********** Init Html reporter *************************/
 		FilePaths.initReportFolder();
 		HtmlReporter.setReporter(FilePaths.getReportFilePath());
-
 	}
 
 	@BeforeClass
@@ -51,9 +50,13 @@ public class MobileTestSetup {
 
 	@BeforeMethod(alwaysRun=true)
 	@org.testng.annotations.Parameters(value={"config", "environment"})
-	public void beforeMethod(String config_file, String environment, Method method) throws Exception {
+	public void beforeMethod(String configFile, String environment, Method method) throws Exception {
+		AppiumDriver driver = null;
+
 		HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName(), "");
-		driver = new AppiumHandler().startDriver(config_file, environment);
+		driver = new AppiumHandler().startDriver(configFile, environment);
+		AppiumDriverManager.setDriver(driver);
+		Log.info(">>Starting Appium session ID: "+ AppiumDriverManager.getDriver().hashCode() + " Test Name: " +method.getName());
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -72,7 +75,7 @@ public class MobileTestSetup {
 
 				case ITestResult.FAILURE:
 					mess = String.format("The test [%s] is FAILED", result.getName());
-					HtmlReporter.fail(mess, result.getThrowable(), driver.takeScreenshot());;
+					// screenshot HtmlReporter.fail(mess, result.getThrowable(), AppiumDriverManager.getDriver().);;
 					break;
 				default:
 					break;
@@ -81,7 +84,8 @@ public class MobileTestSetup {
 		}
 		finally {
 			if (AppiumDriverManager.getDriver() != null){
-				AppiumDriverManager.getDriver().quitDriver();
+				Log.info(">>Ending Appium session ID: "+ AppiumDriverManager.getDriver().hashCode() + " Test Name: " +result.getName());
+				AppiumDriverManager.getDriver().quit();
 				//driver.resetApp();
 			}
 		}
@@ -94,11 +98,9 @@ public class MobileTestSetup {
 
 	@AfterSuite(alwaysRun = true)
 	public void afterSuite() throws Exception {
-		HtmlReporter.setSystemInfo("Platform", driver.getDriver().getCapabilities().getPlatform().toString());
-		HtmlReporter.setSystemInfo("Platform Version", driver.getDriver().getCapabilities().getVersion());
 		HtmlReporter.flush();
 		if (AppiumDriverManager.getDriver() != null){
-			AppiumDriverManager.getDriver().quitDriver();
+			AppiumDriverManager.getDriver().quit();
 		}
 	}
 }

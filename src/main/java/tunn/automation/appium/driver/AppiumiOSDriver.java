@@ -7,19 +7,15 @@ import java.util.Map;
 import java.util.Properties;
 
 import com.browserstack.local.Local;
-import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSElement;
-import io.appium.java_client.remote.MobilePlatform;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import tunn.automation.report.Log;
-import tunn.automation.utility.FilePaths;
-import tunn.automation.utility.PropertiesLoader;
 
 public class AppiumiOSDriver extends AppiumBaseDriver{
 
@@ -32,7 +28,7 @@ public class AppiumiOSDriver extends AppiumBaseDriver{
 	public AppiumiOSDriver() throws Exception {
 	}
 
-	public void createDriverWithCapabilities(String config_file, String environment) throws Exception {
+	public AppiumDriver createDriverWithCapabilities(String config_file, String environment) throws Exception {
 		JSONParser parser = new JSONParser();
 		JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/" + config_file));
 		DesiredCapabilities capabilities = getDesiredCapabilities(environment, config);
@@ -70,6 +66,8 @@ public class AppiumiOSDriver extends AppiumBaseDriver{
 			}
 
 			driver = new IOSDriver<IOSElement>(new URL("http://"+username+":"+accessKey+"@"+config.get("server")+"/wd/hub"), capabilities);
+
 		}
+		return driver;
 	}
 }

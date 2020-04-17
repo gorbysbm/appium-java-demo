@@ -7,7 +7,9 @@
     "build": "",
     "name": "",
     "browserstack.local": "",
-    "app": "FasTip.apk"
+    "app": "eribank.apk",
+    "appPackage": "",
+    "appActivity": ""
   },
 
   "environments": {

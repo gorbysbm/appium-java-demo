@@ -1,11 +1,11 @@
 package tunn.automation.appium.driver;
 
 import com.browserstack.local.Local;
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import tunn.automation.report.Log;
 
@@ -18,7 +18,7 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 
 	public AppiumAndroidDriver() {}
 
-	public void createDriverWithCapabilities(String configFile, String environment) throws Exception {
+	public AppiumDriver createDriverWithCapabilities(String configFile, String environment) throws Exception {
 		JSONParser parser = new JSONParser();
 		JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/" + configFile));
 		DesiredCapabilities capabilities = getDesiredCapabilities(environment, config);
@@ -54,10 +54,10 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 				options.put("key", accessKey);
 				browserStackLocal.start(options);
 			}
-
-			driver = new AndroidDriver(new URL("http://"+username+":"+accessKey+"@"+config.get("server")+"/wd/hub"), capabilities);
+			    driver = new AndroidDriver(new URL("http://"+username+":"+accessKey+"@"+config.get("server")+"/wd/hub"), capabilities);
 		}
 
+		return driver;
 	}
 
 }

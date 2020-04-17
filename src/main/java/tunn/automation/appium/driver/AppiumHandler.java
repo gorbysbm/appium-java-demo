@@ -1,25 +1,24 @@
 package tunn.automation.appium.driver;
 
 
+import io.appium.java_client.AppiumDriver;
+
 public class AppiumHandler {
 
-	public AppiumBaseDriver startDriver(String configFile, String environment) throws Exception {
-		AppiumBaseDriver driver;
+	public AppiumDriver startDriver(String configFile, String environment) throws Exception {
+		AppiumDriver driver;
 
 		if (environment.contains("Android")) {
 			AppiumAndroidDriver android = new AppiumAndroidDriver();
-			android.createDriverWithCapabilities(configFile, environment);
-			driver = android;
+			driver = android.createDriverWithCapabilities(configFile, environment);
 		} else if (environment.contains("iOS")) {
 			AppiumiOSDriver ios = new AppiumiOSDriver();
-			ios.createDriverWithCapabilities(configFile, environment);
-			driver = ios;
+			driver = ios.createDriverWithCapabilities(configFile, environment);
 		}
 		else {
 			throw new Exception(String.format("The environment [%s] is not supported", environment));
 		}
 
-		AppiumDriverManager.setDriver(driver);
-		return AppiumDriverManager.getDriver();
+		return driver;
 	}
 }

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Local iOS">
+    <test name="Single iOS Device Test">
+        <parameter name="config" value="conf/local/localios.conf.json"/>
+        <parameter name="environment" value="LocaliOS"/>
+        <classes>
+            <class name="automation.samples.TipCalculatorTests"/>
+        </classes>
+    </test>
+</suite>

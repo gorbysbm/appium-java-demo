@@ -3,34 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>tunn.automation</groupId>
+	<groupId>automation</groupId>
 	<artifactId>automation-testing-demo</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 	<name>automation-testing-demo</name>
 	<description>Automation Test </description>
 	<url>http://maven.apache.org</url>
-
-	<profiles>
-		<profile>
-			<id>seleniumTest</id>
-			<properties>
-				<testSuiteXML>testng1.xml</testSuiteXML>
-			</properties>
-		</profile>
-		<profile>
-			<id>appiumTest</id>
-			<properties>
-				<testSuiteXML>testng2.xml</testSuiteXML>
-			</properties>
-		</profile>
-		<profile>
-			<id>APITest</id>
-			<properties>
-				<testSuiteXML>testng3.xml</testSuiteXML>
-			</properties>
-		</profile>
-	</profiles>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -40,7 +19,7 @@
 		<log4j-version>2.13.1</log4j-version>
 		<extent-report-version>3.0.6</extent-report-version>
 		<poi-version>3.13</poi-version>
-		<testng-version>6.11</testng-version>
+		<testng-version>6.8</testng-version>
 		<ru.yandex.qatools.ashot>1.5.3</ru.yandex.qatools.ashot>
 	</properties>
 
@@ -105,7 +84,7 @@
 		<dependency>
 			<groupId>io.appium</groupId>
 			<artifactId>java-client</artifactId>
-			<version>7.0.0</version>
+			<version>7.3.0</version>
 		</dependency>
 
 		<dependency>
@@ -113,12 +92,6 @@
 			<artifactId>selenium-remote-driver</artifactId>
 			<version>3.141.59</version>
 		</dependency>
-
-
-		<!-- <dependency> <groupId>org.seleniumhq.selenium</groupId> <artifactId>selenium-java</artifactId> 
-			<version>3.141.59</version> </dependency> -->
-
-
 
 		<!-- Screen shot -->
 		<dependency>
@@ -208,13 +181,13 @@
 					<suiteXmlFiles>
 						<suiteXmlFile>${project.build.directory}/test-classes/test_suites/${testSuiteXML}</suiteXmlFile>
 					</suiteXmlFiles>
-					<configuration>
-						<properties>
+<!--					<configuration>-->
+<!--						<properties>-->
 							<!-- <property> <name>parallel</name> <value>tests</value> </property> 
 								<property> <name>threadCount</name> <value>3</value> </property> <property> 
 								<name>dataproviderthreadcount</name> <value>6</value> </property> -->
-						</properties>
-					</configuration>
+<!--						</properties>-->
+<!--					</configuration>-->
 				</configuration>
 			</plugin>
 

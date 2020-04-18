@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="BrowserStack Android" thread-count="2" parallel="tests">
+<suite name="BrowserStack iOS" thread-count="2" parallel="tests">
 
     <test name="BS_Android_pixel3 Test">
         <parameter name="config" value="conf/browserstack/BS_Android.conf.json"/>

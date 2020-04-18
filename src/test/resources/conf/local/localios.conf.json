@@ -9,7 +9,8 @@
     "platformName": "iOS",
     "udid": "FDEF2ABF-ACDF-4ADA-9B44-3FFFD44BDFBF",
     "automationName": "XCUITest",
-    "app": "BookStore.app"
+    "autoAcceptAlerts":true,
+    "app": "ExperiBank.app"
   },
 
   "environments": {

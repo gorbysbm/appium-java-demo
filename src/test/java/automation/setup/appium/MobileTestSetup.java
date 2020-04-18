@@ -56,9 +56,10 @@ public class MobileTestSetup{
 		AppiumDriver driver = null;
 
 		HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName(), "");
-		driver = new AppiumHandler().startDriver(configFile, environment);
+		driver = new AppiumHandler().startDriver(configFile, environment, method);
 		AppiumDriverManager.setDriver(driver);
-		HtmlReporter.info(">>Starting Appium session ID: "+ AppiumDriverManager.getDriver().hashCode() + " Test Name: " +method.getName());
+		HtmlReporter.info(">>Starting Appium session ID: "+ AppiumDriverManager.getDriver().getSessionId().toString()
+				+ " Test Name: " +method.getName());
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -84,9 +85,12 @@ public class MobileTestSetup{
 			}
 		} catch (Exception e) {
 		}
+
+
 		finally {
 			if (AppiumDriverManager.getDriver() != null){
-				Log.info(">>Ending Appium session ID: "+ AppiumDriverManager.getDriver().hashCode() + " Test Name: " +result.getName());
+				Log.info(">>Ending Appium session ID: "+ AppiumDriverManager.getDriver().getSessionId().toString()
+						+ " Test Name: " +result.getName());
 				AppiumDriverManager.getDriver().quit();
 				//driver.resetApp();
 			}

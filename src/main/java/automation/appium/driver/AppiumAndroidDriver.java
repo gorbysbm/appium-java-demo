@@ -1,5 +1,6 @@
 package automation.appium.driver;
 
+import automation.utility.BrowserStackCapabilities;
 import com.browserstack.local.Local;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
@@ -10,6 +11,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import automation.report.Log;
 
 import java.io.FileReader;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +20,7 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 
 	public AppiumAndroidDriver() {}
 
-	public AppiumDriver createDriverWithCapabilities(String configFile, String environment) throws Exception {
+	public AppiumDriver createDriverWithCapabilities(String configFile, String environment, Method method) throws Exception {
 		JSONParser parser = new JSONParser();
 		JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/" + configFile));
 		DesiredCapabilities capabilities = getDesiredCapabilities(environment, config);
@@ -32,29 +34,11 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 		}
 		//Set Browser Stack capabilities
 		else if (environment.contains("BS_Android")){
-			String username = System.getenv("BROWSERSTACK_USERNAME");
-			if(username == null) {
-				username = (String) config.get("user");
-			}
+			BrowserStackCapabilities browserStackCapabilities = new BrowserStackCapabilities(method, config, capabilities).invoke();
+			String username = browserStackCapabilities.getUsername();
+			String accessKey = browserStackCapabilities.getAccessKey();
 
-			String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
-			if(accessKey == null) {
-				accessKey = (String) config.get("key");
-			}
-
-			String app = System.getenv("BROWSERSTACK_APP_ID");
-			if(app != null && !app.isEmpty()) {
-				capabilities.setCapability("app", app);
-			}
-
-			if(capabilities.getCapability("browserstack.local") != null
-					&& capabilities.getCapability("browserstack.local") == "true"){
-				browserStackLocal = new Local();
-				Map<String, String> options = new HashMap<String, String>();
-				options.put("key", accessKey);
-				browserStackLocal.start(options);
-			}
-			    driver = new AndroidDriver(new URL("http://"+username+":"+accessKey+"@"+config.get("server")+"/wd/hub"), capabilities);
+			driver = new AndroidDriver(new URL("http://"+username+":"+accessKey+"@"+config.get("server")+"/wd/hub"), capabilities);
 		}
 
 		return driver;

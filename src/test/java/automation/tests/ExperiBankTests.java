@@ -39,7 +39,7 @@ public class ExperiBankTests extends MobileTestSetup {
 		ebMakePaymentPage.verifyNewBalance(payment);
 	}
 
-	@Test(invocationCount = 1, groups = {"functional"})
+	@Test(invocationCount = 0, groups = {"functional"})
 	public void payBillTest2() throws Exception {
 		String payment = generateRandomAmount();
 

@@ -4,9 +4,11 @@
   "key": "BROWSERSTACK_ACCESS_KEY",
 
   "capabilities": {
-    "build": "android build",
+    "build": "iOS build",
     "name": "",
     "browserstack.debug": true,
+
+
     "app": "bs://563995fb5099af13308bc8d54e9c5b627e74007c",
     "autoGrantPermissions": "true"
   },

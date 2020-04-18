@@ -70,7 +70,7 @@ public class EBMakePaymentPage extends AppiumBaseDriver{
 	}
 
 	public void proceedWithPayment() {
-		waitForAlert().accept();
+		click(MobileBy.ByAndroidUIAutomator.AndroidUIAutomator("new UiSelector().text(\"Yes\")"));
 	}
 
  	public void verifyNewBalance(String amountSent){

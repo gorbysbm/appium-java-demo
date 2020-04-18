@@ -7,9 +7,10 @@
     "build": "",
     "name": "",
     "browserstack.local": "",
-    "app": "eribank.apk",
+    "app": "eribank1.apk",
     "appPackage": "",
-    "appActivity": ""
+    "appActivity": "",
+    "autoGrantPermissions": true
   },
 
   "environments": {

@@ -26,7 +26,6 @@ public class PropertiesLoader {
 		general_configuration = readResourceProperties("/config/config.properties");
 		apppium_android_configuration = readResourceProperties("/config/appium/android.properties");
 		appium_ios_configuration = readResourceProperties("/config/appium/ios.properties");
-		appium_browser_configuration = readResourceProperties("/config/appium/browser.properties");
 		appium_appium_configuration = readResourceProperties("/config/appium/appium.properties");
 		saucelabs_configuration = readResourceProperties("/config/appium/saucelabs.properties");
 		browserstack_configuration = readResourceProperties("/config/appium/browserstack.properties");
@@ -52,8 +51,7 @@ public class PropertiesLoader {
 
 	/**
 	 * This method is used to read the configuration file
-	 * 
-	 * @param fileName
+	 *
 	 *            The path of property file located in project
 	 * @return Properties set
 	 * @throws Exception

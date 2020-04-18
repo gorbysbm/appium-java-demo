@@ -1,11 +1,13 @@
 package automation.appium.driver;
 
 import java.io.FileReader;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import automation.utility.BrowserStackCapabilities;
 import com.browserstack.local.Local;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSElement;
@@ -28,7 +30,7 @@ public class AppiumiOSDriver extends AppiumBaseDriver{
 	public AppiumiOSDriver() throws Exception {
 	}
 
-	public AppiumDriver createDriverWithCapabilities(String config_file, String environment) throws Exception {
+	public AppiumDriver createDriverWithCapabilities(String config_file, String environment, Method method) throws Exception {
 		JSONParser parser = new JSONParser();
 		JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/" + config_file));
 		DesiredCapabilities capabilities = getDesiredCapabilities(environment, config);
@@ -42,28 +44,9 @@ public class AppiumiOSDriver extends AppiumBaseDriver{
 		}
 		//Set Browser Stack capabilities
 		else if (environment.contains("BS_iOS")){
-			String username = System.getenv("BROWSERSTACK_USERNAME");
-			if(username == null) {
-				username = (String) config.get("user");
-			}
-
-			String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
-			if(accessKey == null) {
-				accessKey = (String) config.get("key");
-			}
-
-			String app = System.getenv("BROWSERSTACK_APP_ID");
-			if(app != null && !app.isEmpty()) {
-				capabilities.setCapability("app", app);
-			}
-
-			if(capabilities.getCapability("browserstack.local") != null
-					&& capabilities.getCapability("browserstack.local") == "true"){
-				browserStackLocal = new Local();
-				Map<String, String> options = new HashMap<String, String>();
-				options.put("key", accessKey);
-				browserStackLocal.start(options);
-			}
+			BrowserStackCapabilities browserStackCapabilities = new BrowserStackCapabilities(method, config, capabilities).invoke();
+			String username = browserStackCapabilities.getUsername();
+			String accessKey = browserStackCapabilities.getAccessKey();
 
 			driver = new IOSDriver<IOSElement>(new URL("http://"+username+":"+accessKey+"@"+config.get("server")+"/wd/hub"), capabilities);
 

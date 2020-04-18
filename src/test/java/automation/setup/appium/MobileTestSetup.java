@@ -4,9 +4,9 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import automation.report.CaptureArtifact;
+import automation.utility.BrowserStackCapabilities;
 import com.browserstack.local.Local;
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.OutputType;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -15,7 +15,6 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import automation.appium.driver.AppiumBaseDriver;
 import automation.appium.driver.AppiumDriverManager;
 import automation.appium.driver.AppiumHandler;
 import automation.excelhelper.ExcelHelper;
@@ -64,6 +63,8 @@ public class MobileTestSetup{
 
 	@AfterMethod(alwaysRun = true)
 	public void afterMethod(ITestResult result) throws Exception {
+		//TODO: not yet working
+		BrowserStackCapabilities.markTests("failed");
 		String mess = "";
 		try {
 			switch (result.getStatus()) {

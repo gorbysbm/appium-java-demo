@@ -21,7 +21,7 @@
 <!--        <parameter name="environment" value="BS_Android_SamsungGalaxyS10e"/>-->
 <!--        <groups>-->
 <!--            <run>-->
-<!--                <include name="functional"/>-->
+<!--                <include name ="functional"/>-->
 <!--            </run>-->
 <!--        </groups>-->
 <!--        <packages>-->

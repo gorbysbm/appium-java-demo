@@ -33,7 +33,7 @@ public class ExperiBankTests extends MobileTestSetup {
 		ebMakePaymentPage.enterPhone("1234567");
 		ebMakePaymentPage.enterName("My Name");
 		ebMakePaymentPage.enterAmount(payment);
-		ebMakePaymentPage.selectCountry("Brazil");
+		ebMakePaymentPage.selectCountry("Vietnam");
 		ebMakePaymentPage.clickSendPayment();
 		ebMakePaymentPage.proceedWithPayment();
 		ebMakePaymentPage.verifyNewBalance(payment);

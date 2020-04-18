@@ -1,14 +1,9 @@
 package automation.appium.driver;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
 
-import javax.imageio.ImageIO;
-
 import com.browserstack.local.Local;
-import org.apache.commons.io.FileUtils;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;
@@ -20,12 +15,8 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.Screenshot;
-import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 import automation.report.HtmlReporter;
 import automation.report.Log;
-import automation.utility.FilePaths;
 import automation.utility.PropertiesLoader;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
@@ -60,6 +51,26 @@ public class AppiumBaseDriver {
 		element.clear();
 		element.sendKeys(text);
 	}
+
+	public WebElement scrollIntoView(String text, String predicate) {
+		WebElement foundElement = null;
+
+		if (isAndroidDriver()) {
+			String locator = String.format("new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().text(\"%s\"))", text);
+			By by = MobileBy.AndroidUIAutomator(locator);
+			foundElement = driver.findElement(by);
+		}
+		else if (isIOSDriver()) {
+			HashMap<String, String> scrollObject = new HashMap<>();
+			scrollObject.put("predicateString", String.format("%s == '%s'",predicate, text));
+			scrollObject.put("toVisible", "true");
+			scrollObject.put("direction", "down");
+			driver.executeScript("mobile: scroll", scrollObject);
+			foundElement = ((IOSDriver) driver).findElementByIosNsPredicate(String.format("%s == '%s'",predicate, text));
+		}
+		return foundElement;
+	}
+
 
 	//Wait for presence of elements before proceeding with action
 	public List<WebElement> waitForPresenceOfAllElements(By elementBy) {
@@ -195,23 +206,6 @@ public class AppiumBaseDriver {
 		DOWN, UP, LEFT, RIGHT;
 	}
 
-	public void scrollUntillViewText(String text) {
-		if (isAndroidDriver()) {
-			String locator = String.format(
-					"new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().text(\"%s\"))",
-					text);
-			By by = MobileBy.AndroidUIAutomator(locator);
-			driver.findElement(by);
-		}
-		// For IOS
-		else {
-			JavascriptExecutor js = (JavascriptExecutor) driver;
-	        HashMap<String, String> scrollObject = new HashMap<>();
-	        scrollObject.put("predicateString", "value CONTAINS '" + text + "'");
-	        scrollObject.put("direction", "down");
-	        js.executeScript("mobile: scroll", scrollObject);
-		}
-	}
 
 	public WebElement findElement(WebElement element) {
 

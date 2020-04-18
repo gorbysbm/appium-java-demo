@@ -9,16 +9,16 @@
     "browserstack.debug": true,
 
 
-    "app": "bs://563995fb5099af13308bc8d54e9c5b627e74007c",
+    "app": "bs://073e09396ec7f626c2eb1f3fe27f0a5d880ba8fa",
     "autoGrantPermissions": "true"
   },
 
   "environments": {
-    "BS_Android_pixel3": {
-      "device": "Google Pixel 3"
+    "BS_iOS_iphone11pro": {
+      "device": "iPhone 11 Pro"
     },
-    "BS_Android_SamsungGalaxyS10e": {
-      "device": "Samsung Galaxy S10e"
+    "BS_iOS_iphone11max": {
+      "device": "iPhone 11 Max"
     }
   }
 }

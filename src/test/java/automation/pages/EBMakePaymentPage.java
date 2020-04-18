@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
+import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import automation.appium.driver.AppiumBaseDriver;
@@ -16,28 +17,27 @@ public class EBMakePaymentPage extends AppiumBaseDriver{
 	private AppiumDriver driver = AppiumDriverManager.getDriver();
 
 	@AndroidFindBy(id = "phoneTextField")
-	//@iOSXCUITFindBy(accessibility = "Enter check amount")
+	@iOSXCUITFindBy(id = "phoneTextField")
 	private WebElement phoneField;
 
 	@AndroidFindBy(id = "nameTextField")
-	//@iOSXCUITFindBy(accessibility = "Enter check amount")
+	@iOSXCUITFindBy(id = "nameTextField")
 	private WebElement nameField;
 
 	@AndroidFindBy(id = "amountTextField")
-	//@iOSXCUITFindBy(accessibility = "Enter check amount")
+	@iOSXCUITFindBy(id = "amountTextField")
 	private WebElement amountField;
 
 	@AndroidFindBy(id = "countryButton")
-	//@iOSXCUITFindBy(accessibility = "Enter check amount")
+	@iOSXCUITFindBy(id = "countryButton")
 	private WebElement countrySelectButton;
 
-	@AndroidFindBy(uiAutomator = "new UiScrollable(new UiSelector().className(\"android.widget.ListView\")).scrollIntoView("
-			+ "new UiSelector().text(\"Brazil\"));")
-			//@iOSXCUITFindBy(accessibility = "Enter check amount")
+
+	//@iOSXCUITFindBy( = "Enter check amount")
 	private WebElement countryName;
 
 	@AndroidFindBy(id = "sendPaymentButton")
-	//@iOSXCUITFindBy(accessibility = "Enter check amount")
+	@iOSXCUITFindBy(id = "sendPaymentButton")
 	private WebElement sendPayment;
 
 
@@ -60,9 +60,10 @@ public class EBMakePaymentPage extends AppiumBaseDriver{
 		clearAndTypeText(phoneField, txt);
 	}
 
-	public void selectCountry(String txt){
+	public void selectCountry(String countryName){
 		click(countrySelectButton);
-		click(countryName);
+		WebElement we = scrollIntoView(countryName, "name");
+		click(we);
 	}
 
 	public void clickSendPayment(){
@@ -70,7 +71,9 @@ public class EBMakePaymentPage extends AppiumBaseDriver{
 	}
 
 	public void proceedWithPayment() {
-		click(MobileBy.ByAndroidUIAutomator.AndroidUIAutomator("new UiSelector().text(\"Yes\")"));
+		if (isAndroidDriver()){
+			click(MobileBy.ByAndroidUIAutomator.AndroidUIAutomator("new UiSelector().text(\"Yes\")"));
+		}
 	}
 
  	public void verifyNewBalance(String amountSent){

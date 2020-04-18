@@ -16,15 +16,15 @@ public class EBLoginPage extends AppiumBaseDriver{
 	private AppiumDriver driver = AppiumDriverManager.getDriver();
 
 	@AndroidFindBy(id = "usernameTextField")
-	//@iOSXCUITFindBy(accessibility = "Enter check amount")
+	@iOSXCUITFindBy(id = "usernameTextField")
 	private WebElement userNameField;
 
 	@AndroidFindBy(id = "passwordTextField")
-	//@iOSXCUITFindBy(xpath = "//XCUIElementTypeStaticText[@name=\"$15.00\"]") //*[matches(name(), '^cup.*\d$')]
+	@iOSXCUITFindBy(id = "passwordTextField")
 	private WebElement passwordField;
 
 	@AndroidFindBy(id = "loginButton")
-	//@iOSXCUITFindBy(accessibility = "Calculate Tip")
+	@iOSXCUITFindBy(id = "loginButton")
 	private WebElement submitButton;
 
 	public EBLoginPage() {

@@ -12,7 +12,7 @@ import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.Random;
 
-public class ExperiBankTests extends MobileTestSetup {
+public class ExperiBankTests1 extends MobileTestSetup {
 	EBLoginPage ebLoginPage;
 	EBMainMenuPage ebMainMenuPage;
 	EBMakePaymentPage ebMakePaymentPage;
@@ -25,7 +25,7 @@ public class ExperiBankTests extends MobileTestSetup {
 	}
 
 	@Test(invocationCount = 1, groups = {"functional"})
-	public void payBillTest1() throws Exception {
+	public void EB1payBillTest1() throws Exception {
 		String payment = generateRandomAmount();
 
 		ebLoginPage.login("company","company");
@@ -39,8 +39,23 @@ public class ExperiBankTests extends MobileTestSetup {
 		ebMakePaymentPage.verifyNewBalance(payment);
 	}
 
+	@Test(invocationCount = 1, groups = {"functional"})
+	public void EB1payBillTest2() throws Exception {
+		String payment = generateRandomAmount();
+
+		ebLoginPage.login("company","company");
+		ebMainMenuPage.clickMakePayment();
+//		ebMakePaymentPage.enterPhone("1234567");
+//		ebMakePaymentPage.enterName("My Name");
+		ebMakePaymentPage.enterAmount(payment);
+		ebMakePaymentPage.selectCountry("Germany");
+		ebMakePaymentPage.clickSendPayment();
+		ebMakePaymentPage.proceedWithPayment();
+		ebMakePaymentPage.verifyNewBalance(payment);
+	}
+
 	@Test(invocationCount = 0, groups = {"functional"})
-	public void payBillTest2() throws Exception {
+	public void EB1payBillTest3() throws Exception {
 		String payment = generateRandomAmount();
 
 		ebLoginPage.login("company","company");
@@ -48,11 +63,12 @@ public class ExperiBankTests extends MobileTestSetup {
 		ebMakePaymentPage.enterPhone("1234567");
 		ebMakePaymentPage.enterName("My Name");
 		ebMakePaymentPage.enterAmount(payment);
-		ebMakePaymentPage.selectCountry("Brazil");
+		ebMakePaymentPage.selectCountry("Germany");
 		ebMakePaymentPage.clickSendPayment();
 		ebMakePaymentPage.proceedWithPayment();
 		ebMakePaymentPage.verifyNewBalance(payment);
 	}
+
 
 	public String generateRandomAmount(){
 		DecimalFormat df2 = new DecimalFormat("#.00");

@@ -19,17 +19,17 @@
 		<log4j-version>2.13.1</log4j-version>
 		<extent-report-version>3.0.6</extent-report-version>
 		<poi-version>3.13</poi-version>
-		<testng-version>6.8</testng-version>
 		<ru.yandex.qatools.ashot>1.5.3</ru.yandex.qatools.ashot>
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
-			<version>${testng-version}</version>
+			<version>7.1.0</version>
+			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>com.browserstack</groupId>
 			<artifactId>browserstack-local-java</artifactId>
@@ -105,6 +105,12 @@
 			<artifactId>json</artifactId>
 			<version>20180813</version>
 		</dependency>
+		<dependency>
+			<groupId>org.testng</groupId>
+			<artifactId>testng</artifactId>
+			<version>7.1.0</version>
+			<scope>compile</scope>
+		</dependency>
 
 	</dependencies>
 
@@ -179,7 +185,7 @@
 				<configuration>
 					<!-- Suite testng xml file to consider for test execution -->
 					<suiteXmlFiles>
-						<suiteXmlFile>${project.build.directory}/test-classes/test_suites/${testSuiteXML}</suiteXmlFile>
+						<suiteXmlFile>${project.build.directory}/test-classes/testsuites/${testSuiteXML}</suiteXmlFile>
 					</suiteXmlFiles>
 <!--					<configuration>-->
 <!--						<properties>-->

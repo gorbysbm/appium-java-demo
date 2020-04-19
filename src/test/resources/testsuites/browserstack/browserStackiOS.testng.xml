@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="BrowserStack iOS" thread-count="2" parallel="tests">
+    <parameter name="deviceHost" value="browserStack"/>
 
     <test name="BS_iOS_iphone11pro Test">
         <parameter name="config" value="conf/browserstack/BS_iOS.conf.json"/>
@@ -10,9 +11,9 @@
                 <include name="functional"/>
             </run>
         </groups>
-        <packages>
-            <package name="automation.tests.*"></package>
-        </packages>
+        <classes>
+            <class name="automation.tests.ExperiBankTests1"></class>
+        </classes>
     </test>
 
 <!--    <test name="BS_Android_SamsungGalaxyS10e Test">-->

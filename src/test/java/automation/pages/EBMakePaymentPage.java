@@ -40,7 +40,6 @@ public class EBMakePaymentPage extends AppiumBaseDriver{
 	@iOSXCUITFindBy(id = "sendPaymentButton")
 	private WebElement sendPayment;
 
-
 	//////////////////////////////////Page Objects////////////////////////////////////
 
 	public EBMakePaymentPage() {
@@ -71,15 +70,19 @@ public class EBMakePaymentPage extends AppiumBaseDriver{
 	}
 
 	public void proceedWithPayment() {
-		if (isAndroidDriver()){
-			click(MobileBy.ByAndroidUIAutomator.AndroidUIAutomator("new UiSelector().text(\"Yes\")"));
-		}
+		WebElement el = findElementByText("Yes","name");
+		click(el);
 	}
 
  	public void verifyNewBalance(String amountSent){
-		String newBalance =new DecimalFormat("#.00").format(100 - Double.parseDouble(amountSent));
-		if (isAndroidDriver()){
-			waitForVisibilityOfElement(new MobileBy.ByAndroidUIAutomator("new UiSelector().textContains(\"Your balance is: "+newBalance+"$\")"));
+		String newBalance =new DecimalFormat("#.00").format(100 - Double.parseDouble(amountSent))+"$";
+		String balancePhrase = "Your balance is: "+newBalance;
+
+		if (isAndroidDriver()) {
+			findElementByText(balancePhrase, "");
+		} else {
+			findElementByText(newBalance, "name");
 		}
+
 	}
 }

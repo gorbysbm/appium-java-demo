@@ -33,7 +33,7 @@ public class HtmlReporter {
 			_report = createInstance(filename);
 
 		// Tests view
-		_report.setAnalysisStrategy(AnalysisStrategy.CLASS);
+		_report.setAnalysisStrategy(AnalysisStrategy.SUITE);
 		return _report;
 	}
 
@@ -68,7 +68,7 @@ public class HtmlReporter {
 
 		ExtentReports report = new ExtentReports();
 		report.attachReporter(htmlReporter);
-		report.setSystemInfo("Application", "Finstro Pay Automation Tests");
+		report.setSystemInfo("Application", "");
 
 		return report;
 	}

@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Local Android and Ios" parallel="tests" thread-count="3">
+    <listeners>
+        <listener class-name="automation.utility.RetryListener"/>
+    </listeners>
     <test name="Single Android Device Test">
         <parameter name="config" value="conf/local/localandroid.conf.json"/>
         <parameter name="environment" value="LocalAndroid"/>
-        <classes>
-            <class name="automation.samples.TipCalculatorTests"/>
-        </classes>
+        <!--        <classes>-->
+        <!--            <class name="automation.tests.ExperiBankTests"/>-->
+        <!--        </classes>-->
+        <groups>
+            <run>
+                <include name="functional"/>
+            </run>
+        </groups>
+        <packages>
+            <package name="automation.tests.*"></package>
+        </packages>
     </test>
 
 
@@ -14,7 +25,7 @@
         <parameter name="config" value="conf/local/localios.conf.json"/>
         <parameter name="environment" value="LocaliOS"/>
         <classes>
-            <class name="automation.samples.TipCalculatorTests"/>
+            <class name="automation.tests.ExperiBankTests1"/>
         </classes>
     </test>
 

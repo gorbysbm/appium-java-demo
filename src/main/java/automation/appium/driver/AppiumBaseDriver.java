@@ -26,6 +26,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
+import org.testng.annotations.Optional;
 
 public class AppiumBaseDriver {
 	protected Local browserStackLocal;
@@ -67,6 +68,20 @@ public class AppiumBaseDriver {
 			scrollObject.put("direction", "down");
 			driver.executeScript("mobile: scroll", scrollObject);
 			foundElement = ((IOSDriver) driver).findElementByIosNsPredicate(String.format("%s == '%s'",predicate, text));
+		}
+		return foundElement;
+	}
+
+	public WebElement findElementByText(String text, String predicate) {
+		WebElement foundElement = null;
+
+		if (isAndroidDriver()) {
+			String locator = String.format("new UiSelector().text(\"%s\")", text);
+			foundElement = waitForPresenceOfElement(MobileBy.AndroidUIAutomator(locator));
+		}
+		else if (isIOSDriver()) {
+			String locator =  String.format("%s == '%s'",predicate, text);
+			foundElement = waitForPresenceOfElement(MobileBy.iOSNsPredicateString(locator));
 		}
 		return foundElement;
 	}

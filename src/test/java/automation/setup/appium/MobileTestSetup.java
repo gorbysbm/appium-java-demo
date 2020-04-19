@@ -1,12 +1,14 @@
 package automation.setup.appium;
 
 import java.lang.reflect.Method;
+import java.sql.DriverManager;
 import java.util.HashMap;
 
 import automation.report.CaptureArtifact;
 import automation.utility.BrowserStackCapabilities;
 import com.browserstack.local.Local;
 import io.appium.java_client.AppiumDriver;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -44,8 +46,8 @@ public class MobileTestSetup{
 	}
 
 	@BeforeClass(alwaysRun = true)
-	public void beforeClass() throws Exception {
-		HtmlReporter.createTest(this.getClass().getSimpleName(), "");
+	public void beforeClass(ITestContext ctx) throws Exception {
+		HtmlReporter.createTest(ctx.getName()+" :: "+this.getClass().getSimpleName(), "");
 		Common.currentTest = this.getClass().getSimpleName();
 	}
 
@@ -54,43 +56,53 @@ public class MobileTestSetup{
 	public void beforeMethod(String configFile, String environment, Method method) throws Exception {
 		AppiumDriver driver = null;
 
-		HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName(), "");
 		driver = new AppiumHandler().startDriver(configFile, environment, method);
 		AppiumDriverManager.setDriver(driver);
+		HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName()+" :: "
+				+ AppiumDriverManager.getDriver().getSessionId().toString(), "");
 		HtmlReporter.info(">>Starting Appium session ID: "+ AppiumDriverManager.getDriver().getSessionId().toString()
 				+ " Test Name: " +method.getName());
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void afterMethod(ITestResult result) throws Exception {
-		//TODO: not yet working
-		BrowserStackCapabilities.markTests("failed");
-		String mess = "";
+	@org.testng.annotations.Parameters(value={"config", "environment"})
+	public void afterMethod(String configFile, String environment, ITestResult result) throws Exception {
+		String message = "";
 		try {
 			switch (result.getStatus()) {
 				case ITestResult.SUCCESS:
-					mess = String.format("The test [%s] is PASSED", result.getName());
-					HtmlReporter.pass(mess);
+					message = String.format(">>The test [%s]: PASSED for session: [%s]", result.getName(), AppiumDriverManager.getDriver().getSessionId().toString());
+					HtmlReporter.pass(message);
+					if(environment.startsWith("BS_")){
+						BrowserStackCapabilities bsCaps =new BrowserStackCapabilities();
+						bsCaps.markTests("passed",  "all good");
+					}
 					break;
 				case ITestResult.SKIP:
-					mess = String.format("The test [%s] is PASSED", result.getName());
-					HtmlReporter.pass(mess);
+					message = String.format(">>The test [%s]: was SKIPPED because of [%s]", result.getName(), result.getThrowable());
+					Log.info(message);
+					//HtmlReporter.skip(message, result.getThrowable(), CaptureArtifact.takeScreenshot(AppiumDriverManager.getDriver()));;
 					break;
 
 				case ITestResult.FAILURE:
-					mess = String.format("The test [%s] is FAILED", result.getName());
-					HtmlReporter.fail(mess, result.getThrowable(), CaptureArtifact.takeScreenshot(AppiumDriverManager.getDriver()));;
+					message = String.format(">>The test [%s]: FAILED for session: [%s]", result.getName(), AppiumDriverManager.getDriver().getSessionId().toString());
+					HtmlReporter.fail(message, result.getThrowable(), CaptureArtifact.takeScreenshot(AppiumDriverManager.getDriver()));;
+					if(environment.startsWith("BS_")){
+						BrowserStackCapabilities bsCaps =new BrowserStackCapabilities();
+						bsCaps.markTests("failed",  result.getThrowable().toString());
+					}
 					break;
 				default:
 					break;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
-
 
 		finally {
 			if (AppiumDriverManager.getDriver() != null){
-				Log.info(">>Ending Appium session ID: "+ AppiumDriverManager.getDriver().getSessionId().toString()
+				//				AppiumDriverManager.getDriver().getAllSessionDetails()
+				HtmlReporter.info(">>Ending Appium session ID: "+ AppiumDriverManager.getDriver().getSessionId().toString()
 						+ " Test Name: " +result.getName());
 				AppiumDriverManager.getDriver().quit();
 				//driver.resetApp();

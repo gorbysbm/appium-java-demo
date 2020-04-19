@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Local Android" parallel="tests" thread-count="3">
+    <listeners>
+        <listener class-name="automation.utility.RetryListener"/>
+    </listeners>
     <test name="Single Android Device Test">
         <parameter name="config" value="conf/local/localandroid.conf.json"/>
         <parameter name="environment" value="LocalAndroid"/>

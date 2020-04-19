@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import automation.report.HtmlReporter;
 import automation.utility.BrowserStackCapabilities;
 import com.browserstack.local.Local;
 import io.appium.java_client.AppiumDriver;
@@ -39,7 +40,7 @@ public class AppiumiOSDriver extends AppiumBaseDriver{
 			capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir")+"/apps/"
 					+ capabilities.getCapability("app"));
 			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, capabilities.getCapability("device"));
-			Log.info("Starting remote iOS driver for: " + capabilities.toString());
+			HtmlReporter.info(">>Starting Appium iOS driver for: " + capabilities.toString());
 			driver = new IOSDriver<>(new URL(config.get("server").toString()), capabilities);
 		}
 		//Set Browser Stack capabilities

@@ -2,6 +2,7 @@ package automation.utility;
 
 import automation.appium.driver.AppiumDriverManager;
 import automation.report.HtmlReporter;
+import automation.report.Log;
 import com.browserstack.local.Local;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -33,6 +34,9 @@ public class BrowserStackCapabilities {
         this.capabilities = capabilities;
     }
 
+    public BrowserStackCapabilities() {
+    }
+
     public String getUsername() {
         return username;
     }
@@ -57,7 +61,7 @@ public class BrowserStackCapabilities {
         }
 
         if (capabilities.getCapability("name").toString().isEmpty()){
-            capabilities.setCapability("name", method.getName());
+            capabilities.setCapability("name", method.getDeclaringClass().getSimpleName()+" :: " +method.getName());
         }
 
 //        if(capabilities.getCapability("browserstack.local") != null
@@ -70,16 +74,15 @@ public class BrowserStackCapabilities {
         return this;
     }
 
-    public static void markTests(String status) throws URISyntaxException, UnsupportedEncodingException, IOException {
+    public void markTests(String status, String reason) throws URISyntaxException, UnsupportedEncodingException, IOException {
         String sessionId = AppiumDriverManager.getDriver().getSessionId().toString();
-
-        URI uri = new URI("https://"+username+":"+accessKey+"@api.browserstack.com/automate/sessions/"+sessionId+".json");
-        HtmlReporter.info(">>uri for BS report: "+uri);
+        Log.info(">>Session id: "+sessionId);
+        URI uri = new URI("https://"+username+":"+accessKey+"@api-cloud.browserstack.com/app-automate/sessions/"+sessionId+".json");
         HttpPut putRequest = new HttpPut(uri);
 
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         nameValuePairs.add((new BasicNameValuePair("status", status)));
-        nameValuePairs.add((new BasicNameValuePair("reason", "")));
+        nameValuePairs.add((new BasicNameValuePair("reason", reason)));
         putRequest.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
         HttpClientBuilder.create().build().execute(putRequest);

@@ -6,11 +6,11 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import automation.appium.driver.AppiumBaseDriver;
-import automation.appium.driver.AppiumDriverManager;
+import automation.appium.driver.CreateDriver;
 
 public class EBMainMenuPage extends AppiumBaseDriver{
 
-	private AppiumDriver driver = AppiumDriverManager.getDriver();
+	private AppiumDriver driver =  CreateDriver.getInstance().getCurrentDriver();
 
 	@AndroidFindBy(id = "makePaymentButton")
 	//@iOSXCUITFindBy(accessibility = "Enter check amount")

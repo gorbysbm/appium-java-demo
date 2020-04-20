@@ -33,7 +33,7 @@ public class HtmlReporter {
 			_report = createInstance(filename);
 
 		// Tests view
-		_report.setAnalysisStrategy(AnalysisStrategy.SUITE);
+		_report.setAnalysisStrategy(AnalysisStrategy.CLASS);
 		return _report;
 	}
 

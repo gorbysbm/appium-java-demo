@@ -26,11 +26,10 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
-import org.testng.annotations.Optional;
 
 public class AppiumBaseDriver {
 	protected Local browserStackLocal;
-	protected AppiumDriver driver = AppiumDriverManager.getDriver();
+	protected AppiumDriver driver = CreateDriver.getInstance().getCurrentDriver();
 	private WebDriverWait wait;
 	int EXPLICIT_WAIT_TIMEOUT = 6;
 

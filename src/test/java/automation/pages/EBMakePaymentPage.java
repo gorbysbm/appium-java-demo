@@ -1,20 +1,19 @@
 package automation.pages;
 
 import io.appium.java_client.AppiumDriver;
-import io.appium.java_client.MobileBy;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import automation.appium.driver.AppiumBaseDriver;
-import automation.appium.driver.AppiumDriverManager;
+import automation.appium.driver.CreateDriver;
 
 import java.text.DecimalFormat;
 
 public class EBMakePaymentPage extends AppiumBaseDriver{
 
-	private AppiumDriver driver = AppiumDriverManager.getDriver();
+	private AppiumDriver driver =  CreateDriver.getInstance().getCurrentDriver();
 
 	@AndroidFindBy(id = "phoneTextField")
 	@iOSXCUITFindBy(id = "phoneTextField")

@@ -1,7 +1,6 @@
 package automation.setup.appium;
 
 import java.lang.reflect.Method;
-import java.sql.DriverManager;
 import java.util.HashMap;
 
 import automation.report.CaptureArtifact;
@@ -17,7 +16,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 
-import automation.appium.driver.AppiumDriverManager;
+import automation.appium.driver.CreateDriver;
 import automation.appium.driver.AppiumHandler;
 import automation.excelhelper.ExcelHelper;
 import automation.report.HtmlReporter;
@@ -57,10 +56,11 @@ public class MobileTestSetup{
 		AppiumDriver driver = null;
 
 		driver = new AppiumHandler().startDriver(configFile, environment, method);
-		AppiumDriverManager.setDriver(driver);
+		CreateDriver.getInstance().setDriver(driver);
+		
 		HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName()+" :: "
-				+ AppiumDriverManager.getDriver().getSessionId().toString(), "");
-		HtmlReporter.info(">>Starting Appium session ID: "+ AppiumDriverManager.getDriver().getSessionId().toString()
+				+ CreateDriver.getInstance().getSessionID(), "");
+		HtmlReporter.info(">>Starting session ID: "+ CreateDriver.getInstance().getSessionID()
 				+ " Test Name: " +method.getName());
 	}
 
@@ -71,11 +71,11 @@ public class MobileTestSetup{
 		try {
 			switch (result.getStatus()) {
 				case ITestResult.SUCCESS:
-					message = String.format(">>The test [%s]: PASSED for session: [%s]", result.getName(), AppiumDriverManager.getDriver().getSessionId().toString());
+					message = String.format(">>The test [%s]: PASSED for session: %s", result.getName(), CreateDriver.getInstance().getSessionID());
 					HtmlReporter.pass(message);
 					if(environment.startsWith("BS_")){
-						BrowserStackCapabilities bsCaps =new BrowserStackCapabilities();
-						bsCaps.markTests("passed",  "all good");
+						BrowserStackCapabilities bsCaps = new BrowserStackCapabilities();
+						bsCaps.markTests("passed",  "all good", CreateDriver.getInstance().getSessionID());
 					}
 					break;
 				case ITestResult.SKIP:
@@ -85,11 +85,11 @@ public class MobileTestSetup{
 					break;
 
 				case ITestResult.FAILURE:
-					message = String.format(">>The test [%s]: FAILED for session: [%s]", result.getName(), AppiumDriverManager.getDriver().getSessionId().toString());
-					HtmlReporter.fail(message, result.getThrowable(), CaptureArtifact.takeScreenshot(AppiumDriverManager.getDriver()));;
+					message = String.format(">>The test [%s]: FAILED for session: [%s]", result.getName(), CreateDriver.getInstance().getSessionID().toString());
+					HtmlReporter.fail(message, result.getThrowable(), CaptureArtifact.takeScreenshot(CreateDriver.getInstance().getCurrentDriver()));;
 					if(environment.startsWith("BS_")){
 						BrowserStackCapabilities bsCaps =new BrowserStackCapabilities();
-						bsCaps.markTests("failed",  result.getThrowable().toString());
+						bsCaps.markTests("failed",  result.getThrowable().toString(), CreateDriver.getInstance().getSessionID() );
 					}
 					break;
 				default:
@@ -100,11 +100,10 @@ public class MobileTestSetup{
 		}
 
 		finally {
-			if (AppiumDriverManager.getDriver() != null){
-				//				AppiumDriverManager.getDriver().getAllSessionDetails()
-				HtmlReporter.info(">>Ending Appium session ID: "+ AppiumDriverManager.getDriver().getSessionId().toString()
+			if (CreateDriver.getInstance().getCurrentDriver() != null){
+				HtmlReporter.info(">>Ending session ID: "+ CreateDriver.getInstance().getSessionID()
 						+ " Test Name: " +result.getName());
-				AppiumDriverManager.getDriver().quit();
+				CreateDriver.getInstance().getCurrentDriver().quit();
 				//driver.resetApp();
 			}
 		}
@@ -118,8 +117,8 @@ public class MobileTestSetup{
 	@AfterSuite(alwaysRun = true)
 	public void afterSuite() throws Exception {
 		HtmlReporter.flush();
-		if (AppiumDriverManager.getDriver() != null){
-			AppiumDriverManager.getDriver().quit();
+		if (CreateDriver.getInstance().getCurrentDriver() != null){
+			CreateDriver.getInstance().getCurrentDriver().quit();
 		}
 	}
 }

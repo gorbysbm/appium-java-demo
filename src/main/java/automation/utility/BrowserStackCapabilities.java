@@ -1,9 +1,7 @@
 package automation.utility;
 
-import automation.appium.driver.AppiumDriverManager;
-import automation.report.HtmlReporter;
+import automation.appium.driver.CreateDriver;
 import automation.report.Log;
-import com.browserstack.local.Local;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPut;
@@ -18,8 +16,6 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class BrowserStackCapabilities {
     private Method method;
@@ -74,8 +70,7 @@ public class BrowserStackCapabilities {
         return this;
     }
 
-    public void markTests(String status, String reason) throws URISyntaxException, UnsupportedEncodingException, IOException {
-        String sessionId = AppiumDriverManager.getDriver().getSessionId().toString();
+    public void markTests(String status, String reason, String sessionId) throws URISyntaxException, UnsupportedEncodingException, IOException {
         Log.info(">>Session id: "+sessionId);
         URI uri = new URI("https://"+username+":"+accessKey+"@api-cloud.browserstack.com/app-automate/sessions/"+sessionId+".json");
         HttpPut putRequest = new HttpPut(uri);

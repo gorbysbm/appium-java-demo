@@ -5,6 +5,7 @@ import io.appium.java_client.AppiumDriver;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
@@ -26,7 +27,7 @@ public class CaptureArtifact {
      *         report.html
      * @throws Exception
      */
-    public static String takeScreenshot(AppiumDriver driver) throws Exception {
+    public static String takeScreenshot(WebDriver driver) throws Exception {
 
         String failureImageFileName = new SimpleDateFormat("MM-dd-yyyy_HH-mm-ss.SSS")
                 .format(new GregorianCalendar().getTime()) + ".jpg";

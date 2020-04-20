@@ -17,7 +17,6 @@
 		<jdk.level>1.8</jdk.level>
 		<!-- Dependencies version -->
 		<log4j-version>2.13.1</log4j-version>
-		<extent-report-version>3.0.6</extent-report-version>
 		<poi-version>3.13</poi-version>
 		<ru.yandex.qatools.ashot>1.5.3</ru.yandex.qatools.ashot>
 	</properties>
@@ -62,7 +61,7 @@
 		<dependency>
 			<groupId>com.aventstack</groupId>
 			<artifactId>extentreports</artifactId>
-			<version>${extent-report-version}</version>
+			<version>3.1.5</version>
 		</dependency>
 
 		<!-- POI -->

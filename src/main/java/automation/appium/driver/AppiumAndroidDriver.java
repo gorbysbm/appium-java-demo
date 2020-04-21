@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import automation.report.Log;
+import org.testng.ITestContext;
 
 import java.io.FileReader;
 import java.lang.reflect.Method;
@@ -21,7 +22,7 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 
 	public AppiumAndroidDriver() {}
 
-	public AppiumDriver createDriverWithCapabilities(String configFile, String environment, Method method) throws Exception {
+	public AppiumDriver createDriverWithCapabilities(String configFile, String environment, Method method, ITestContext context) throws Exception {
 		JSONParser parser = new JSONParser();
 		JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/" + configFile));
 		DesiredCapabilities capabilities = getDesiredCapabilities(environment, config);
@@ -35,7 +36,7 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 		}
 		//Set Browser Stack capabilities
 		else if (environment.contains("BS_Android")){
-			BrowserStackCapabilities browserStackCapabilities = new BrowserStackCapabilities(method, config, capabilities).invoke();
+			BrowserStackCapabilities browserStackCapabilities = new BrowserStackCapabilities(method, config, capabilities, context).invoke();
 			String username = browserStackCapabilities.getUsername();
 			String accessKey = browserStackCapabilities.getAccessKey();
 

@@ -50,7 +50,7 @@ public class CreateDriver {
         return  mobileDriver.get();
     }
 
-    //TODO: This is only set up to support Appium at this moment, not yet Selenium
+    //TODO: This is only set up to support Appium at this moment, not yet Webdriver
     public AppiumDriver getCurrentDriver(){
         return  getInstance().getDriver(true);
     }

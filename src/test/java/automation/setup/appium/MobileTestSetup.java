@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import automation.report.CaptureArtifact;
 import automation.utility.BrowserStackCapabilities;
+import automation.utility.StringUtilities;
 import com.browserstack.local.Local;
 import io.appium.java_client.AppiumDriver;
 import org.testng.ITestContext;
@@ -38,7 +39,7 @@ public class MobileTestSetup{
 	public HashMap<String, String> deviceInfo;
 
 	@BeforeSuite(alwaysRun = true)
-	public void beforeSuite() throws Exception {
+	public void beforeSuite(ITestContext context) throws Exception {
 		/*********** Init Html reporter *************************/
 		FilePaths.initReportFolder();
 		HtmlReporter.setReporter(FilePaths.getReportFilePath());
@@ -52,10 +53,10 @@ public class MobileTestSetup{
 
 	@BeforeMethod(alwaysRun=true)
 	@org.testng.annotations.Parameters(value={"config", "environment"})
-	public void beforeMethod(String configFile, String environment, Method method) throws Exception {
+	public void beforeMethod(String configFile, String environment, Method method, ITestContext context) throws Exception {
 		AppiumDriver driver = null;
 
-		driver = new AppiumHandler().startDriver(configFile, environment, method);
+		driver = new AppiumHandler().startDriver(configFile, environment, method, context);
 		CreateDriver.getInstance().setDriver(driver);
 		
 		HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName()+" :: "
@@ -75,7 +76,7 @@ public class MobileTestSetup{
 					HtmlReporter.pass(message);
 					if(environment.startsWith("BS_")){
 						BrowserStackCapabilities bsCaps = new BrowserStackCapabilities();
-						bsCaps.markTests("passed",  "all good", CreateDriver.getInstance().getSessionID());
+						bsCaps.markTests("passed",  "all good", CreateDriver.getInstance().getSessionID(), result);
 					}
 					break;
 				case ITestResult.SKIP:
@@ -88,8 +89,8 @@ public class MobileTestSetup{
 					message = String.format(">>The test [%s]: FAILED for session: [%s]", result.getName(), CreateDriver.getInstance().getSessionID().toString());
 					HtmlReporter.fail(message, result.getThrowable(), CaptureArtifact.takeScreenshot(CreateDriver.getInstance().getCurrentDriver()));;
 					if(environment.startsWith("BS_")){
-						BrowserStackCapabilities bsCaps =new BrowserStackCapabilities();
-						bsCaps.markTests("failed",  result.getThrowable().toString(), CreateDriver.getInstance().getSessionID() );
+						BrowserStackCapabilities bsCaps = new BrowserStackCapabilities();
+						bsCaps.markTests("failed",  result.getThrowable().toString(), CreateDriver.getInstance().getSessionID(), result );
 					}
 					break;
 				default:

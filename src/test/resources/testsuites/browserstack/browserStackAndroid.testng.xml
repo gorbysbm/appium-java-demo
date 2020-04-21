@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="BrowserStack Android" thread-count="2" parallel="tests">
-
+    <listeners>
+        <listener class-name="automation.utility.RetryListener"/>
+    </listeners>
     <test name="BS_Android_pixel3 Test1">
         <parameter name="config" value="conf/browserstack/BS_Android.conf.json"/>
 <!--        <parameter name="environment" value="BS_Android_SamsungGalaxyS10e"/>-->
@@ -26,7 +28,7 @@
             </run>
         </groups>
         <classes>
-            <class name="automation.tests.ExperiBankTests2"/>
+            <class name="automation.tests.ExperiBankTests1"/>
         </classes>
     </test>
 

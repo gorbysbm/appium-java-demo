@@ -19,6 +19,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import automation.report.Log;
+import org.testng.ITestContext;
 
 public class AppiumiOSDriver extends AppiumBaseDriver{
 
@@ -31,7 +32,7 @@ public class AppiumiOSDriver extends AppiumBaseDriver{
 	public AppiumiOSDriver() throws Exception {
 	}
 
-	public AppiumDriver createDriverWithCapabilities(String config_file, String environment, Method method) throws Exception {
+	public AppiumDriver createDriverWithCapabilities(String config_file, String environment, Method method, ITestContext context) throws Exception {
 		JSONParser parser = new JSONParser();
 		JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/" + config_file));
 		DesiredCapabilities capabilities = getDesiredCapabilities(environment, config);
@@ -45,7 +46,7 @@ public class AppiumiOSDriver extends AppiumBaseDriver{
 		}
 		//Set Browser Stack capabilities
 		else if (environment.contains("BS_iOS")){
-			BrowserStackCapabilities browserStackCapabilities = new BrowserStackCapabilities(method, config, capabilities).invoke();
+			BrowserStackCapabilities browserStackCapabilities = new BrowserStackCapabilities(method, config, capabilities, context).invoke();
 			String username = browserStackCapabilities.getUsername();
 			String accessKey = browserStackCapabilities.getAccessKey();
 

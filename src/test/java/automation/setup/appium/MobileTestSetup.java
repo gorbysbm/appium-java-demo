@@ -82,11 +82,11 @@ public class MobileTestSetup{
 				case ITestResult.SKIP:
 					message = String.format(">>The test [%s]: was SKIPPED because of [%s]", result.getName(), result.getThrowable());
 					Log.info(message);
-					//HtmlReporter.skip(message, result.getThrowable(), CaptureArtifact.takeScreenshot(AppiumDriverManager.getDriver()));;
+					HtmlReporter.skip(message, result.getThrowable(), CaptureArtifact.takeScreenshot(CreateDriver.getInstance().getCurrentDriver()));;
 					break;
 
 				case ITestResult.FAILURE:
-					message = String.format(">>The test [%s]: FAILED for session: [%s]", result.getName(), CreateDriver.getInstance().getSessionID().toString());
+					message = String.format(">>The test [%s]: FAILED for session: [%s]", result.getName(), CreateDriver.getInstance().getSessionID());
 					HtmlReporter.fail(message, result.getThrowable(), CaptureArtifact.takeScreenshot(CreateDriver.getInstance().getCurrentDriver()));;
 					if(environment.startsWith("BS_")){
 						BrowserStackCapabilities bsCaps = new BrowserStackCapabilities();

@@ -1,6 +1,8 @@
 package automation.tests;
 
+import automation.report.Log;
 import org.junit.Ignore;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import automation.pages.EBLoginPage;
@@ -25,6 +27,24 @@ public class ExperiBankTests1 extends MobileTestSetup {
 	}
 
 	@Test(invocationCount = 1, groups = {"functional"})
+	public void EB1coinFlip1() throws Exception {
+		ebLoginPage.login("company","company");
+		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
+	}
+	@Test(invocationCount = 1, groups = {"functional"})
+	public void EB1coinFlip2() throws Exception {
+		ebLoginPage.login("company","company");
+		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
+	}
+	@Test(invocationCount = 0, groups = {"functional"})
+	public void EB1coinFlip3() throws Exception {
+		ebLoginPage.login("company","company");
+		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
+	}
+
+
+
+	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1payBillTest1() throws Exception {
 		String payment = generateRandomAmount();
 
@@ -39,7 +59,7 @@ public class ExperiBankTests1 extends MobileTestSetup {
 		ebMakePaymentPage.verifyNewBalance(payment);
 	}
 
-	@Test(invocationCount = 1, groups = {"functional"})
+	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1payBillTest2() throws Exception {
 		String payment = generateRandomAmount();
 
@@ -79,4 +99,13 @@ public class ExperiBankTests1 extends MobileTestSetup {
 		return result;
 	}
 
+	private String coinFlip(){
+		if (Math.random() < 0.5){
+			Log.info("**Heads");
+			return "Heads";
+		}else{
+			Log.info("**Tails");
+			return "Tails";
+		}
+	}
 }

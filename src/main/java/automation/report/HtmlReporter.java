@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 
+import com.aventstack.extentreports.reporter.ExtentSparkReporter;
 import org.apache.commons.io.IOUtils;
 
 import com.aventstack.extentreports.AnalysisStrategy;
@@ -13,8 +14,6 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.markuputils.ExtentColor;
 import com.aventstack.extentreports.markuputils.MarkupHelper;
-import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.aventstack.extentreports.reporter.configuration.ChartLocation;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import automation.utility.Common;
@@ -47,9 +46,7 @@ public class HtmlReporter {
 	 */
 	public static ExtentReports createInstance(String fileName) throws IOException {
 
-		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(fileName);
-		htmlReporter.config().setTestViewChartLocation(ChartLocation.BOTTOM);
-		htmlReporter.config().setChartVisibilityOnOpen(false);
+        ExtentSparkReporter htmlReporter = new ExtentSparkReporter(fileName);
 		htmlReporter.config().setTheme(Theme.STANDARD);
 		htmlReporter.config().setDocumentTitle(fileName);
 		htmlReporter.config().setEncoding("utf-8");
@@ -64,7 +61,7 @@ public class HtmlReporter {
 		htmlReporter.config().setCSS(cssCode);
 		// end
 
-		htmlReporter.setAppendExisting(false);
+		//htmlReporter.setAppendExisting(false);
 
 		ExtentReports report = new ExtentReports();
 		report.attachReporter(htmlReporter);
@@ -105,10 +102,7 @@ public class HtmlReporter {
 	/**
 	 * To Create an ExtentTest session
 	 * 
-	 * @param strTestMethodName
-	 *            The method name
-	 * @param strTestMethodDesc
-	 *            The method description
+	 *
 	 * @return ExtentTest session
 	 */
 	public static synchronized ExtentTest createTest(String strTestClassName) {
@@ -125,7 +119,7 @@ public class HtmlReporter {
 	 *            The method name
 	 * @param strTestMethodDesc
 	 *            The method description
-	 * @param strNodeName
+	 *
 	 *            The node name
 	 * @return ExtentTest session
 	 */

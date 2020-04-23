@@ -26,12 +26,12 @@ public class ExperiBankTests2 extends MobileTestSetup {
 	}
 
 	@Test(invocationCount = 1, groups = {"functional"})
-	public void EB1coinFlip1() throws Exception {
+	public void EB2coinFlip1() throws Exception {
 		ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 	@Test(invocationCount = 1, groups = {"functional"})
-	public void EB1coinFlip2() throws Exception {
+	public void EB2coinFlip2() throws Exception {
 		ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}

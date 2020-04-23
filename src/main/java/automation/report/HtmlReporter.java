@@ -19,6 +19,9 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 import automation.utility.Common;
 import automation.utility.FilePaths;
 
+/**
+ * For documentation and extending the features: https://extentreports.com/docs/versions/4/java/
+ */
 public class HtmlReporter {
 
 	private static ExtentReports _report;
@@ -182,6 +185,21 @@ public class HtmlReporter {
 			return getNode();
 		}
 	}
+
+	/**
+	 * To remove the current node
+	 */
+	public static synchronized void removeCurrentNode() {
+		_report.removeTest(getNode());
+	}
+
+	/**
+	 * To remove the current test
+	 */
+	public static synchronized void removeCurrentTest() {
+		_report.removeTest(getTest());
+	}
+
 
 	/**
 	 * To write a passed step to report

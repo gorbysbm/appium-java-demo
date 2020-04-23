@@ -59,7 +59,7 @@ public class CreateDriver {
         return sessionBrowser.get();
     }
 
-    public  String getSessionID(){
+    public  String getSessionId(){
         return sessionID.get();
     }
 

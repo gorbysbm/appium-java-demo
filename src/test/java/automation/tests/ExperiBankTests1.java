@@ -44,7 +44,7 @@ public class ExperiBankTests1 extends MobileTestSetup {
 
 
 
-	@Test(invocationCount = 0, groups = {"functional"})
+	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1payBillTest1() throws Exception {
 		String payment = generateRandomAmount();
 

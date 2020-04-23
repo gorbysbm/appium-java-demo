@@ -13,8 +13,18 @@
             </run>
         </groups>
         <classes>
-            <class name="automation.tests.ExperiBankTests1"/>
+            <class name="automation.tests.CoinFlipTests1"/>
             <!--            <class name="automation.tests.ExperiBankTests2"/>-->
         </classes>
     </test>
+
+    <test name="Single iOS Device">
+        <parameter name="config" value="conf/local/localios.conf.json"/>
+        <parameter name="environment" value="LocaliOS"/>
+        <classes>
+            <class name="automation.tests.CoinFlipTests1"/>
+        </classes>
+    </test>
+
+
 </suite>

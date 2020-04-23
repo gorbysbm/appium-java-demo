@@ -10,10 +10,8 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Method;
-import java.text.DecimalFormat;
-import java.util.Random;
 
-public class CoinFlipTests1 extends MobileTestSetup {
+public class CoinFlipTests2 extends MobileTestSetup {
 	EBLoginPage ebLoginPage;
 	EBMainMenuPage ebMainMenuPage;
 	EBMakePaymentPage ebMakePaymentPage;
@@ -27,17 +25,17 @@ public class CoinFlipTests1 extends MobileTestSetup {
 	}
 
 	@Test(invocationCount = 1, groups = {"functional"})
-	public void EB1coinFlip1() throws Exception {
+	public void EB2coinFlip1() throws Exception {
 		//ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 	@Test(invocationCount = 1, groups = {"functional"})
-	public void EB1coinFlip2() throws Exception {
+	public void EB2coinFlip2() throws Exception {
 		//ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 	@Test(invocationCount = 0, groups = {"functional"})
-	public void EB1coinFlip3() throws Exception {
+	public void EB2coinFlip3() throws Exception {
 		//ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}

@@ -4,10 +4,10 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 
 import automation.report.CaptureArtifact;
+import automation.report.Log;
 import automation.utility.BrowserStackCapabilities;
-import automation.utility.StringUtilities;
-import com.browserstack.local.Local;
 import io.appium.java_client.AppiumDriver;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
@@ -21,11 +21,21 @@ import automation.appium.driver.CreateDriver;
 import automation.appium.driver.AppiumHandler;
 import automation.excelhelper.ExcelHelper;
 import automation.report.HtmlReporter;
-import automation.report.Log;
 import automation.utility.Common;
 import automation.utility.FilePaths;
+import org.testng.xml.XmlTest;
 
 public class MobileTestSetup{
+
+	public Exception getExecutionException() {
+		return executionException;
+	}
+
+	public void setExecutionException(Exception executionException) {
+		this.executionException = executionException;
+	}
+
+	private Exception executionException;
 
 	public Object[][] getTestProvider(String filepPath, String sheetName) throws Exception {
 		// return the data from excel file
@@ -33,13 +43,11 @@ public class MobileTestSetup{
 		return data;
 	}
 
-	// Web driver
-	protected Local browserStackLocal;
 	// hashmap contains device infor like: platform, deviceName, uuid, browser...... etc
 	public HashMap<String, String> deviceInfo;
 
 	@BeforeSuite(alwaysRun = true)
-	public void beforeSuite(ITestContext context) throws Exception {
+	public void beforeSuite(ITestContext ctx) throws Exception {
 		/*********** Init Html reporter *************************/
 		FilePaths.initReportFolder();
 		HtmlReporter.setReporter(FilePaths.getReportFilePath());
@@ -53,47 +61,57 @@ public class MobileTestSetup{
 
 	@BeforeMethod(alwaysRun=true)
 	@org.testng.annotations.Parameters(value={"config", "environment"})
-	public void beforeMethod(String configFile, String environment, Method method, ITestContext context) throws Exception {
-		AppiumDriver driver = null;
+	public void beforeMethod(String configFile, String environment, Method method, ITestContext ctx) throws Exception {
+		try {
+			AppiumDriver driver = new AppiumHandler().startDriver(configFile, environment, method, ctx);
+			CreateDriver.getInstance().setDriver(driver);
+		} catch (Exception e) {
+			setExecutionException(e);
+		}
+		if(this.executionException != null){
+			HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName(), "");
+			throw new SessionNotCreatedException(getExecutionException().toString());
+		} else{
+			HtmlReporter.createNode(this.getClass().getSimpleName(),
+					method.getName()+ " :: " + CreateDriver.getInstance().getSessionId(), "");
+			HtmlReporter.info(">>STARTING TEST: " + ctx.getName()+"::"+this.getClass().getSimpleName()+":"
+					+method.getName() + " session ID: "+ CreateDriver.getInstance().getSessionId());
+		}
 
-		driver = new AppiumHandler().startDriver(configFile, environment, method, context);
-		CreateDriver.getInstance().setDriver(driver);
-		
-		HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName()+" :: "
-				+ CreateDriver.getInstance().getSessionID(), "");
-		HtmlReporter.info(">>Starting session ID: "+ CreateDriver.getInstance().getSessionID()
-				+ " Test Name: " +method.getName());
 	}
 
 	@AfterMethod(alwaysRun = true)
 	@org.testng.annotations.Parameters(value={"config", "environment"})
-	public void afterMethod(String configFile, String environment, ITestResult result) throws Exception {
+	public void afterMethod(String configFile, String environment, ITestResult result, ITestContext ctx) throws Exception {
+		XmlTest testInfo = ctx.getCurrentXmlTest();
 		String message = "";
 		try {
 			switch (result.getStatus()) {
 				case ITestResult.SUCCESS:
-					message = String.format(">>The test [%s]: PASSED for session: %s", result.getName(), CreateDriver.getInstance().getSessionID());
+					message = String.format(">>The test [%s] [%s]: PASSED for session: %s", testInfo.getName(), result.getName(), CreateDriver.getInstance().getSessionId());
 					HtmlReporter.pass(message);
 					if(environment.startsWith("BS_")){
 						BrowserStackCapabilities bsCaps = new BrowserStackCapabilities();
-						bsCaps.markTests("passed",  "all good", CreateDriver.getInstance().getSessionID(), result);
+						bsCaps.markTests("passed",  "all good", CreateDriver.getInstance().getSessionId(), result);
 					}
 					break;
 				case ITestResult.SKIP:
-					message = String.format(">>The test [%s]: was SKIPPED because of [%s]", result.getName(), result.getThrowable());
+					message = String.format(">>The test [%s] [%s]: SKIPPED for session: %s", testInfo.getName(), result.getName(), CreateDriver.getInstance().getSessionId(), result.getThrowable());
 					Log.info(message);
-					HtmlReporter.skip(message, result.getThrowable(), CaptureArtifact.takeScreenshot(CreateDriver.getInstance().getCurrentDriver()));;
+					HtmlReporter.removeCurrentNode();
 					break;
 
 				case ITestResult.FAILURE:
-					message = String.format(">>The test [%s]: FAILED for session: [%s]", result.getName(), CreateDriver.getInstance().getSessionID());
+					message = String.format(">>The test [%s] [%s]: FAILED for session: %s", testInfo.getName(), result.getName(), CreateDriver.getInstance().getSessionId());
 					HtmlReporter.fail(message, result.getThrowable(), CaptureArtifact.takeScreenshot(CreateDriver.getInstance().getCurrentDriver()));;
 					if(environment.startsWith("BS_")){
 						BrowserStackCapabilities bsCaps = new BrowserStackCapabilities();
-						bsCaps.markTests("failed",  result.getThrowable().toString(), CreateDriver.getInstance().getSessionID(), result );
+						bsCaps.markTests("failed",  result.getThrowable().toString(), CreateDriver.getInstance().getSessionId(), result );
 					}
 					break;
 				default:
+					message = String.format(">>The test [%s] [%s]: did not get executed or get a status due to: %s ", testInfo.getName(), result.getName(), result.getThrowable());
+					HtmlReporter.fail(message);
 					break;
 			}
 		} catch (Exception e) {
@@ -102,7 +120,7 @@ public class MobileTestSetup{
 
 		finally {
 			if (CreateDriver.getInstance().getCurrentDriver() != null){
-				HtmlReporter.info(">>Ending session ID: "+ CreateDriver.getInstance().getSessionID()
+				HtmlReporter.info(">>Ending session ID: "+ CreateDriver.getInstance().getSessionId()
 						+ " Test Name: " +result.getName());
 				CreateDriver.getInstance().getCurrentDriver().quit();
 				//driver.resetApp();

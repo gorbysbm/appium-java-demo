@@ -11,7 +11,7 @@ import automation.appium.driver.CreateDriver;
 
 public class EBLoginPage extends AppiumBaseDriver{
 
-	private AppiumDriver driver = CreateDriver.getInstance().getCurrentDriver();
+	private AppiumDriver driver = CreateDriver.getInstance().getCurrentMobileDriver();
 
 	@AndroidFindBy(id = "usernameTextField")
 	@iOSXCUITFindBy(id = "usernameTextField")

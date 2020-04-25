@@ -29,7 +29,7 @@ import io.appium.java_client.touch.offset.PointOption;
 
 public class AppiumBaseDriver {
 	protected Local browserStackLocal;
-	protected AppiumDriver driver = CreateDriver.getInstance().getCurrentDriver();
+	protected AppiumDriver driver = CreateDriver.getInstance().getCurrentMobileDriver();
 	private WebDriverWait wait;
 	int EXPLICIT_WAIT_TIMEOUT = 6;
 

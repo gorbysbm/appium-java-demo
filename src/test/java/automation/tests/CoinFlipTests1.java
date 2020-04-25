@@ -36,7 +36,7 @@ public class CoinFlipTests1 extends MobileTestSetup {
 		//ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
-	@Test(invocationCount = 0, groups = {"functional"})
+	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1coinFlip3() throws Exception {
 		//ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));

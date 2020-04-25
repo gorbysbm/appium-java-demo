@@ -13,7 +13,7 @@ import java.text.DecimalFormat;
 
 public class EBMakePaymentPage extends AppiumBaseDriver{
 
-	private AppiumDriver driver =  CreateDriver.getInstance().getCurrentDriver();
+	private AppiumDriver driver =  CreateDriver.getInstance().getCurrentMobileDriver();
 
 	@AndroidFindBy(id = "phoneTextField")
 	@iOSXCUITFindBy(id = "phoneTextField")

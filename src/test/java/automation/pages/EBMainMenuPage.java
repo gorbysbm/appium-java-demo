@@ -10,7 +10,7 @@ import automation.appium.driver.CreateDriver;
 
 public class EBMainMenuPage extends AppiumBaseDriver{
 
-	private AppiumDriver driver =  CreateDriver.getInstance().getCurrentDriver();
+	private AppiumDriver driver =  CreateDriver.getInstance().getCurrentMobileDriver();
 
 	@AndroidFindBy(id = "makePaymentButton")
 	//@iOSXCUITFindBy(accessibility = "Enter check amount")

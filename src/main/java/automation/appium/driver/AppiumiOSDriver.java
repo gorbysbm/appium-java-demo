@@ -41,7 +41,6 @@ public class AppiumiOSDriver extends AppiumBaseDriver{
 			capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir")+"/apps/"
 					+ capabilities.getCapability("app"));
 			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, capabilities.getCapability("device"));
-			HtmlReporter.info(">>Starting Appium iOS driver for: " + capabilities.toString());
 			driver = new IOSDriver<>(new URL(config.get("server").toString()), capabilities);
 		}
 		//Set Browser Stack capabilities

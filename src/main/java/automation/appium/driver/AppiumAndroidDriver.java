@@ -31,7 +31,6 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 			capabilities.setCapability(MobileCapabilityType.APP, System.getProperty("user.dir")+"/apps/"
 					+ capabilities.getCapability("app"));
 			capabilities.setCapability(MobileCapabilityType.DEVICE_NAME, capabilities.getCapability("device"));
-			HtmlReporter.info(">>Starting Appium Android driver for: " + capabilities.toString());
 			driver = new AndroidDriver<>(new URL(config.get("server").toString()), capabilities);
 		}
 		//Set Browser Stack capabilities

@@ -29,13 +29,13 @@ public class HtmlReporter {
 
 	private static HashMap<String, ExtentTest> extentTestMap = new HashMap<String, ExtentTest>();
 
-	public static ExtentReports setReporter(String filename) throws IOException {
+	public static ExtentReports setReporter(String filename, AnalysisStrategy analysisStrategy) throws IOException {
 
 		if (_report == null)
 			_report = createInstance(filename);
 
 		// Tests view
-		_report.setAnalysisStrategy(AnalysisStrategy.CLASS);
+		_report.setAnalysisStrategy(analysisStrategy);
 		return _report;
 	}
 

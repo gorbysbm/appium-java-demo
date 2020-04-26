@@ -36,7 +36,7 @@ public class ExperiBankTests2 extends MobileTestSetup {
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 
-	@Test(invocationCount = 0, groups = {"functional"})
+	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB2payBillTest1() throws Exception {
 		String payment = generateRandomAmount();
 
@@ -52,7 +52,7 @@ public class ExperiBankTests2 extends MobileTestSetup {
 	}
 
 	@Test(invocationCount = 0, groups = {"functional"})
-	public void EB2payBillTest2() throws Exception {
+	public void EB2payBillTest2ShouldFail() throws Exception {
 		String payment = generateRandomAmount();
 
 		ebLoginPage.login("company","company");

@@ -4,7 +4,7 @@
   "key": "BROWSERSTACK_ACCESS_KEY",
 
   "capabilities": {
-    "build": "iOS build",
+    "build": "",
     "name": "",
     "browserstack.debug": true,
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Local Android" parallel="tests" thread-count="3" configfailurepolicy="continue">
+
+
+    <listeners>
+<!--        <listener class-name="automation.utility.RetryListener"/>-->
+    </listeners>
+    <test name="Single Android Device Test">
+<!--        <parameter name="config" value="conf/local/localandroid.conf.json"/>-->
+<!--        <parameter name="environment" value="LocalAndroid"/>-->
+        <groups>
+            <run>
+                <include name="functional"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="automation.tests.TestNGDebugTests1"/>
+            <!--            <class name="automation.tests.ExperiBankTests2"/>-->
+        </classes>
+    </test>
+
+<!--    <test name="Single iOS Device">-->
+<!--        <parameter name="config" value="conf/local/localios.conf.json"/>-->
+<!--        <parameter name="environment" value="LocaliOS"/>-->
+<!--        <classes>-->
+<!--            <class name="automation.tests.CoinFlipTests1"/>-->
+<!--        </classes>-->
+<!--    </test>-->
+
+
+</suite>

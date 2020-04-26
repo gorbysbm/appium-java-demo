@@ -10,6 +10,8 @@ import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.SkipException;
+import org.testng.TestException;
 import org.testng.annotations.*;
 
 import automation.appium.driver.CreateDriver;
@@ -51,8 +53,8 @@ public class MobileTestSetup{
 			CreateDriver.getInstance().setDriver(driver);
 		} catch (Exception e) {
 			HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName(), "");
-			HtmlReporter.fail(">>FAILED to create Appium driver with capabilities: ");
-			throw new SessionNotCreatedException(e.toString());
+			HtmlReporter.fail(">>FAILED to create Appium driver. Ending Test. Error was "+ e);
+			throw new TestException(e.toString());
 		}
 
 		HtmlReporter.createNode(this.getClass().getSimpleName(),
@@ -107,8 +109,7 @@ public class MobileTestSetup{
 
 		finally {
 			if (driver != null){
-				HtmlReporter.info(">>Ending session ID: "+ driver.getSessionId().toString()
-						+ " Test Name: " +result.getMethod().getQualifiedName());
+				HtmlReporter.info(">>ENDING TEST: "+testInfo.getName()+"::" +result.getMethod().getQualifiedName());
 				driver.quit();
 				//driver.resetApp();
 			}

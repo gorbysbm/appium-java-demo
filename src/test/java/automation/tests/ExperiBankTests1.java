@@ -1,7 +1,6 @@
 package automation.tests;
 
 import automation.report.Log;
-import org.junit.Ignore;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -60,7 +59,7 @@ public class ExperiBankTests1 extends MobileTestSetup {
 	}
 
 	@Test(invocationCount = 0, groups = {"functional"})
-	public void EB1payBillTest2() throws Exception {
+	public void EB1payBillTest2ShouldFail() throws Exception {
 		String payment = generateRandomAmount();
 
 		ebLoginPage.login("company","company");

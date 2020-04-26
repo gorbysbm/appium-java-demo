@@ -18,13 +18,13 @@ public class CoinFlipTests1 extends MobileTestSetup {
 	EBMainMenuPage ebMainMenuPage;
 	EBMakePaymentPage ebMakePaymentPage;
 
-	@BeforeMethod(alwaysRun = true)
-	//Don't proceed with test if before method fails org.openqa.selenium.SessionNotCreatedException
-	public void setupPage(Method method) throws Exception {
-//		ebLoginPage = new EBLoginPage();
-//		ebMainMenuPage = new EBMainMenuPage();
-//		ebMakePaymentPage = new EBMakePaymentPage();
-	}
+//	@BeforeMethod(alwaysRun = true)
+//	//Don't proceed with test if before method fails org.openqa.selenium.SessionNotCreatedException
+//	public void setupPage(Method method) throws Exception {
+////		ebLoginPage = new EBLoginPage();
+////		ebMainMenuPage = new EBMainMenuPage();
+////		ebMakePaymentPage = new EBMakePaymentPage();
+//	}
 
 	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1coinFlip1() throws Exception {
@@ -36,7 +36,7 @@ public class CoinFlipTests1 extends MobileTestSetup {
 		//ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
-	@Test(invocationCount = 1, groups = {"functional"})
+	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1coinFlip3() throws Exception {
 		//ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Local Android and Ios" parallel="tests" thread-count="2">
+<suite name="Local Android and Ios" parallel="tests" thread-count="2" configfailurepolicy="continue">
     <listeners>
-<!--        <listener class-name="automation.utility.MyTestListenerAdapter"/>-->
         <listener class-name="automation.utility.RetryListener"/>
     </listeners>
     <test name="Single Android Device">

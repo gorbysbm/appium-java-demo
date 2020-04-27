@@ -8,7 +8,6 @@ import org.testng.log4testng.Logger;
 public class Retry implements IRetryAnalyzer {
     private int retryCount = 0;
     private static final int DEFAULT_MAX_RETRY_COUNT = 1;   // retry a failed test N additional times
-    private static final Logger LOGGER = Logger.getLogger(Retry.class);
 
     @Override
     public boolean retry(ITestResult result) {

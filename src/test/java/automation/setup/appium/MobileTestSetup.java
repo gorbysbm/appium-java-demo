@@ -1,26 +1,22 @@
 package automation.setup.appium;
 
-import java.lang.reflect.Method;
-
-import automation.report.CaptureArtifact;
-import automation.report.Log;
-import automation.utility.BrowserStackCapabilities;
-import com.aventstack.extentreports.AnalysisStrategy;
-import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.SessionNotCreatedException;
-import org.testng.ITestContext;
-import org.testng.ITestResult;
-import org.testng.SkipException;
-import org.testng.TestException;
-import org.testng.annotations.*;
-
-import automation.appium.driver.CreateDriver;
 import automation.appium.driver.AppiumHandler;
+import automation.appium.driver.CreateDriver;
 import automation.excelhelper.ExcelHelper;
+import automation.report.CaptureArtifact;
 import automation.report.HtmlReporter;
+import automation.utility.BrowserStackCapabilities;
 import automation.utility.Common;
 import automation.utility.FilePaths;
+import com.aventstack.extentreports.AnalysisStrategy;
+import io.appium.java_client.AppiumDriver;
+import org.testng.ITestContext;
+import org.testng.ITestResult;
+import org.testng.TestException;
+import org.testng.annotations.*;
 import org.testng.xml.XmlTest;
+
+import java.lang.reflect.Method;
 
 public class MobileTestSetup{
 
@@ -71,6 +67,10 @@ public class MobileTestSetup{
 		XmlTest testInfo = null;
 		try {
 			testInfo = ctx.getCurrentXmlTest();
+			//Since extent Reports doesn't yet have a "was retried" status remove the test to avoid false failure reports
+			if (result.wasRetried()){
+				HtmlReporter.removeCurrentNode();
+			}
 
 			switch (result.getStatus()) {
 				case ITestResult.SUCCESS:
@@ -82,10 +82,9 @@ public class MobileTestSetup{
 					}
 					break;
 				case ITestResult.SKIP:
-					message = String.format(">>The test [%s] [%s]: SKIPPED for session: %s", testInfo.getName(),
-							result.getName(), driver.getSessionId().toString(), result.getThrowable());
-					Log.info(message);
-					HtmlReporter.removeCurrentNode();
+					message = String.format(">>The test [%s] [%s]: was SKIPPED: %s", testInfo.getName(),
+							result.getName(), result.getThrowable());
+					HtmlReporter.skip(message);
 					break;
 
 				case ITestResult.FAILURE:
@@ -98,6 +97,7 @@ public class MobileTestSetup{
 					}
 					break;
 				default:
+					//Mark Test as failed if it did not get a status for some unexpected reason
 					message = String.format(">>The test [%s] [%s]: did not get executed or get a status due to: %s ",
 							testInfo.getName(), result.getMethod().getQualifiedName(), "");
 					if (!HtmlReporter.getNode().getStatus().name().equalsIgnoreCase("Fail")){

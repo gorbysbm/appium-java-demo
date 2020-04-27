@@ -18,8 +18,8 @@
 		<!-- Dependencies version -->
 		<log4j-version>2.13.1</log4j-version>
 		<poi-version>3.13</poi-version>
-		<ru.yandex.qatools.ashot>1.5.3</ru.yandex.qatools.ashot>
 	</properties>
+
 
 	<dependencies>
 		<dependency>
@@ -29,15 +29,42 @@
 		</dependency>
 
 		<dependency>
+			<groupId>io.appium</groupId>
+			<artifactId>java-client</artifactId>
+			<version>7.3.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-driver</artifactId>
+			<version>3.141.59</version>
+		</dependency>
+
+		<!-- Screen shot -->
+		<dependency>
+			<groupId>ru.yandex.qatools.ashot</groupId>
+			<artifactId>ashot</artifactId>
+			<version>1.5.3</version>
+		</dependency>
+
+		<!-- ExtentReport - HTMLReporter -->
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports</artifactId>
+			<version>4.1.5</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/com.aventstack/extentreports-testng-adapter -->
+		<dependency>
+			<groupId>com.aventstack</groupId>
+			<artifactId>extentreports-testng-adapter</artifactId>
+			<version>1.0.7</version>
+		</dependency>
+
+		<dependency>
 			<groupId>com.browserstack</groupId>
 			<artifactId>browserstack-local-java</artifactId>
 			<version>1.0.3</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.12</version>
 		</dependency>
 
 		<!-- Logging -->
@@ -56,21 +83,20 @@
 			<artifactId>log4j-1.2-api</artifactId>
 			<version>${log4j-version}</version>
 		</dependency>
-		<!-- Common-io -->
+
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.5</version>
 		</dependency>
 
-		<!-- ExtentReport - HTMLReporter -->
+		<!--START Apache plugins -->
 		<dependency>
-			<groupId>com.aventstack</groupId>
-			<artifactId>extentreports</artifactId>
-			<version>4.1.4</version>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.12</version>
 		</dependency>
 
-		<!-- POI -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
@@ -81,53 +107,30 @@
 			<artifactId>poi</artifactId>
 			<version>${poi-version}</version>
 		</dependency>
-		<dependency>
-			<groupId>com.googlecode.json-simple</groupId>
-			<artifactId>json-simple</artifactId>
-			<version>1.1.1</version>
-		</dependency>
-		<dependency>
-			<groupId>io.appium</groupId>
-			<artifactId>java-client</artifactId>
-			<version>7.3.0</version>
-		</dependency>
 
-		<dependency>
-			<groupId>org.seleniumhq.selenium</groupId>
-			<artifactId>selenium-remote-driver</artifactId>
-			<version>3.141.59</version>
-		</dependency>
-
-		<!-- Screen shot -->
-		<dependency>
-			<groupId>ru.yandex.qatools.ashot</groupId>
-			<artifactId>ashot</artifactId>
-			<version>${ru.yandex.qatools.ashot}</version>
-		</dependency>
-
+		<!--END Apache plugins -->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20180813</version>
 		</dependency>
 
-
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
 	</dependencies>
-
 
 	<build>
 		<pluginManagement>
 		</pluginManagement>
 		<plugins>
-			<plugin>
-				<groupId>io.qameta.allure</groupId>
-				<artifactId>allure-maven</artifactId>
-				<version>2.9</version>
-			</plugin>
+			<!-- START maven plugins -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.6</version>
+				<version>3.1.2</version>
 				<executions>
 					<execution>
 						<goals>
@@ -172,7 +175,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!-- Compiler plug-in -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -190,10 +192,17 @@
 				<configuration>
 					<!-- Suite testng xml file to consider for test execution -->
 					<suiteXmlFiles>
+						<!--suppress UnresolvedMavenProperty -->
 						<suiteXmlFile>${project.build.directory}/test-classes/testsuites/${testSuiteXML}</suiteXmlFile>
 					</suiteXmlFiles>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+			</plugin>
+			<!-- END maven plugins -->
 		</plugins>
 
 	</build>

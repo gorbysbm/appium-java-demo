@@ -4,9 +4,9 @@
 
 
     <listeners>
-<!--        <listener class-name="automation.utility.RetryListener"/>-->
+        <listener class-name="automation.utility.RetryListener"/>
     </listeners>
-    <test name="Single Android Device Test">
+    <test name="Debugging TestNG Framework Setup">
 <!--        <parameter name="config" value="conf/local/localandroid.conf.json"/>-->
 <!--        <parameter name="environment" value="LocalAndroid"/>-->
         <groups>

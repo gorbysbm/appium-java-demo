@@ -64,8 +64,6 @@ public class HtmlReporter {
 		htmlReporter.config().setCSS(cssCode);
 		// end
 
-		//htmlReporter.setAppendExisting(false);
-
 		ExtentReports report = new ExtentReports();
 		report.attachReporter(htmlReporter);
 		report.setSystemInfo("Application", "");
@@ -372,6 +370,12 @@ public class HtmlReporter {
 
 		Log.info(strDescription);
 
+	}
+
+	public static void skip(String strDescription) throws IOException {
+		getTest().skip(strDescription);
+
+		Log.info(strDescription);
 	}
 
 	/**

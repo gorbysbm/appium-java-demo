@@ -17,8 +17,8 @@
     "BS_iOS_iphone11pro": {
       "device": "iPhone 11 Pro"
     },
-    "BS_iOS_iphone11max": {
-      "device": "iPhone 11 Max"
+    "BS_iOS_iphone11proMax": {
+      "device": "iPhone 11 Pro Max"
     }
   }
 }

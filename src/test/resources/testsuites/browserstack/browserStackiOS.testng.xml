@@ -14,21 +14,21 @@
             </run>
         </groups>
         <classes>
-            <class name="automation.tests.ExperiBankTests1"></class>
+            <class name="automation.tests.CoinFlipTests1"></class>
         </classes>
     </test>
 
-<!--    <test name="BS_Android_SamsungGalaxyS10e Test">-->
-<!--        <parameter name="config" value="conf/browserstack/BS_Android.conf.json"/>-->
-<!--        <parameter name="environment" value="BS_Android_SamsungGalaxyS10e"/>-->
-<!--        <groups>-->
-<!--            <run>-->
-<!--                <include name="functional"/>-->
-<!--            </run>-->
-<!--        </groups>-->
-<!--        <packages>-->
-<!--            <package name="automation.tests.*"></package>-->
-<!--        </packages>-->
-<!--    </test>-->
+    <test name="BS_iOS_iphone11proMax Test">
+        <parameter name="config" value="conf/browserstack/BS_iOS.conf.json"/>
+        <parameter name="environment" value="BS_iOS_iphone11proMax"/>
+        <groups>
+            <run>
+                <include name="functional"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="automation.tests.ExperiBankTests1"></class>
+        </classes>
+    </test>
 
 </suite>

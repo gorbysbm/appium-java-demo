@@ -1,6 +1,0 @@
-language: java
-jdk:
-  - oraclejdk8
-
-script:
-  -  mvn clean test -Dsurefire.suiteXmlFiles=src/test/resources/testsuites/browserstack/browserStackAndroid.testng.xml 

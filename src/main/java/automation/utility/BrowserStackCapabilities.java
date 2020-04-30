@@ -23,7 +23,7 @@ public class BrowserStackCapabilities {
     private JSONObject config;
     private DesiredCapabilities capabilities;
     private ITestContext context;
-    private static String username = System.getenv("BROWSERSTACK_USERNAME");
+    private static String username = System.getenv("BROWSERSTACK_USER");
     private static String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
 
     public BrowserStackCapabilities(Method method, JSONObject config, DesiredCapabilities capabilities, ITestContext context) {

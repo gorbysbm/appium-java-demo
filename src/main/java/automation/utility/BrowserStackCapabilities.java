@@ -65,9 +65,7 @@ public class BrowserStackCapabilities {
         }
 
         if (capabilities.getCapability("build").toString().isEmpty()){
-            capabilities.setCapability("build",
-                    context.getSuite().getName()
-                            +" :: "+ StringUtilities.getFormattedDate(context.getStartDate().getTime(),"yyyy-MM-dd HH:mm:ss z"));
+            capabilities.setCapability("build", context.getSuite().getName());
         }
 
 //        if(capabilities.getCapability("browserstack.local") != null

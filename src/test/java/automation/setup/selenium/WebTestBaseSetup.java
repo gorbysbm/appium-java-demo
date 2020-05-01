@@ -3,6 +3,7 @@ package automation.setup.selenium;
 import java.lang.reflect.Method;
 
 import com.aventstack.extentreports.AnalysisStrategy;
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -25,9 +26,9 @@ public class WebTestBaseSetup {
 	public String platform;
 
 	@BeforeSuite
-	public void beforeSuite() throws Exception {
+	public void beforeSuite(ITestContext ctx) throws Exception {
 		FilePaths.initReportFolder();
-		HtmlReporter.setReporter(FilePaths.getReportFilePath(), AnalysisStrategy.CLASS);
+		HtmlReporter.setReporter(FilePaths.getReportFilePath(), AnalysisStrategy.CLASS, ctx);
 	}
 
 	// @BeforeClass

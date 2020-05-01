@@ -8,6 +8,7 @@ import automation.report.HtmlReporter;
 import automation.utility.BrowserStackCapabilities;
 import automation.utility.Common;
 import automation.utility.FilePaths;
+import automation.utility.StringUtilities;
 import com.aventstack.extentreports.AnalysisStrategy;
 import io.appium.java_client.AppiumDriver;
 import org.testng.ITestContext;
@@ -30,9 +31,12 @@ public class MobileTestSetup{
 
 	@BeforeSuite(alwaysRun = true)
 	public void beforeSuite(ITestContext ctx) throws Exception {
+		ctx.getSuite().getXmlSuite().setName(ctx.getSuite().getName()
+				+" :: "+ StringUtilities.getFormattedDate(ctx.getStartDate().getTime(),"yyyy-MM-dd HH:mm:ss z"));
 		/*********** Init Html reporter *************************/
 		FilePaths.initReportFolder();
-		HtmlReporter.setReporter(FilePaths.getReportFilePath(), AnalysisStrategy.CLASS);
+		HtmlReporter.setReporter(FilePaths.getReportFilePath(), AnalysisStrategy.CLASS, ctx);
+
 	}
 
 	@BeforeClass(alwaysRun = true)

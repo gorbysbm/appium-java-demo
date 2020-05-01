@@ -7,8 +7,6 @@
     "build": "",
     "name": "",
     "browserstack.debug": true,
-
-
     "app": "bs://073e09396ec7f626c2eb1f3fe27f0a5d880ba8fa",
     "autoGrantPermissions": "true"
   },

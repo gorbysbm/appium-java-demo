@@ -18,6 +18,7 @@ import com.aventstack.extentreports.reporter.configuration.Theme;
 
 import automation.utility.Common;
 import automation.utility.FilePaths;
+import org.testng.ITestContext;
 
 /**
  * For documentation and extending the features: https://extentreports.com/docs/versions/4/java/
@@ -29,10 +30,10 @@ public class HtmlReporter {
 
 	private static HashMap<String, ExtentTest> extentTestMap = new HashMap<String, ExtentTest>();
 
-	public static ExtentReports setReporter(String filename, AnalysisStrategy analysisStrategy) throws IOException {
+	public static ExtentReports setReporter(String filename, AnalysisStrategy analysisStrategy, ITestContext ctx) throws IOException {
 
 		if (_report == null)
-			_report = createInstance(filename);
+			_report = createInstance(filename, ctx);
 
 		// Tests view
 		_report.setAnalysisStrategy(analysisStrategy);
@@ -44,17 +45,18 @@ public class HtmlReporter {
 	 * 
 	 * @param fileName
 	 *            The report's name
+	 * @param ctx
 	 * @return
 	 * @throws IOException
 	 */
-	public static ExtentReports createInstance(String fileName) throws IOException {
+	public static ExtentReports createInstance(String fileName, ITestContext ctx) throws IOException {
 
         ExtentSparkReporter htmlReporter = new ExtentSparkReporter(fileName);
 		htmlReporter.config().setTheme(Theme.STANDARD);
 		htmlReporter.config().setDocumentTitle(fileName);
 		htmlReporter.config().setEncoding("utf-8");
-		htmlReporter.config().setReportName(fileName);
-		// adding CSS and Javascript for API Request Step
+		htmlReporter.config().setReportName(ctx.getSuite().getXmlSuite().getName());
+ 		//adding CSS and Javascript for API Request Step
 		InputStream jsFile = HtmlReporter.class.getClassLoader()
 				.getResourceAsStream("config/extent-report/api-step-javascript-code.js");
 		InputStream cssFile = HtmlReporter.class.getClassLoader().getResourceAsStream("config/extent-report/api-step-stylesheet.css");

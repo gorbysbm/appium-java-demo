@@ -1,13 +1,10 @@
 package automation.tests;
 
-import automation.report.CaptureArtifact;
 import automation.report.HtmlReporter;
 import automation.report.Log;
-import automation.utility.BrowserStackCapabilities;
 import automation.utility.Common;
 import automation.utility.FilePaths;
 import com.aventstack.extentreports.AnalysisStrategy;
-import com.aventstack.extentreports.testng.listener.ExtentITestListenerClassAdapter;
 import org.testng.Assert;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
@@ -24,7 +21,7 @@ public class TestNGDebugTests1 {
 	@BeforeSuite(alwaysRun = true)
 	public void beforeSuite(ITestContext ctx) throws Exception {
 		FilePaths.initReportFolder();
-		HtmlReporter.setReporter(FilePaths.getReportFilePath(), AnalysisStrategy.CLASS);
+		HtmlReporter.setReporter(FilePaths.getReportFilePath(), AnalysisStrategy.CLASS, ctx );
 		Log.info("Before suite: "+ Thread.currentThread().getId());
 	}
 

@@ -2,6 +2,7 @@ package automation.setup.selenium;
 
 import java.lang.reflect.Method;
 
+import org.testng.ITestContext;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
@@ -43,8 +44,8 @@ public class WebTestSetup extends WebTestBaseSetup {
 
 	@Override
 	@BeforeSuite
-	public void beforeSuite() throws Exception {
-		super.beforeSuite();
+	public void beforeSuite(ITestContext ctx) throws Exception {
+		super.beforeSuite(ctx);
 
 	}
 

@@ -14,7 +14,8 @@
             </run>
         </groups>
         <classes>
-            <class name="automation.tests.CoinFlipTests1"/>
+            <class name="automation.tests.ExperiBankTests1"/>
+            <class name="automation.tests.ExperiBankTests2"/>
         </classes>
     </test>
 
@@ -28,7 +29,7 @@
         </groups>
         <classes>
             <class name="automation.tests.ExperiBankTests1"/>
-            <class name="automation.tests.CoinFlipTests2"/>
+            <class name="automation.tests.ExperiBankTests2"/>
         </classes>
     </test>
 

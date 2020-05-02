@@ -102,7 +102,7 @@ public class MobileTestSetup{
 					break;
 				default:
 					//Mark Test as failed if it did not get a status for some unexpected reason
-					message = String.format(">>The test [%s] [%s]: did not get executed or get a status due to: %s ",
+					message = String.format(">>The test [%s] [%s]: did not get executed or get a status",
 							testInfo.getName(), result.getMethod().getQualifiedName(), "");
 					if (!HtmlReporter.getNode().getStatus().name().equalsIgnoreCase("Fail")){
 						HtmlReporter.fail(message);

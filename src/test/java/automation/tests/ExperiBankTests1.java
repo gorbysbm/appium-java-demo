@@ -14,37 +14,42 @@ import java.text.DecimalFormat;
 import java.util.Random;
 
 public class ExperiBankTests1 extends MobileTestSetup {
-	EBLoginPage ebLoginPage;
-	EBMainMenuPage ebMainMenuPage;
-	EBMakePaymentPage ebMakePaymentPage;
-
-	@BeforeMethod(alwaysRun = true)
-	public void setupPage(Method method) throws Exception {
-		ebLoginPage = new EBLoginPage();
-		ebMainMenuPage = new EBMainMenuPage();
-		ebMakePaymentPage = new EBMakePaymentPage();
-	}
 
 	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1coinFlip1() throws Exception {
+		EBLoginPage ebLoginPage = new EBLoginPage();
+		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();
+		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage();
+
 		ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1coinFlip2() throws Exception {
+		EBLoginPage ebLoginPage = new EBLoginPage();
+		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();
+		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage();
+
 		ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1coinFlip3() throws Exception {
+		EBLoginPage ebLoginPage = new EBLoginPage();
+		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();
+		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage();
+
 		ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 
 
 
-	@Test(invocationCount = 1, groups = {"functional"})
+	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1payBillTest1() throws Exception {
+		EBLoginPage ebLoginPage = new EBLoginPage();
+		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();
+		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage();
 		String payment = generateRandomAmount();
 
 		ebLoginPage.login("company","company");
@@ -60,27 +65,15 @@ public class ExperiBankTests1 extends MobileTestSetup {
 
 	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1payBillTest2ShouldFail() throws Exception {
+		EBLoginPage ebLoginPage = new EBLoginPage();
+		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();
+		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage();
 		String payment = generateRandomAmount();
 
 		ebLoginPage.login("company","company");
 		ebMainMenuPage.clickMakePayment();
 //		ebMakePaymentPage.enterPhone("1234567");
 //		ebMakePaymentPage.enterName("My Name");
-		ebMakePaymentPage.enterAmount(payment);
-		ebMakePaymentPage.selectCountry("Germany");
-		ebMakePaymentPage.clickSendPayment();
-		ebMakePaymentPage.proceedWithPayment();
-		ebMakePaymentPage.verifyNewBalance(payment);
-	}
-
-	@Test(invocationCount = 0, groups = {"functional"})
-	public void EB1payBillTest3() throws Exception {
-		String payment = generateRandomAmount();
-
-		ebLoginPage.login("company","company");
-		ebMainMenuPage.clickMakePayment();
-		ebMakePaymentPage.enterPhone("1234567");
-		ebMakePaymentPage.enterName("My Name");
 		ebMakePaymentPage.enterAmount(payment);
 		ebMakePaymentPage.selectCountry("Germany");
 		ebMakePaymentPage.clickSendPayment();

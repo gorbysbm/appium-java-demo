@@ -5,9 +5,7 @@ import automation.report.Log;
 import automation.utility.Common;
 import automation.utility.FilePaths;
 import com.aventstack.extentreports.AnalysisStrategy;
-import org.testng.Assert;
-import org.testng.ITestContext;
-import org.testng.ITestResult;
+import org.testng.*;
 import org.testng.annotations.*;
 import org.testng.xml.XmlTest;
 
@@ -41,7 +39,6 @@ public class TestNGDebugTests1 {
 		HtmlReporter.info(">>STARTING TEST: " + ctx.getName()+"::"+this.getClass().getSimpleName()+":"
 				+method.getName() + " session ID: ");
 		Log.info("beforeMEthod: "+ coinFlip() + Thread.currentThread().getId());
-		//Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 
 	@AfterMethod(alwaysRun = true)
@@ -94,6 +91,7 @@ public class TestNGDebugTests1 {
 	@AfterSuite(alwaysRun = true)
 	public void afterSuite() throws Exception {
 		Log.info("After suite: "+ Thread.currentThread().getId());
+		HtmlReporter.flush();
 	}
 
 
@@ -107,7 +105,7 @@ public class TestNGDebugTests1 {
 		//ebLoginPage.login("company","company");
 		Assert.assertTrue(false);
 	}
-	@Test(invocationCount = 0, groups = {"functional"})
+	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1coinFlip3() throws Exception {
 		//ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));

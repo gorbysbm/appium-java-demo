@@ -202,6 +202,14 @@ public class HtmlReporter {
 
 
 	/**
+	 * To update the node or node parent's name
+	 * @throws Exception
+	 */
+	public static void setName(String name) {
+		getTest().getModel().setName(name);
+	}
+
+	/**
 	 * To write a passed step to report
 	 * 
 	 * @param strDescription

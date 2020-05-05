@@ -34,7 +34,7 @@ public class ExperiBankTests2 extends MobileTestSetup {
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 
-	@Test(invocationCount = 1, groups = {"functional"})
+	@Test(invocationCount = 1, groups = {"functional","passingTest"})
 	public void EB2payBillTest1() throws Exception {
 		EBLoginPage ebLoginPage = new EBLoginPage();
 		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();
@@ -72,7 +72,7 @@ public class ExperiBankTests2 extends MobileTestSetup {
 		ebMakePaymentPage.verifyNewBalance(payment);
 	}
 
-	@Test(invocationCount = 0, groups = {"functional"})
+	@Test(invocationCount = 0, groups = {"functional","passingTest"})
 	public void EB2payBillTest3() throws Exception {
 		EBLoginPage ebLoginPage = new EBLoginPage();
 		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();

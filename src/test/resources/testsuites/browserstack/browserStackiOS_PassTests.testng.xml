@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="BrowserStack iOS" parallel="tests" configfailurepolicy="continue">
+    <listeners>
+        <listener class-name="automation.utility.RetryListener"/>
+    </listeners>
+
+    <test name="BS_iOS_iphone11pro Test" thread-count="2" parallel="classes">
+        <parameter name="config" value="conf/browserstack/BS_iOS.conf.json"/>
+        <parameter name="environment" value="BS_iOS_iphone11pro"/>
+        <groups>
+            <run>
+                <include name="passingTest"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="automation.tests.ExperiBankTests1"/>
+            <class name="automation.tests.ExperiBankTests2"/>
+        </classes>
+    </test>
+
+    <test name="BS_iOS_iphone11proMax Test" thread-count="2" parallel="classes">
+        <parameter name="config" value="conf/browserstack/BS_iOS.conf.json"/>
+        <parameter name="environment" value="BS_iOS_iphone11proMax"/>
+        <groups>
+            <run>
+                <include name="passingTest"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="automation.tests.ExperiBankTests1"/>
+            <class name="automation.tests.ExperiBankTests2"/>
+        </classes>
+    </test>
+
+</suite>

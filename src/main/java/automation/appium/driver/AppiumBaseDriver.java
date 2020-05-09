@@ -28,15 +28,77 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
 public class AppiumBaseDriver {
-	protected Local browserStackLocal;
 	protected AppiumDriver driver = CreateDriver.getInstance().getCurrentMobileDriver();
 	private WebDriverWait wait;
 	int EXPLICIT_WAIT_TIMEOUT = 6;
 
 	public void click (WebElement element) {
-		waitForClickable(element);
-		element.click();
+		HtmlReporter.info(String.format(">>Clicking on element [%s]", element.toString()));
+		try {
+			waitForClickable(element);
+			element.click();
+		} catch (Exception e) {
+			HtmlReporter.fail(String.format(">>Can't click on element [%s]", element.toString()));
+			throw e;
+		}
 	}
+
+	public void clearAndTypeText(WebElement element, String text) {
+		HtmlReporter.info(String.format(">>Typing text [%s] to element [%s]", text, element.toString()));
+		try {
+			waitForVisibilityOfElement(element);
+			element.clear();
+			element.sendKeys(text);
+		} catch (Exception e) {
+			HtmlReporter.fail(String.format(">>Can't clear / type text of element [%s]", element.toString()));
+			throw e;
+		}
+	}
+
+	//Use to scroll into view by element's text
+	public WebElement scrollIntoView(String text, String predicate) {
+		WebElement foundElement = null;
+		HtmlReporter.info(String.format(">>Scrolling to element with text [%s]", text));
+		try {
+			if (isAndroidDriver()) {
+				String locator = String.format("new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().text(\"%s\"))", text);
+				By by = MobileBy.AndroidUIAutomator(locator);
+				foundElement = driver.findElement(by);
+			}
+			else if (isIOSDriver()) {
+				HashMap<String, String> scrollObject = new HashMap<>();
+				scrollObject.put("predicateString", String.format("%s == '%s'",predicate, text));
+				scrollObject.put("toVisible", "true");
+				scrollObject.put("direction", "down");
+				driver.executeScript("mobile: scroll", scrollObject);
+				foundElement = ((IOSDriver) driver).findElementByIosNsPredicate(String.format("%s == '%s'",predicate, text));
+			}
+		} catch (Exception e) {
+			HtmlReporter.fail(String.format(">>Failed to scroll to element with text [%s]", text));
+			throw e;
+		}
+		return foundElement;
+	}
+
+	public WebElement findElementByText(String text, String predicate) {
+		WebElement foundElement = null;
+		HtmlReporter.info(String.format(">>Finding element with text [%s]", text));
+		try {
+			if (isAndroidDriver()) {
+				String locator = String.format("new UiSelector().text(\"%s\")", text);
+				foundElement = waitForPresenceOfElement(MobileBy.AndroidUIAutomator(locator));
+			}
+			else if (isIOSDriver()) {
+				String locator =  String.format("%s == '%s'",predicate, text);
+				foundElement = waitForPresenceOfElement(MobileBy.iOSNsPredicateString(locator));
+			}
+		} catch (Exception e) {
+			HtmlReporter.fail(String.format(">>Failed to find element with text [%s]", text));
+			throw e;
+		}
+		return foundElement;
+	}
+
 
 	public Boolean waitForPresenceOfTextinElement(WebElement element, String text) {
 		return getExplicitWait().until(ExpectedConditions.textToBePresentInElement(element, text));
@@ -45,46 +107,6 @@ public class AppiumBaseDriver {
 	public void waitForClickable(WebElement element) {
 		getExplicitWait().until(ExpectedConditions.elementToBeClickable(element));
 	}
-
-	public void clearAndTypeText(WebElement element, String text) {
-		waitForVisibilityOfElement(element);
-		element.clear();
-		element.sendKeys(text);
-	}
-
-	public WebElement scrollIntoView(String text, String predicate) {
-		WebElement foundElement = null;
-
-		if (isAndroidDriver()) {
-			String locator = String.format("new UiScrollable(new UiSelector().scrollable(true).instance(0)).scrollIntoView(new UiSelector().text(\"%s\"))", text);
-			By by = MobileBy.AndroidUIAutomator(locator);
-			foundElement = driver.findElement(by);
-		}
-		else if (isIOSDriver()) {
-			HashMap<String, String> scrollObject = new HashMap<>();
-			scrollObject.put("predicateString", String.format("%s == '%s'",predicate, text));
-			scrollObject.put("toVisible", "true");
-			scrollObject.put("direction", "down");
-			driver.executeScript("mobile: scroll", scrollObject);
-			foundElement = ((IOSDriver) driver).findElementByIosNsPredicate(String.format("%s == '%s'",predicate, text));
-		}
-		return foundElement;
-	}
-
-	public WebElement findElementByText(String text, String predicate) {
-		WebElement foundElement = null;
-
-		if (isAndroidDriver()) {
-			String locator = String.format("new UiSelector().text(\"%s\")", text);
-			foundElement = waitForPresenceOfElement(MobileBy.AndroidUIAutomator(locator));
-		}
-		else if (isIOSDriver()) {
-			String locator =  String.format("%s == '%s'",predicate, text);
-			foundElement = waitForPresenceOfElement(MobileBy.iOSNsPredicateString(locator));
-		}
-		return foundElement;
-	}
-
 
 	//Wait for presence of elements before proceeding with action
 	public List<WebElement> waitForPresenceOfAllElements(By elementBy) {
@@ -195,10 +217,6 @@ public class AppiumBaseDriver {
 		Select dropdown = new Select(driver.findElement(elementBy));
 		dropdown.selectByValue(itemName);
 	}
-
-
-
-
 
 
 	public AppiumDriver<WebElement> getDriver() {

@@ -31,23 +31,24 @@ public class MobileTestSetup{
 
 	@BeforeSuite(alwaysRun = true)
 	public void beforeSuite(ITestContext ctx) throws Exception {
-		ctx.getSuite().getXmlSuite().setName(ctx.getSuite().getName()
-				+" :: "+ StringUtilities.getFormattedDate(ctx.getStartDate().getTime(),"yyyy-MM-dd HH:mm:ss z"));
+		String timeStampedSuiteName = ctx.getSuite().getName() + " :: "
+				+ StringUtilities.getFormattedDate(ctx.getStartDate().getTime(), "yyyy-MM-dd HH:mm:ss z");
+		ctx.getSuite().getXmlSuite().setName(timeStampedSuiteName);
 		/*********** Init Html reporter *************************/
 		FilePaths.initReportFolder();
 		HtmlReporter.setReporter(FilePaths.getReportFilePath(), AnalysisStrategy.CLASS, ctx);
-
 	}
 
 	@BeforeClass(alwaysRun = true)
 	public void beforeClass(ITestContext ctx) throws Exception {
-		HtmlReporter.createTest(ctx.getName()+" :: "+this.getClass().getSimpleName(), "");
 		Common.currentTest = this.getClass().getSimpleName();
+		HtmlReporter.createTest(ctx.getName()+" :: "+this.getClass().getSimpleName(), "");
 	}
 
 	@BeforeMethod(alwaysRun=true)
 	@org.testng.annotations.Parameters(value={"config", "environment"})
 	public void beforeMethod(String configFile, String environment, Method method, ITestContext ctx) throws Exception {
+		//Try to start Appium driver and fail the test if not successful
 		try {
  			driver = new AppiumHandler().startDriver(configFile, environment, method, ctx);
 			CreateDriver.getInstance().setDriver(driver);

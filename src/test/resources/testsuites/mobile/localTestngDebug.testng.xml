@@ -15,8 +15,8 @@
             </run>
         </groups>
         <classes>
-            <class name="automation.tests.TestNGDebugTests1"/>
-            <!--            <class name="automation.tests.ExperiBankTests2"/>-->
+            <class name="automation.tests.appium.TestNGDebugTests1"/>
+            <!--            <class name="automation.tests.appium.ExperiBankTests2"/>-->
         </classes>
     </test>
 
@@ -24,7 +24,7 @@
 <!--        <parameter name="config" value="conf/local/localios.conf.json"/>-->
 <!--        <parameter name="environment" value="LocaliOS"/>-->
 <!--        <classes>-->
-<!--            <class name="automation.tests.CoinFlipTests1"/>-->
+<!--            <class name="automation.tests.appium.CoinFlipTests1"/>-->
 <!--        </classes>-->
 <!--    </test>-->
 

@@ -1,4 +1,4 @@
-package automation.tests;
+package automation.tests.appium;
 
 import automation.pages.EBLoginPage;
 import automation.pages.EBMainMenuPage;

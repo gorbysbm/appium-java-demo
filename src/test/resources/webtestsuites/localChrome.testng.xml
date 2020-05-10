@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Local Chrome" configfailurepolicy="continue">
+<!--    <listeners>-->
+<!--        <listener class-name="automation.utility.RetryListener"/>-->
+<!--    </listeners>-->
+
+    <test name="Chrome Test">
+        <parameter name="config" value="conf/local/localios.conf.json"/>
+        <parameter name="environment" value="Localchrome"/>
+        <groups>
+            <run>
+                <include name="functional"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="automation.tests.selenium.CoinFlipTests1"/>
+<!--            <class name="automation.tests.appium.ExperiBankTests2"/>-->
+        </classes>
+
+    </test>
+</suite>

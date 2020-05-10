@@ -1,19 +1,15 @@
-package automation.tests;
+package automation.tests.selenium;
 
+import automation.appium.driver.CreateDriver;
 import automation.pages.EBLoginPage;
 import automation.pages.EBMainMenuPage;
 import automation.pages.EBMakePaymentPage;
 import automation.report.Log;
-import automation.setup.appium.MobileTestSetup;
+import automation.setup.selenium.WebTestSetup;
 import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.lang.reflect.Method;
-import java.text.DecimalFormat;
-import java.util.Random;
-
-public class CoinFlipTests1 extends MobileTestSetup {
+public class CoinFlipTests1 extends WebTestSetup {
 	EBLoginPage ebLoginPage;
 	EBMainMenuPage ebMainMenuPage;
 	EBMakePaymentPage ebMakePaymentPage;
@@ -29,9 +25,10 @@ public class CoinFlipTests1 extends MobileTestSetup {
 	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1coinFlip1() throws Exception {
 		//ebLoginPage.login("company","company");
+		CreateDriver.getInstance().getCurrentWebDriver().get("http://www.google.com");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
-	@Test(invocationCount = 1, groups = {"functional"})
+	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1coinFlip2() throws Exception {
 		//ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));

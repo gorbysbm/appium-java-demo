@@ -1,4 +1,4 @@
-package automation.tests;
+package automation.tests.appium;
 
 import automation.report.Log;
 import org.testng.Assert;

@@ -1,4 +1,4 @@
-package automation.tests;
+package automation.tests.appium;
 
 import automation.report.HtmlReporter;
 import automation.report.Log;

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Local Android Framework Debug" parallel="tests" thread-count="3" configfailurepolicy="continue">
+<suite name="Local Demo Framework Debug" parallel="tests" thread-count="3" configfailurepolicy="continue">
     <listeners>
         <listener class-name="automation.utility.RetryListener"/>
     </listeners>
@@ -14,8 +14,8 @@
 <!--            </run>-->
 <!--        </groups>-->
 <!--        <classes>-->
-<!--            <class name="automation.tests.CoinFlipTests1"/>-->
-<!--            &lt;!&ndash;            <class name="automation.tests.ExperiBankTests2"/>&ndash;&gt;-->
+<!--            <class name="automation.tests.appium.CoinFlipTests1"/>-->
+<!--            &lt;!&ndash;            <class name="automation.tests.appium.ExperiBankTests2"/>&ndash;&gt;-->
 <!--        </classes>-->
 <!--    </test>-->
 
@@ -23,7 +23,7 @@
         <parameter name="config" value="conf/local/localios.conf.json"/>
         <parameter name="environment" value="LocaliOS"/>
         <classes>
-            <class name="automation.tests.CoinFlipTests1"/>
+            <class name="automation.tests.appium.CoinFlipTests1"/>
         </classes>
     </test>
 

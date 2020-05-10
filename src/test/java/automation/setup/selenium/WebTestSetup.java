@@ -1,98 +1,73 @@
 package automation.setup.selenium;
 
-import java.lang.reflect.Method;
-
+import automation.appium.driver.DriverHandler;
+import automation.appium.driver.CreateDriver;
+import automation.report.HtmlReporter;
+import automation.setup.BaseTestSetup;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.DataProvider;
+import org.testng.TestException;
+import org.testng.annotations.*;
+import org.testng.xml.XmlTest;
 
-import automation.excelhelper.ExcelHelper;
-import automation.report.Log;
-import automation.utility.FilePaths;
-import automation.utility.PropertiesLoader;
+import java.lang.reflect.Method;
 
+public class WebTestSetup extends BaseTestSetup {
 
-public class WebTestSetup extends WebTestBaseSetup {
+	private WebDriver driver;
 
-	public static String dataFilePath;
-	public static String sheetName;
-	
-	
-	public Object[][] getTestProvider(String filepPath, String sheetName) throws Exception {
-		// return the data from excel file
-		Object[][] data = ExcelHelper.getTableArray(filepPath,sheetName);
-		return data;
-	}
-	
-	@DataProvider(name = "configBrowser",parallel = true)
-	public Object[][] configBrowser() throws Exception {
-		// return the data from excel file
-		//Object[][] data = new Object[1][2];
-		//String browser = PropertiesLoader.getPropertiesLoader().selenium_configuration.getProperty("selenium.browser"); //chrome,firefox
-		//String platform = PropertiesLoader.getPropertiesLoader().selenium_configuration.getProperty("selenium.platform"); 
-		//data[0][0] = browser;
-		//data[0][1] = platform;
-		Object[][] data = ExcelHelper.getTableArray(FilePaths.getResourcePath("/config/selenium/browser_configuration.xlsx"), "Sheet1");
-		return data;
-	}
-
-	@Override
-	@BeforeSuite
+	@BeforeSuite(alwaysRun = true)
 	public void beforeSuite(ITestContext ctx) throws Exception {
 		super.beforeSuite(ctx);
-
 	}
 
-	@Override
-	@BeforeClass
-	public void beforeClass() throws Exception {
-		super.beforeClass();
-		Log.startTestCase(this.getClass().getName());
+	@BeforeClass(alwaysRun = true)
+	public void beforeClass(ITestContext ctx) throws Exception {
+		super.beforeClass(ctx);
 	}
 
-	@Override
-	@BeforeMethod
-	public void beforeMethod(Method method) throws Exception {
-		Log.info("+++++++++ Start testing: " + method.getName() + " ++++++++++++++");
-		super.beforeMethod(method);
-		driver.openUrl(PropertiesLoader.getPropertiesLoader().selenium_environment_variable.getProperty("default_url"));
-		//mngr250783
-		//UjapUmu
+	@BeforeMethod(alwaysRun=true)
+	@Parameters(value={"config", "environment"})
+	public void beforeMethod(String configFile, String environment, Method method, ITestContext ctx) throws Exception {
+		//Try to start driver and fail the test if not successful
+		try {
+ 			driver = new DriverHandler().startDriver(driver, configFile, environment, method, ctx);
+			CreateDriver.getInstance().setDriver(driver);
+		} catch (Exception e) {
+			HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName(), "");
+			HtmlReporter.fail(">>FAILED to create driver. Ending Test. Error was "+ e);
+			throw new TestException(e.toString());
+		}
+		super.beforeMethod((RemoteWebDriver) driver, configFile, environment, method, ctx);
 	}
 
-	@Override
 	@AfterMethod(alwaysRun = true)
-	public void afterMethod(ITestResult result) throws Exception {
-		super.afterMethod(result);
+	@Parameters(value={"config", "environment"})
+	public void afterMethod(String configFile, String environment, ITestResult result, ITestContext ctx) throws Exception {
+		String sessionId = ((RemoteWebDriver) driver).getSessionId().toString();
+		try {
+			super.afterMethod(driver, sessionId, configFile, environment, result, ctx);
+		}
+
+		finally {
+			if (driver != null){
+				HtmlReporter.info(">>ENDING TEST: "+ctx.getCurrentXmlTest().getName()+"::" +result.getMethod().getQualifiedName());
+				driver.quit();
+			}
+		}
 	}
 
-	@Override
 	@AfterClass(alwaysRun = true)
 	public void afterClass() throws Exception {
-		Log.endTestCase(this.getClass().getName());
-		super.afterClass();
 	}
 
-	@Override
 	@AfterSuite(alwaysRun = true)
-	public void afterSuite() {
+	public void afterSuite() throws Exception {
 		super.afterSuite();
+		if (driver != null){
+			driver.quit();
+		}
 	}
-
-
-	public Integer randomNumber() {
-		int number = 0;
-		return number;
-	}
-
-
-
-
-
 }

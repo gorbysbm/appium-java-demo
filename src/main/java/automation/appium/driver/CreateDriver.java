@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 public class CreateDriver {
 
     private static CreateDriver instance = null;
-    private ThreadLocal<WebDriver> webDriver = new ThreadLocal<WebDriver>();
+    private ThreadLocal<WebDriver> webDriver = new ThreadLocal<>();
     private ThreadLocal<AppiumDriver> mobileDriver = new ThreadLocal<>();
 
     private  CreateDriver(){

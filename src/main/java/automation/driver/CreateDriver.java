@@ -20,28 +20,27 @@ public class CreateDriver {
         return instance;
     }
 
-    public void setDriver (WebDriver driver) {
+    public synchronized void setDriver (WebDriver driver) {
         webDriver.set(driver);
     }
 
-    public  void  setDriver(AppiumDriver<MobileElement> driver){
+    public synchronized void  setDriver(AppiumDriver<MobileElement> driver){
         mobileDriver.set(driver);
     }
 
-    private WebDriver getWebDriver(){
+    private synchronized WebDriver getWebDriver(){
         return webDriver.get();
     }
 
-    private  AppiumDriver<MobileElement> getMobileDriver(){
+    private synchronized AppiumDriver<MobileElement> getMobileDriver(){
         return  mobileDriver.get();
     }
 
-    //TODO: This is only set up to support Appium at this moment, not yet Webdriver
-    public AppiumDriver getCurrentMobileDriver(){
+    public synchronized AppiumDriver getCurrentMobileDriver(){
         return  getInstance().getMobileDriver();
     }
 
-    public WebDriver getCurrentWebDriver(){
+    public synchronized WebDriver getCurrentWebDriver(){
         return  getInstance().getWebDriver();
     }
 

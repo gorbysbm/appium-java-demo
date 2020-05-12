@@ -64,7 +64,7 @@ public class CoinFlipTests2 extends WebTestSetup {
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 
-	@Test(invocationCount = 1, groups = {"functional"})
+	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1coinFlip6() throws Exception {
 		//ebLoginPage.login("company","company");
 		CreateDriver.getInstance().getCurrentWebDriver().get("http://www.google.com");

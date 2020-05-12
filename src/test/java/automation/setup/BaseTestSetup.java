@@ -39,18 +39,22 @@ public class BaseTestSetup {
 	}
 
 	public void beforeMethod(RemoteWebDriver driver, String configFile, String environment, Method method, ITestContext ctx) throws Exception {
-
-		HtmlReporter.createNode(this.getClass().getSimpleName(),
-				method.getName()+ " :: " + driver.getSessionId(), "");
-		HtmlReporter.info(">>Created driver with capabilities: " + driver.getCapabilities());
-		HtmlReporter.info(">>STARTING TEST: " + ctx.getName()+"::"+this.getClass().getSimpleName()+":"
-				+method.getName() + " session ID: "+ driver.getSessionId());
+		try {
+			HtmlReporter.createNode(this.getClass().getSimpleName(),
+					method.getName()+ " :: " + driver.getSessionId(), "");
+			HtmlReporter.info(">>Created driver with capabilities: " + driver.getCapabilities());
+			HtmlReporter.info(">>STARTING TEST: " + ctx.getName()+"::"+this.getClass().getSimpleName()+":"
+					+method.getName() + " session ID: "+ driver.getSessionId());
+		} catch (Exception e) {
+			HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName()+ " :: NULL Driver", "");
+			HtmlReporter.info(">>FAIL: The current driver is null so cannot start test");
+			throw new Exception(e);
+		}
 	}
 
 	public void afterMethod(WebDriver driver, String sessionId, String configFile, String environment, ITestResult result, ITestContext ctx) throws Exception {
 		String message = "";
-		XmlTest testInfo = null;
-		testInfo = ctx.getCurrentXmlTest();
+		XmlTest testInfo = ctx.getCurrentXmlTest();
 		//Since extent Reports doesn't yet have a "was retried" status remove the test to avoid false failure reports
 		if (result.wasRetried()){
 			HtmlReporter.removeCurrentNode();

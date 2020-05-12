@@ -5,7 +5,7 @@
         <listener class-name="automation.utility.RetryListener"/>
     </listeners>
 
-    <test name="Chrome Test" parallel="methods">
+    <test name="Chrome Test" parallel="classes">
         <parameter name="config" value=""/>
         <parameter name="environment" value="LocalChrome"/>
         <groups>
@@ -15,8 +15,8 @@
         </groups>
         <classes>
             <class name="automation.tests.selenium.CoinFlipTests1"/>
-            <class name="automation.tests.selenium.CoinFlipTests2"/>
-            <class name="automation.tests.selenium.CoinFlipTests3"/>
+<!--            <class name="automation.tests.selenium.CoinFlipTests2"/>-->
+<!--            <class name="automation.tests.selenium.CoinFlipTests3"/>-->
         </classes>
 
     </test>

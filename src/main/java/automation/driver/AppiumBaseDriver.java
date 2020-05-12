@@ -1,9 +1,8 @@
-package automation.appium.driver;
+package automation.driver;
 
 import java.time.Duration;
 import java.util.*;
 
-import com.browserstack.local.Local;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.*;
 import org.openqa.selenium.NoSuchElementException;

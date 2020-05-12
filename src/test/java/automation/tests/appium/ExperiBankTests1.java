@@ -15,7 +15,7 @@ import java.util.Random;
 
 public class ExperiBankTests1 extends MobileTestSetup {
 
-	@Test(invocationCount = 0, groups = {"functional"})
+	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1coinFlip1() throws Exception {
 		EBLoginPage ebLoginPage = new EBLoginPage();
 		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();

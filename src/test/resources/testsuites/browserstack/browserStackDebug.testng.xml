@@ -29,7 +29,7 @@
         </groups>
         <classes>
             <class name="automation.tests.appium.ExperiBankTests1"/>
-<!--            <class name="automation.tests.appium.ExperiBankTests2"/>-->
+            <class name="automation.tests.appium.ExperiBankTests2"/>
         </classes>
     </test>
 

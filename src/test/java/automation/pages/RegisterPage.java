@@ -6,7 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
-import automation.appium.driver.AppiumBaseDriver;
+import automation.driver.AppiumBaseDriver;
 import automation.report.HtmlReporter;
 
 public class RegisterPage {

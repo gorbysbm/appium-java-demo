@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Local Chrome" thread-count="3" configfailurepolicy="continue">
+    <listeners>
+        <listener class-name="automation.utility.RetryListener"/>
+    </listeners>
+
+    <test name="Chrome Test" parallel="methods">
+        <parameter name="config" value=""/>
+        <parameter name="environment" value="LocalChrome"/>
+        <groups>
+            <run>
+                <include name="functional"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="automation.tests.selenium.CoinFlipTests1"/>
+            <class name="automation.tests.selenium.CoinFlipTests2"/>
+            <class name="automation.tests.selenium.CoinFlipTests3"/>
+        </classes>
+
+    </test>
+</suite>

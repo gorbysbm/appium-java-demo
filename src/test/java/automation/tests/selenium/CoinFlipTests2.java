@@ -11,7 +11,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class CoinFlipTests1 extends WebTestSetup {
+public class CoinFlipTests2 extends WebTestSetup {
 	EBLoginPage ebLoginPage;
 	EBMainMenuPage ebMainMenuPage;
 	EBMakePaymentPage ebMakePaymentPage;

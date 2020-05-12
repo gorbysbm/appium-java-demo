@@ -1,15 +1,11 @@
-package automation.appium.driver;
+package automation.driver;
 
 import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
-import automation.report.HtmlReporter;
 import automation.utility.BrowserStackCapabilities;
-import com.browserstack.local.Local;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSElement;
 import org.json.simple.JSONObject;
@@ -18,7 +14,6 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
-import automation.report.Log;
 import org.testng.ITestContext;
 
 public class AppiumiOSDriver extends AppiumBaseDriver{

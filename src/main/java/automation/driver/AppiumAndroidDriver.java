@@ -1,22 +1,17 @@
-package automation.appium.driver;
+package automation.driver;
 
-import automation.report.HtmlReporter;
 import automation.utility.BrowserStackCapabilities;
-import com.browserstack.local.Local;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import automation.report.Log;
 import org.testng.ITestContext;
 
 import java.io.FileReader;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 
 public class AppiumAndroidDriver extends AppiumBaseDriver {
 

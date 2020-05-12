@@ -24,13 +24,13 @@ public class BaseTestSetup {
 		return data;
 	}
 
-	public void beforeSuite(ITestContext ctx) throws Exception {
+	public void beforeSuite(ITestContext ctx, AnalysisStrategy analysisStrategy) throws Exception {
 		String timeStampedSuiteName = ctx.getSuite().getName() + " :: "
 				+ StringUtilities.getFormattedDate(ctx.getStartDate().getTime(), "yyyy-MM-dd HH:mm:ss z");
 		ctx.getSuite().getXmlSuite().setName(timeStampedSuiteName);
 		/*********** Init Html reporter *************************/
 		FilePaths.initReportFolder();
-		HtmlReporter.setReporter(FilePaths.getReportFilePath(), AnalysisStrategy.CLASS, ctx);
+		HtmlReporter.setReporter(FilePaths.getReportFilePath(), analysisStrategy, ctx);
 	}
 
 	public void beforeClass(ITestContext ctx) throws Exception {
@@ -97,4 +97,5 @@ public class BaseTestSetup {
 	public void afterSuite() throws Exception {
 		HtmlReporter.flush();
 	}
+
 }

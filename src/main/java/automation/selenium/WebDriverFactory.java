@@ -50,7 +50,6 @@ public class WebDriverFactory {
 	 * This method is used to open a webdriver, it's used for selenium grid as well
 	 * 
 	 * @author Hanoi Automation team
-	 * @param None
 	 * @return None
 	 * @throws Exception
 	 *             The method throws an exeption when browser is invalid or can't
@@ -100,10 +99,11 @@ public class WebDriverFactory {
 			} else {
 
 				if (browser.equalsIgnoreCase(BrowserType.FIREFOX)) {
-					FirefoxOptions options = new FirefoxOptions();
-					options.addPreference("security.insecure_password.ui.enabled", false);
-					options.addPreference("security.insecure_field_warning.contextual.enabled", false);
-					driver = new FirefoxDriver(options);
+					//FirefoxOptions options = new FirefoxOptions();
+					//options.addPreference("security.insecure_password.ui.enabled", false);
+					//options.addPreference("security.insecure_field_warning.contextual.enabled", false);
+					//driver = new FirefoxDriver(options);
+					driver = new FirefoxDriver();
 				} else if (browser.equalsIgnoreCase(BrowserType.CHROME)) {
 					HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 					chromePrefs.put("profile.default_content_settings.popups", 0);
@@ -301,7 +301,6 @@ public class WebDriverFactory {
 	 * This method is used to close a webdriver
 	 * 
 	 * @author Hanoi Automation team
-	 * @param None
 	 * @return None
 	 * @throws Exception
 	 *             The exception is thrown when can't close the webdriver.

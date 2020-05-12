@@ -6,8 +6,8 @@ import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import automation.appium.driver.AppiumBaseDriver;
-import automation.appium.driver.CreateDriver;
+import automation.driver.AppiumBaseDriver;
+import automation.driver.CreateDriver;
 
 public class EBLoginPage extends AppiumBaseDriver{
 

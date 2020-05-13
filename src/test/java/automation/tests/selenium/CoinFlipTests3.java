@@ -1,6 +1,6 @@
 package automation.tests.selenium;
 
-import automation.driver.CreateDriver;
+import automation.driver.DriverCreator;
 import automation.pages.EBLoginPage;
 import automation.pages.EBMainMenuPage;
 import automation.pages.EBMakePaymentPage;
@@ -27,48 +27,48 @@ public class CoinFlipTests3 extends WebTestSetup {
 	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1coinFlip1() throws Exception {
 		//ebLoginPage.login("company","company");
-		CreateDriver.getInstance().getCurrentWebDriver().get("http://www.google.com");
-		HtmlReporter.info("I'm thread: "+ ((RemoteWebDriver) CreateDriver.getInstance().getCurrentWebDriver()).getSessionId());
+		DriverCreator.getCurrentWebDriver().get("http://www.google.com");
+		HtmlReporter.info("I'm thread: "+ ((RemoteWebDriver) DriverCreator.getCurrentWebDriver()).getSessionId());
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 
 	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1coinFlip2() throws Exception {
 		//ebLoginPage.login("company","company");
-		CreateDriver.getInstance().getCurrentWebDriver().get("http://www.google.com");
-		HtmlReporter.info("I'm thread: "+ ((RemoteWebDriver) CreateDriver.getInstance().getCurrentWebDriver()).getSessionId());
+		DriverCreator.getCurrentWebDriver().get("http://www.google.com");
+		HtmlReporter.info("I'm thread: "+ ((RemoteWebDriver) DriverCreator.getCurrentWebDriver()).getSessionId());
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 
 	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1coinFlip3() throws Exception {
 		//ebLoginPage.login("company","company");
-		CreateDriver.getInstance().getCurrentWebDriver().get("http://www.google.com");
-		HtmlReporter.info("I'm thread: "+ ((RemoteWebDriver) CreateDriver.getInstance().getCurrentWebDriver()).getSessionId());
+		DriverCreator.getCurrentWebDriver().get("http://www.google.com");
+		HtmlReporter.info("I'm thread: "+ ((RemoteWebDriver) DriverCreator.getCurrentWebDriver()).getSessionId());
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 
 	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1coinFlip4() throws Exception {
 		//ebLoginPage.login("company","company");
-		CreateDriver.getInstance().getCurrentWebDriver().get("http://www.google.com");
-		HtmlReporter.info("I'm thread: "+ ((RemoteWebDriver) CreateDriver.getInstance().getCurrentWebDriver()).getSessionId());
+		DriverCreator.getCurrentWebDriver().get("http://www.google.com");
+		HtmlReporter.info("I'm thread: "+ ((RemoteWebDriver) DriverCreator.getCurrentWebDriver()).getSessionId());
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 
-	@Test(invocationCount = 1, groups = {"functional"})
+	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1coinFlip5() throws Exception {
 		//ebLoginPage.login("company","company");
-		CreateDriver.getInstance().getCurrentWebDriver().get("http://www.google.com");
-		HtmlReporter.info("I'm thread: "+ ((RemoteWebDriver) CreateDriver.getInstance().getCurrentWebDriver()).getSessionId());
+		DriverCreator.getCurrentWebDriver().get("http://www.google.com");
+		HtmlReporter.info("I'm thread: "+ ((RemoteWebDriver) DriverCreator.getCurrentWebDriver()).getSessionId());
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 
 	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1coinFlip6() throws Exception {
 		//ebLoginPage.login("company","company");
-		CreateDriver.getInstance().getCurrentWebDriver().get("http://www.google.com");
-		HtmlReporter.info("I'm thread: "+ ((RemoteWebDriver) CreateDriver.getInstance().getCurrentWebDriver()).getSessionId());
+		DriverCreator.getCurrentWebDriver().get("http://www.google.com");
+		HtmlReporter.info("I'm thread: "+ ((RemoteWebDriver) DriverCreator.getCurrentWebDriver()).getSessionId());
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 

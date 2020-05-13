@@ -1,5 +1,6 @@
 package automation.setup;
 
+import automation.driver.DriverHandler;
 import automation.excelhelper.ExcelHelper;
 import automation.report.CaptureArtifact;
 import automation.report.HtmlReporter;
@@ -101,5 +102,17 @@ public class BaseTestSetup {
 	public void afterSuite() throws Exception {
 		HtmlReporter.flush();
 	}
+
+	public void startDriver(String configFile, String environment, Method method, ITestContext ctx) throws Exception {
+		//Try to start driver and fail the test if not successful
+		try {
+			DriverHandler.startDriver(configFile, environment, method, ctx);
+		} catch (Exception e) {
+			HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName(), "");
+			HtmlReporter.fail(">>FAILED to create driver. Ending Test. Error was "+ e);
+			throw new Exception(e.toString());
+		}
+	}
+
 
 }

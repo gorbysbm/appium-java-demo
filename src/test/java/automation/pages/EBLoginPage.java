@@ -7,11 +7,11 @@ import io.appium.java_client.pagefactory.iOSXCUITFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import automation.driver.AppiumBaseDriver;
-import automation.driver.CreateDriver;
+import automation.driver.DriverCreator;
 
 public class EBLoginPage extends AppiumBaseDriver{
 
-	private AppiumDriver driver = CreateDriver.getInstance().getCurrentMobileDriver();
+	private AppiumDriver driver = DriverCreator.getCurrentMobileDriver();
 
 	@AndroidFindBy(id = "usernameTextField")
 	@iOSXCUITFindBy(id = "usernameTextField")

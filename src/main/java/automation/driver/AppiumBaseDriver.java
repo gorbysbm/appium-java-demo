@@ -27,7 +27,7 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
 public class AppiumBaseDriver {
-	protected AppiumDriver driver = CreateDriver.getInstance().getCurrentMobileDriver();
+	protected AppiumDriver driver = DriverCreator.getCurrentMobileDriver();
 	private WebDriverWait wait;
 	int EXPLICIT_WAIT_TIMEOUT = 6;
 

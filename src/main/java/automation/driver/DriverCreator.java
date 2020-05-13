@@ -4,28 +4,28 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import org.openqa.selenium.WebDriver;
 
-public class CreateDriver {
+public class DriverCreator {
 
-    private static CreateDriver instance = null;
+    private static DriverCreator instance = null;
     private ThreadLocal<WebDriver> webDriver = new ThreadLocal<>();
     private ThreadLocal<AppiumDriver> mobileDriver = new ThreadLocal<>();
 
-    private  CreateDriver(){
+    private DriverCreator(){
     }
 
-    public static CreateDriver getInstance(){
+    public static DriverCreator getInstance(){
         if (instance == null) {
-            instance = new CreateDriver();
+            instance = new DriverCreator();
         }
         return instance;
     }
 
     public synchronized void setDriver (WebDriver driver) {
-        webDriver.set(driver);
-    }
-
-    public synchronized void  setDriver(AppiumDriver<MobileElement> driver){
-        mobileDriver.set(driver);
+        if(driver instanceof AppiumDriver){
+            mobileDriver.set((AppiumDriver) driver);
+        }else{
+            webDriver.set(driver);
+        }
     }
 
     private synchronized WebDriver getWebDriver(){
@@ -36,11 +36,11 @@ public class CreateDriver {
         return  mobileDriver.get();
     }
 
-    public synchronized AppiumDriver getCurrentMobileDriver(){
+    public static synchronized AppiumDriver getCurrentMobileDriver(){
         return  getInstance().getMobileDriver();
     }
 
-    public synchronized WebDriver getCurrentWebDriver(){
+    public static synchronized WebDriver getCurrentWebDriver(){
         return  getInstance().getWebDriver();
     }
 

@@ -40,7 +40,8 @@ public class EBMakePaymentPage extends AppiumBaseDriver{
 
 	//////////////////////////////////Page Objects////////////////////////////////////
 
-	public EBMakePaymentPage() {
+	public EBMakePaymentPage(AppiumDriver driver) {
+		super(driver);
 		setExplicitWaitToDefault();
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}

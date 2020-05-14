@@ -16,7 +16,8 @@ public class EBMainMenuPage extends AppiumBaseDriver{
 	//@iOSXCUITFindBy(accessibility = "Enter check amount")
 	private WebElement makePaymentButton;
 
-	public EBMainMenuPage() {
+	public EBMainMenuPage(AppiumDriver driver) {
+		super(driver);
 		setExplicitWaitToDefault();
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}

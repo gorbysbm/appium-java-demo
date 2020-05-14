@@ -10,6 +10,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSElement;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import io.appium.java_client.ios.IOSDriver;
@@ -18,13 +19,8 @@ import org.testng.ITestContext;
 
 public class AppiumiOSDriver extends AppiumBaseDriver{
 
+	public AppiumiOSDriver() {
 
-	private static Properties ios_configuration;
-	private static Properties browser_configuration;
-	private static Properties appium_configuration;
-	private static Properties sauce_configuration;
-
-	public AppiumiOSDriver() throws Exception {
 	}
 
 	public AppiumDriver createDriverWithCapabilities(String config_file, String environment, Method method, ITestContext context) throws Exception {

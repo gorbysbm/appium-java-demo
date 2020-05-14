@@ -1,6 +1,8 @@
 package automation.tests.appium;
 
+import automation.driver.DriverCreator;
 import automation.report.Log;
+import io.appium.java_client.AppiumDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -17,27 +19,30 @@ public class ExperiBankTests1 extends MobileTestSetup {
 
 	@Test(invocationCount = 1, groups = {"functional"})
 	public void EB1coinFlip1() throws Exception {
-		EBLoginPage ebLoginPage = new EBLoginPage();
-		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();
-		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage();
+		AppiumDriver driver = DriverCreator.getCurrentMobileDriver();
+		EBLoginPage ebLoginPage = new EBLoginPage(driver);
+		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage(driver);
+		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage(driver);
 
 		ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1coinFlip2() throws Exception {
-		EBLoginPage ebLoginPage = new EBLoginPage();
-		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();
-		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage();
+		AppiumDriver driver = DriverCreator.getCurrentMobileDriver();
+		EBLoginPage ebLoginPage = new EBLoginPage(driver);
+		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage(driver);
+		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage(driver);
 
 		ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
 	}
 	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1coinFlip3() throws Exception {
-		EBLoginPage ebLoginPage = new EBLoginPage();
-		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();
-		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage();
+		AppiumDriver driver = DriverCreator.getCurrentMobileDriver();
+		EBLoginPage ebLoginPage = new EBLoginPage(driver);
+		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage(driver);
+		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage(driver);
 
 		ebLoginPage.login("company","company");
 		Assert.assertTrue(coinFlip().equalsIgnoreCase("heads"));
@@ -47,9 +52,10 @@ public class ExperiBankTests1 extends MobileTestSetup {
 
 	@Test(invocationCount = 1, groups = {"functional", "passingTest"})
 	public void EB1payBillTest1() throws Exception {
-		EBLoginPage ebLoginPage = new EBLoginPage();
-		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();
-		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage();
+		AppiumDriver driver = DriverCreator.getCurrentMobileDriver();
+		EBLoginPage ebLoginPage = new EBLoginPage(driver);
+		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage(driver);
+		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage(driver);
 		String payment = generateRandomAmount();
 
 		ebLoginPage.login("company","company");
@@ -65,9 +71,10 @@ public class ExperiBankTests1 extends MobileTestSetup {
 
 	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1payBillTest2ShouldFail() throws Exception {
-		EBLoginPage ebLoginPage = new EBLoginPage();
-		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();
-		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage();
+		AppiumDriver driver = DriverCreator.getCurrentMobileDriver();
+		EBLoginPage ebLoginPage = new EBLoginPage(driver);
+		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage(driver);
+		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage(driver);
 		String payment = generateRandomAmount();
 
 		ebLoginPage.login("company","company");
@@ -82,9 +89,10 @@ public class ExperiBankTests1 extends MobileTestSetup {
 	}
 	@Test(invocationCount = 0, groups = {"functional", "passingTest"})
 	public void EB1payBillTest3() throws Exception {
-		EBLoginPage ebLoginPage = new EBLoginPage();
-		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage();
-		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage();
+		AppiumDriver driver = DriverCreator.getCurrentMobileDriver();
+		EBLoginPage ebLoginPage = new EBLoginPage(driver);
+		EBMainMenuPage ebMainMenuPage = new EBMainMenuPage(driver);
+		EBMakePaymentPage ebMakePaymentPage = new EBMakePaymentPage(driver);
 		String payment = generateRandomAmount();
 
 		ebLoginPage.login("company","company");

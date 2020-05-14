@@ -25,7 +25,8 @@ public class EBLoginPage extends AppiumBaseDriver{
 	@iOSXCUITFindBy(id = "loginButton")
 	private WebElement submitButton;
 
-	public EBLoginPage() {
+	public EBLoginPage(AppiumDriver driver) {
+		super(driver);
 		setExplicitWaitToDefault();
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}

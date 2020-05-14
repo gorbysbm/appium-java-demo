@@ -6,6 +6,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.ITestContext;
 
@@ -15,7 +16,8 @@ import java.net.URL;
 
 public class AppiumAndroidDriver extends AppiumBaseDriver {
 
-	public AppiumAndroidDriver() {}
+	public AppiumAndroidDriver() {
+	}
 
 	public AppiumDriver createDriverWithCapabilities(String configFile, String environment, Method method, ITestContext context) throws Exception {
 		JSONParser parser = new JSONParser();

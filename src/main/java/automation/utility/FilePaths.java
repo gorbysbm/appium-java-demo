@@ -19,6 +19,7 @@ public class FilePaths {
 	private static String REPORT_FOLDER;
 	private static String SCREENSHOT_FOLDER;
 	private static String REPORT_FILE_PATH;
+	public static String DATA_PROVIDERS_FILE_PATH = getRootProject()+"/src/test/resources/dataproviders/";
 
 	public static String getRootProject() {
 		return System.getProperty("user.dir");

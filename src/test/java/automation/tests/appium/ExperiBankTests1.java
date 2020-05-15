@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class ExperiBankTests1 extends MobileTestSetup {
 
-	@Test(invocationCount = 1, groups = {"functional"})
+	@Test(invocationCount = 0, groups = {"functional"})
 	public void EB1coinFlip1() throws Exception {
 		AppiumDriver driver = DriverCreator.getCurrentMobileDriver();
 		EBLoginPage ebLoginPage = new EBLoginPage(driver);

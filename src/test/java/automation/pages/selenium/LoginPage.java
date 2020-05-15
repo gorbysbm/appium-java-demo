@@ -14,6 +14,11 @@ import org.testng.log4testng.Logger;
 
 public class LoginPage extends SeleniumBaseDriver {
 
+    public LoginPage(WebDriver driver) {
+        super(driver);
+        PageFactory.initElements(driver, this);
+    }
+
     //*********Locators*********
     @FindBy(css = "table input[name='userName']")
     private WebElement txtUsername;
@@ -27,11 +32,7 @@ public class LoginPage extends SeleniumBaseDriver {
     @FindBy(css = "table input[name='login']")
     private WebElement btnLogin ;
 
-    public LoginPage(WebDriver driver) {
-        super(driver);
-        setExplicitWaitToDefault();
-        PageFactory.initElements(driver, this);
-    }
+
 
     //*********Page Methods*********
 

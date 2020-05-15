@@ -4,26 +4,29 @@ import automation.driver.DriverHandler;
 import automation.excelhelper.ExcelHelper;
 import automation.report.CaptureArtifact;
 import automation.report.HtmlReporter;
+import automation.report.Log;
 import automation.utility.BrowserStackCapabilities;
 import automation.utility.Common;
 import automation.utility.FilePaths;
-import automation.utility.StringUtilities;
+import automation.util.StringUtilities;
 import com.aventstack.extentreports.AnalysisStrategy;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
+import org.testng.annotations.Listeners;
 import org.testng.xml.XmlTest;
 
+import java.io.IOException;
+import java.io.Reader;
 import java.lang.reflect.Method;
-
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 public class BaseTestSetup {
-
-	public Object[][] getTestProvider(String filepPath, String sheetName) throws Exception {
-		// return the data from excel file
-		Object[][] data = ExcelHelper.getTableArray(filepPath, sheetName);
-		return data;
-	}
 
 	public void beforeSuite(ITestContext ctx, AnalysisStrategy analysisStrategy) throws Exception {
 		String timeStampedSuiteName = ctx.getSuite().getName() + " :: "
@@ -114,5 +117,13 @@ public class BaseTestSetup {
 		}
 	}
 
+	public Object[][] getDataProvider(String testName) throws IOException {
+		String filePath = FilePaths.DATA_PROVIDERS_FILE_PATH + testName + ".csv";
+		Reader reader = Files.newBufferedReader(Paths.get(filePath));
 
+		CSVReader csvReader = new CSVReaderBuilder(reader).withSkipLines(1).build();
+		List<String[]> found = csvReader.readAll();
+		Object[][] dataProviderObj = found.toArray(new Object[found.size()][]);
+		return dataProviderObj;
+	}
 }

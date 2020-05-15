@@ -18,7 +18,6 @@ public class EBMainMenuPage extends AppiumBaseDriver{
 
 	public EBMainMenuPage(AppiumDriver driver) {
 		super(driver);
-		setExplicitWaitToDefault();
 		PageFactory.initElements(new AppiumFieldDecorator(driver), this);
 	}
 

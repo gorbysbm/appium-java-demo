@@ -27,7 +27,7 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 
 public class AppiumBaseDriver extends BaseDriver{
-	protected AppiumDriver driver = DriverCreator.getCurrentMobileDriver();
+	protected AppiumDriver driver;
 	int EXPLICIT_WAIT_TIMEOUT = 6;
 
 	public AppiumBaseDriver() {
@@ -36,6 +36,8 @@ public class AppiumBaseDriver extends BaseDriver{
 
 	public AppiumBaseDriver(WebDriver driver) {
 		super(driver);
+		this.driver = (AppiumDriver) driver;
+		setExplicitWaitToDefault();
 	}
 
 	//Use to scroll into view by element's text

@@ -2,6 +2,7 @@ package automation.driver;
 
 import automation.report.HtmlReporter;
 import automation.report.Log;
+import io.appium.java_client.AppiumDriver;
 import org.json.simple.JSONObject;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -25,6 +26,7 @@ public class SeleniumBaseDriver extends BaseDriver {
 
 	public SeleniumBaseDriver(WebDriver driver) {
 		super(driver);
+		setExplicitWaitToDefault();
 		this.driver = driver;
 	}
 

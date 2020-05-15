@@ -28,6 +28,16 @@ public class BaseDriver {
 		this.driver = driver;
 	}
 
+	public void openUrl(String url) throws Exception {
+		try {
+			driver.get(url);
+			HtmlReporter.pass(">>Navigating to: " + url);
+		} catch (Exception e) {
+			Log.error("Can't navigate to the url: " + url);
+			HtmlReporter.fail("Can't navigate to the url: " + url);
+			throw (e);
+		}
+	}
 
 	public void click (WebElement element) {
 		HtmlReporter.info(String.format(">>Clicking on element [%s]", element.toString()));
@@ -48,6 +58,18 @@ public class BaseDriver {
 			element.sendKeys(text);
 		} catch (Exception e) {
 			HtmlReporter.fail(String.format(">>Can't clear / type text of element [%s]", element.toString()));
+			throw e;
+		}
+	}
+
+	public void clearAndTypeText(By elementBy, String text) {
+		HtmlReporter.info(String.format(">>Typing text [%s] to element [%s]", text, elementBy.toString()));
+		try {
+			WebElement el = waitForVisibilityOfElement(elementBy);
+			el.clear();
+			el.sendKeys(text);
+		} catch (Exception e) {
+			HtmlReporter.fail(String.format(">>Can't clear / type text of element [%s]", elementBy.toString()));
 			throw e;
 		}
 	}
@@ -184,6 +206,9 @@ public class BaseDriver {
 	}
 
 
+	public String getPageTitle(){
+		return driver.getTitle();
+	}
 
 	public void selectRadioButton(WebElement element) throws Exception {
 		try {
@@ -310,27 +335,7 @@ public class BaseDriver {
 		}
 	}
 
-	/**
-	 * This method is used to navigate the browser to the url
-	 * 
-	 *
-	 * @param url
-	 *            the url of website
-	 * @return None
-	 * @throws Exception
-	 *             The exception is thrown if the driver can't navigate to the
-	 *             url
-	 */
-	public void openUrl(String url) throws Exception {
-		try {
-			driver.get(url);
-			HtmlReporter.pass("Navigate to the url :" + url);
-		} catch (Exception e) {
-			Log.error("Can't navigate to the url : " + url);
-			HtmlReporter.fail("Can't navigate to the url : " + url);
-			throw (e);
-		}
-	}
+
 	public void deselectCheckBox(WebElement element) throws Exception {
 
 		try {
@@ -421,16 +426,6 @@ public class BaseDriver {
 
 		}
 	}
-
-
-
-
-
-
-
-
-
-
 
 	//Explicit wait. Used to wait a specific time for slow elements in DOM to load
 	public void setExplicitWait(int explicitWait) {

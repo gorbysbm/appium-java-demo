@@ -5,17 +5,19 @@
         <listener class-name="automation.utility.RetryListener"/>
     </listeners>
 
-    <test name="Chrome Test" parallel="methods">
+    <test name="Chrome Test" parallel="classes">
         <parameter name="config" value=""/>
         <parameter name="environment" value="LocalChrome"/>
         <groups>
             <run>
                 <include name="functional"/>
+                <include name="validFlightRegistration"/>
             </run>
         </groups>
         <classes>
-<!--            <class name="automation.tests.selenium.CoinFlipTests1"/>-->
+            <class name="automation.tests.selenium.CoinFlipTests1"/>
             <class name="automation.tests.selenium.LoginTests"/>
+            <class name="automation.tests.selenium.RegistrationTests"/>
 <!--            <class name="automation.tests.selenium.CoinFlipTests3"/>-->
         </classes>
 

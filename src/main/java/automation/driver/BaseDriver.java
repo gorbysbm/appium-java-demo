@@ -28,6 +28,10 @@ public class BaseDriver {
 		this.driver = driver;
 	}
 
+	public String getPageTitle(){
+		return driver.getTitle();
+	}
+
 	public void openUrl(String url) throws Exception {
 		try {
 			driver.get(url);
@@ -206,9 +210,7 @@ public class BaseDriver {
 	}
 
 
-	public String getPageTitle(){
-		return driver.getTitle();
-	}
+
 
 	public void selectRadioButton(WebElement element) throws Exception {
 		try {

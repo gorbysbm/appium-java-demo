@@ -18,6 +18,7 @@
             <class name="automation.tests.selenium.CoinFlipTests1"/>
             <class name="automation.tests.selenium.LoginTests"/>
             <class name="automation.tests.selenium.RegistrationTests"/>
+            <class name="automation.tests.selenium.FlightFinderTests"/>
 <!--            <class name="automation.tests.selenium.CoinFlipTests3"/>-->
         </classes>
 

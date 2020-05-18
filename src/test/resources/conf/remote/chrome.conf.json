@@ -1,0 +1,13 @@
+{
+  "server":"http://localhost:4446/wd/hub",
+
+  "capabilities": {
+    "browserName": "chrome"
+  },
+
+  "environments": {
+    "Remote Chrome": {
+      "chromeLatest": "chromeLatest"
+    }
+  }
+}

@@ -63,7 +63,7 @@ public class ExcelHelper {
 				String CellData = formatter.formatCellValue(Cell);
 				return CellData;
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			// add log error for get cell data
 			System.out.println(e.getMessage());
 			throw (e);
@@ -88,7 +88,7 @@ public class ExcelHelper {
 			for(int i = 0;i<totalCols;i++) {
 				rowData.put(getCellData(0,i,ExcelWSheet), getCellData(rowNumber,i,ExcelWSheet));
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error(e.getMessage());
 			throw e;
 		}

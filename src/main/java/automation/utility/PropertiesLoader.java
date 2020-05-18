@@ -68,7 +68,7 @@ public class PropertiesLoader {
 					prop.setProperty(key, configValue);
 				}
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			System.out.print("Cannot read property file: [" + path + "]");
 			throw e;
 		}
@@ -94,7 +94,7 @@ public class PropertiesLoader {
 					prop.setProperty(key, configValue);
 				}
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			throw e;
 		}
 		return prop;

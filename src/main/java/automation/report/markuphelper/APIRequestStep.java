@@ -75,7 +75,7 @@ public class APIRequestStep implements Markup {
 		sb.append("<span>");
 		try {
 			sb.append(getRequestBody());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			e.printStackTrace();
 		}
 		sb.append("</span>");
@@ -97,7 +97,7 @@ public class APIRequestStep implements Markup {
 		sb.append("<span>");
 		try {
 			sb.append(getResponseBody());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			e.printStackTrace();
 		}
 		sb.append("</span>");
@@ -128,7 +128,7 @@ public class APIRequestStep implements Markup {
 		if (exception != null) {
 			try {
 				sb.append(Common.throwableToString(exception));
-			} catch (Exception e) {
+			} catch (Error | Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -174,7 +174,7 @@ public class APIRequestStep implements Markup {
 				sb.append(EntityUtils.toString(baseRequest.getEntity()));
 			}
 			return sb.toString();
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Cannot get request Entity");
 			throw e;
 		}

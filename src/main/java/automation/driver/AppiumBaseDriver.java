@@ -58,7 +58,7 @@ public class AppiumBaseDriver extends BaseDriver{
 				driver.executeScript("mobile: scroll", scrollObject);
 				foundElement = ((IOSDriver) driver).findElementByIosNsPredicate(String.format("%s == '%s'",predicate, text));
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail(String.format(">>Failed to scroll to element with text [%s]", text));
 			throw e;
 		}
@@ -77,7 +77,7 @@ public class AppiumBaseDriver extends BaseDriver{
 				String locator =  String.format("%s == '%s'",predicate, text);
 				foundElement = waitForPresenceOfElement(MobileBy.iOSNsPredicateString(locator));
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail(String.format(">>Failed to find element with text [%s]", text));
 			throw e;
 		}
@@ -143,7 +143,7 @@ public class AppiumBaseDriver extends BaseDriver{
 			element.sendKeys(text);
 			hideKeyboard();
 			HtmlReporter.pass(String.format("Input text [%s] to element [%s]", text, element.toString()));
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail(String.format("Can't input text [%s] to element [%s]", text, element.toString()));
 			throw e;
 		}
@@ -163,7 +163,7 @@ public class AppiumBaseDriver extends BaseDriver{
 			String text = element.getText();
 			HtmlReporter.pass(String.format("The element [%s] contains text [%s]", element.toString(), text));
 			return text;
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail(String.format("Cannot get text of the element [%s]", element.toString()), e, "");
 			throw e;
 		}
@@ -179,7 +179,7 @@ public class AppiumBaseDriver extends BaseDriver{
 			HtmlReporter.pass(String.format("The element [%s] contains text [%s]", element.toString(), text));
 			clickByPosition(wheels, "top right");
 			return text;
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail(String.format("Cannot get text of the element [%s]", element.toString()), e, "");
 			throw e;
 		}
@@ -219,7 +219,7 @@ public class AppiumBaseDriver extends BaseDriver{
 				new TouchAction<>(driver).tap(PointOption.point(middleX, middleY)).perform();
 			}
 			HtmlReporter.pass(String.format("click on the " + clickPosition + " of element [%s]", element.toString()));
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail(
 					String.format("Can't click on the " + clickPosition + " of element [%s]", element.toString()));
 			throw (e);
@@ -280,7 +280,7 @@ public class AppiumBaseDriver extends BaseDriver{
 				throw new Exception(
 						String.format("The element [%s] cannot selected with value = [%s]", element.toString(), value));
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error(String.format("The element [%s] cannot selected with value = [%s]", element.toString(), value));
 			throw (e);
 		}
@@ -409,7 +409,7 @@ public class AppiumBaseDriver extends BaseDriver{
 			driver.activateApp(appBundleId);
 			Thread.sleep(5000);
 			HtmlReporter.pass("Relaunch app [" + appBundleId + "] sucessfully");
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail("Relaunch app [" + appBundleId + "] failed", e, "");
 			throw (e);
 		}
@@ -430,7 +430,7 @@ public class AppiumBaseDriver extends BaseDriver{
 			driver.launchApp();
 			Thread.sleep(3000);
 			HtmlReporter.pass("Reset app successfully");
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail("Cannot reset app!", e, "");
 			throw e;
 		}

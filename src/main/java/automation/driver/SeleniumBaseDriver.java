@@ -30,8 +30,9 @@ public class SeleniumBaseDriver extends BaseDriver {
 		this.driver = driver;
 	}
 
-
 	public void setExplicitWaitToDefault() {
 		setExplicitWait(EXPLICIT_WAIT_TIMEOUT);
 	}
+
+
 }

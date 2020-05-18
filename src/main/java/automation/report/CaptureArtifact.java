@@ -39,8 +39,8 @@ public class CaptureArtifact {
 
                 return screenShotDirector + File.separator + failureImageFileName;
             }
-        } catch (Exception e) {
-            throw e;
+        } catch (Error | Exception e) {
+            HtmlReporter.info(">> Unable to capture screenshot due to: " + e.getStackTrace());
         }
         return "";
     }
@@ -71,7 +71,7 @@ public class CaptureArtifact {
             } else {
                 return "";
             }
-        } catch (Exception e) {
+        } catch (Error | Exception e) {
             Log.error("Can't capture the screenshot");
             Log.error(e.getMessage());
             throw e;
@@ -98,7 +98,7 @@ public class CaptureArtifact {
                 fileDir = "";
             }
 
-        } catch (Exception e) {
+        } catch (Error | Exception e) {
             Log.error("Can't capture the screenshot");
             Log.error(e.getMessage());
             throw e;
@@ -124,7 +124,7 @@ public class CaptureArtifact {
                 ImageIO.write(screenshot.getImage(), "jpg", new File(fileDir));
             }
 
-        } catch (Exception e) {
+        } catch (Error | Exception e) {
             Log.error("Can't capture the screenshot");
             Log.error(e.getMessage());
             throw e;

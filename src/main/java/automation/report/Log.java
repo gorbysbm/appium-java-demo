@@ -17,7 +17,7 @@ public class Log {
 				initLog();
 			}
 			return log;
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			e.printStackTrace();
 			return null;
 		}
@@ -32,7 +32,7 @@ public class Log {
 			System.out.println(Thread.currentThread().getName());
 			String logFileName = "log_" + Thread.currentThread().getName();
 			ThreadContext.put("ROUTINGKEY", logFileName);
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			throw e;
 		}
 	}

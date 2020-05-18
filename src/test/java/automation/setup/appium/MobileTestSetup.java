@@ -26,16 +26,15 @@ public class MobileTestSetup extends BaseTestSetup {
 	@BeforeMethod(alwaysRun=true)
 	@Parameters(value={"config", "environment"})
 	public void beforeMethod(String configFile, String environment, Method method, ITestContext ctx) throws Exception {
-		startDriver(configFile, environment, method, ctx);
-		super.beforeMethod(getDriver(), configFile, environment, method, ctx);
+		super.startDriver(configFile, environment, method, ctx);
+		super.beforeMethod(configFile, environment, method, ctx);
 	}
 
 	@AfterMethod(alwaysRun = true)
 	@org.testng.annotations.Parameters(value={"config", "environment"})
 	public void afterMethod(String configFile, String environment, ITestResult result, ITestContext ctx) throws Exception {
-		String sessionId = (getDriver() != null) ? getDriver().getSessionId().toString() : "";
 		try {
-			super.afterMethod(getDriver(), sessionId, configFile, environment, result, ctx);
+			super.afterMethod(getDriver(), configFile, environment, result, ctx);
 		}
 
 		finally {
@@ -58,4 +57,5 @@ public class MobileTestSetup extends BaseTestSetup {
 	public AppiumDriver getDriver() {
 		return DriverCreator.getCurrentMobileDriver();
 	}
+
 }

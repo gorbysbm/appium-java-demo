@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Remote Browsers" parallel="tests" configfailurepolicy="continue">
+    <listeners>
+        <listener class-name="automation.utility.RetryListener"/>
+    </listeners>
+
+    <test name="Chrome Test" parallel="classes">
+        <parameter name="config" value=""/>
+        <parameter name="environment" value="RemoteChrome"/>
+        <groups>
+            <run>
+                <include name="functional"/>
+                <include name="validFlightRegistration"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="automation.tests.selenium.CoinFlipTests1"/>
+            <class name="automation.tests.selenium.LoginTests"/>
+            <class name="automation.tests.selenium.RegistrationTests"/>
+            <class name="automation.tests.selenium.FlightFinderTests"/>
+        </classes>
+    </test>
+
+    <test name="Firefox Test" parallel="classes">
+        <parameter name="config" value=""/>
+        <parameter name="environment" value="RemoteFirefox"/>
+        <groups>
+            <run>
+                <include name="functional"/>
+                <include name="validFlightRegistration"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="automation.tests.selenium.CoinFlipTests1"/>
+            <class name="automation.tests.selenium.LoginTests"/>
+            <class name="automation.tests.selenium.RegistrationTests"/>
+            <class name="automation.tests.selenium.FlightFinderTests"/>
+        </classes>
+    </test>
+</suite>

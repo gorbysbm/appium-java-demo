@@ -1,10 +1,9 @@
 package automation.setup;
 
+import automation.driver.DriverCreator;
 import automation.driver.DriverHandler;
-import automation.excelhelper.ExcelHelper;
 import automation.report.CaptureArtifact;
 import automation.report.HtmlReporter;
-import automation.report.Log;
 import automation.utility.BrowserStackCapabilities;
 import automation.utility.Common;
 import automation.utility.FilePaths;
@@ -13,10 +12,8 @@ import com.aventstack.extentreports.AnalysisStrategy;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
-import org.testng.annotations.Listeners;
 import org.testng.xml.XmlTest;
 
 import java.io.IOException;
@@ -24,7 +21,6 @@ import java.io.Reader;
 import java.lang.reflect.Method;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.List;
 public class BaseTestSetup {
 
@@ -42,22 +38,23 @@ public class BaseTestSetup {
 		HtmlReporter.createTest(ctx.getName()+" :: "+this.getClass().getSimpleName(), "");
 	}
 
-	public void beforeMethod(RemoteWebDriver driver, String configFile, String environment, Method method, ITestContext ctx) throws Exception {
+	public void beforeMethod(String configFile, String environment, Method method, ITestContext ctx) throws Exception {
+		String sessionId = DriverCreator.getCurrentSessionId();
 		try {
 			HtmlReporter.createNode(this.getClass().getSimpleName(),
-					method.getName()+ " :: " + driver.getSessionId(), "");
-			HtmlReporter.info(">>Created driver with capabilities: " + driver.getCapabilities());
+					method.getName()+ " :: " + sessionId, "");
 			HtmlReporter.info(">>STARTING TEST: " + ctx.getName()+"::"+this.getClass().getSimpleName()+":"
-					+method.getName() + " session ID: "+ driver.getSessionId());
-		} catch (Exception e) {
+					+method.getName() + " session ID: "+ sessionId);
+		} catch (Error | Exception e) {
 			HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName()+ " :: NULL Driver", "");
 			HtmlReporter.info(">>FAIL: The current driver is null so cannot start test");
 			throw new Exception(e);
 		}
 	}
 
-	public void afterMethod(WebDriver driver, String sessionId, String configFile, String environment, ITestResult result, ITestContext ctx) throws Exception {
+	public void afterMethod(WebDriver driver, String configFile, String environment, ITestResult result, ITestContext ctx) throws Exception {
 		String message = "";
+		String sessionId = DriverCreator.getCurrentSessionId();
 		XmlTest testInfo = ctx.getCurrentXmlTest();
 		//Since extent Reports doesn't yet have a "was retried" status remove the test to avoid false failure reports
 		if (result.wasRetried()){
@@ -110,7 +107,7 @@ public class BaseTestSetup {
 		//Try to start driver and fail the test if not successful
 		try {
 			DriverHandler.startDriver(configFile, environment, method, ctx);
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName(), "");
 			HtmlReporter.fail(">>FAILED to create driver. Ending Test. Error was "+ e);
 			throw new Exception(e.toString());

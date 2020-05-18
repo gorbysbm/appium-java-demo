@@ -25,7 +25,7 @@ public class RequestResponse {
 	private List<String> extractedVariable;
 	private Object responseBodyJson;
 	private String responseBody;
-	private Exception exception;
+	private Throwable exception;
 
 	public RequestResponse(HttpUriRequest request, HttpResponse response) {
 		this.request = request;
@@ -64,7 +64,7 @@ public class RequestResponse {
 		try {
 			HttpEntity responseEntity = response.getEntity();
 			responseBody = EntityUtils.toString(responseEntity);
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			exception = e;
 		}
 		return responseBody;
@@ -142,7 +142,7 @@ public class RequestResponse {
 						return this;
 					}
 				}
-			} catch (Exception e) {
+			} catch (Error | Exception e) {
 				assertionList.add("[FAILED] Cannot extract value with [" + regex + "]");
 				Log.error("[Assertion][FAILED] Cannot extract value with [" + regex + "]");
 				exception = e;
@@ -251,7 +251,7 @@ public class RequestResponse {
 						return this;
 					}
 				}
-			} catch (Exception e) {
+			} catch (Error | Exception e) {
 				extractedVariable.add("[FAILED] Cannot extract value with [" + regex + "]");
 				Log.error("[Extract][FAILED] Cannot extract value with [" + regex + "]");
 				exception = e;
@@ -268,7 +268,7 @@ public class RequestResponse {
 		return this;
 	}
 
-	public void flush() throws Exception {
+	public void flush() throws Throwable {
 		if (exception != null || isAssertOrExtractFailed()) {
 			HtmlReporter.getTest2().fail(MarkupHelper.createAPIRequestStep(request, response, responseBody,
 					assertionList, extractedVariable, exception));
@@ -305,7 +305,7 @@ public class RequestResponse {
 	// Assert.assertEquals(header != null, true);
 	// Log.info("Header contains key '" + key + "'");
 	// HtmlReporter.pass("Header contains key '" + key + "'");
-	// } catch (Exception e) {
+	// } catch (Error | Exception e) {
 	// Log.error("Header doesn't contains key '" + key + "'");
 	// HtmlReporter.fail("Header doesn't contains key '" + key + "'", "screenshot");
 	// throw e;

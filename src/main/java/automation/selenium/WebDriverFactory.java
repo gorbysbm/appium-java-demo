@@ -99,11 +99,11 @@ public class WebDriverFactory {
 			} else {
 
 				if (browser.equalsIgnoreCase(BrowserType.FIREFOX)) {
-					//FirefoxOptions options = new FirefoxOptions();
-					//options.addPreference("security.insecure_password.ui.enabled", false);
-					//options.addPreference("security.insecure_field_warning.contextual.enabled", false);
-					//driver = new FirefoxDriver(options);
-					driver = new FirefoxDriver();
+//					FirefoxOptions options = new FirefoxOptions();
+//					options.addPreference("security.insecure_password.ui.enabled", false);
+//					options.addPreference("security.insecure_field_warning.contextual.enabled", false);
+//					driver = new FirefoxDriver(options);
+//					driver = new FirefoxDriver();
 				} else if (browser.equalsIgnoreCase(BrowserType.CHROME)) {
 					HashMap<String, Object> chromePrefs = new HashMap<String, Object>();
 					chromePrefs.put("profile.default_content_settings.popups", 0);
@@ -129,7 +129,7 @@ public class WebDriverFactory {
 				}
 				Log.info("Starting Webdriver, Browser: " + browser);
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't start the webdriver for " + browser + "\n" + e);
 			throw (e);
 		}
@@ -284,7 +284,7 @@ public class WebDriverFactory {
 	public void setBrowserSizeToMaximum() {
 		try {
 			driver.manage().window().maximize();
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 		}
 	}
 
@@ -312,7 +312,7 @@ public class WebDriverFactory {
 			if (driver != null) {
 				driver.quit();
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 			Log.error("The webdriver is not closed!!! " + e.getMessage());
 			HtmlReporter.getTest().fail("The webdriver is not closed!!!").fail(e);
@@ -332,8 +332,8 @@ public class WebDriverFactory {
 
 		if (driver instanceof InternetExplorerDriver) {
 			strBrowserType = BrowserType.IE;
-		} else if (driver instanceof FirefoxDriver) {
-			strBrowserType = BrowserType.FIREFOX;
+//		} else if (driver instanceof FirefoxDriver) {
+//			strBrowserType = BrowserType.FIREFOX;
 		} else if (driver instanceof ChromeDriver) {
 			strBrowserType = BrowserType.CHROME;
 		} else if (driver instanceof EdgeDriver) {

@@ -86,7 +86,7 @@ public class WebDriverMethod extends WebDriverFactory {
 		try {
 			driver.get(url);
 			HtmlReporter.pass("Navigated to the url : [" + url + "]", takeScreenshot());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail("Can't navigate to the url : [" + url + "]", e, takeScreenshot());
 			throw (e);
 
@@ -104,7 +104,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			// driver.manage().timeouts().pageLoadTimeout(seconds,
 			// TimeUnit.SECONDS);
 			driver.manage().timeouts().setScriptTimeout(seconds, TimeUnit.SECONDS);
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 		}
 	}
@@ -174,7 +174,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			findElement(element).sendKeys(keysToSend);
 			HtmlReporter.pass("Keys [" + keysToSend + "] are sent to the element: [" + elementName + "]",
 					takeScreenshot());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail("Can't sendkeys to the element: [" + elementName + "]", e, takeScreenshot());
 			throw (e);
 
@@ -210,7 +210,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			}
 			HtmlReporter.pass("Text [" + keysToSend + "] is inputted to the element: [" + elementName + "]",
 					takeScreenshot());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail("Can't input text into the element: [" + elementName + "]", e, takeScreenshot());
 			throw (e);
 		}
@@ -230,7 +230,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			((JavascriptExecutor) driver).executeScript(jsFunction);
 			Log.info("Excecuted the java script: [" + jsFunction + "]");
 			HtmlReporter.pass("Excecuted the java script: [" + jsFunction + "]", takeScreenshot());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't excecute the java script: [" + jsFunction + "]");
 			Log.error(e.getMessage());
 			HtmlReporter.fail("Can't excecute the java script: [" + jsFunction + "]", e, takeScreenshot());
@@ -256,7 +256,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			Log.info("Excecute the java script: [" + jsFunction + "] for the object: [" + object + "]");
 			HtmlReporter.pass("Excecute the java script: [" + jsFunction + "] for the object: [" + object + "]",
 					takeScreenshot());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't excecute the java script: [" + jsFunction + "] for the object: [" + object + "]");
 			Log.error(e.getMessage());
 			HtmlReporter.fail("Can't excecute the java script: [" + jsFunction + "] for the object: [" + object + "]",
@@ -291,7 +291,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			HtmlReporter.pass("Got the text of element [" + elementName + "] is : [" + text + "]", takeScreenshot());
 			return text;
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 			Log.error("Can't get text of element: [" + elementName + "]");
 			HtmlReporter.fail("Can't get text of element: [" + elementName + "]", e, takeScreenshot());
@@ -329,7 +329,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			HtmlReporter.pass("Got the text of Dropdown [" + elementName + "] is : [" + text + "]", takeScreenshot());
 			return text;
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 			Log.error("Can't get text of Dropdown: [" + elementName + "]");
 			HtmlReporter.fail("Can't get text of Dropdown: [" + elementName + "]", e, takeScreenshot());
@@ -369,7 +369,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			HtmlReporter.pass("Got the text of Dropdown [" + elementName + "] is : [" + text + "]", takeScreenshot());
 			return text;
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 			Log.error("Can't get text of Dropdown: [" + elementName + "]");
 			HtmlReporter.fail("Can't get text of Dropdown: [" + elementName + "]", e, takeScreenshot());
@@ -400,7 +400,7 @@ public class WebDriverMethod extends WebDriverFactory {
 					takeScreenshot());
 			return attributeValue;
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 			e.printStackTrace();
 			HtmlReporter.fail("Can't get the attribute [" + attribute + "] of element: [" + elementName + "]", e,
@@ -424,7 +424,7 @@ public class WebDriverMethod extends WebDriverFactory {
 		try {
 			waitForElementToBeClickable(element, DEFAULT_WAITTIME_SECONDS).click();
 			HtmlReporter.pass("Click on the element: [" + elementName + "]", takeScreenshot());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail("Can't click on the element: [" + elementName + "]", e, takeScreenshot());
 			throw (e);
 		}
@@ -450,7 +450,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			Log.info("DoubleClick [" + elementName + "] successfully");
 			HtmlReporter.pass("DoubleClick on the element: [" + elementName + "]", takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("DoubleClick [" + elementName + "] failed");
 			HtmlReporter.fail("DoubleClick on the element: [" + elementName + "] failed", e, takeScreenshot());
 			throw e;
@@ -476,7 +476,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			Log.info("Click by JavaScript on the element: [" + elementName + "]");
 			HtmlReporter.pass("Click by JavaScript on the element: [" + elementName + "]", takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 			Log.error("Can't click by Java Script on the element: [" + elementName + "]");
 			HtmlReporter.fail("Can't click by Java Script on the element: [" + elementName + "]", e, takeScreenshot());
@@ -503,7 +503,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			action.moveToElement(findElement(element)).click().build().perform();
 			Log.info("Click by Actions on the element: [" + elementName + "]");
 			HtmlReporter.pass("Click by Actions on the element: [" + elementName + "]", takeScreenshot());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Click by Actions on [" + elementName + "] failed");
 			HtmlReporter.fail("Click by Actions on [" + elementName + "] failed", e, takeScreenshot());
 			throw e;
@@ -533,7 +533,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			Log.info("Radio button element: [" + elementName + "] is selected.");
 			HtmlReporter.pass("Radio button element: [" + elementName + "] is selected.", takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 			Log.error("Radio button element: [" + elementName + "] isn't selected.");
 			HtmlReporter.fail("Radio button element: [" + elementName + "] isn't selected.", e, takeScreenshot());
@@ -564,7 +564,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			Log.info("Checkbox element: [" + elementName + "] is selected.");
 			HtmlReporter.pass("Checkbox element: [" + elementName + "] is selected.", takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 			Log.error("Checkbox element: [" + elementName + "] isn't selected.");
 			HtmlReporter.fail("Checkbox element: [" + elementName + "] isn't selected.", e, takeScreenshot());
@@ -594,7 +594,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			Log.info("Checkbox element: " + elementName + " is deselected.");
 			HtmlReporter.pass("Checkbox element: [" + elementName + "] is deselected.", takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 			Log.error("Checkbox element: " + elementName + " isn't deselected.");
 			HtmlReporter.fail("Checkbox element: [" + elementName + "] isn't deselected.", e, takeScreenshot());
@@ -624,7 +624,7 @@ public class WebDriverMethod extends WebDriverFactory {
 				throw new Exception("The checkbox status is: [" + checkbox.isSelected() + "], but expectation is ["
 						+ isSelected + "]");
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error(e.getMessage());
 			HtmlReporter.fail("Verify the status of checkbox element: [" + elementName + "] failed", e,
 					takeScreenshot());
@@ -660,7 +660,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			HtmlReporter.pass("Select option by Text: [" + chosenOption + "] from select box: [" + elementName + "]",
 					takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't select option: [" + chosenOption + "] by Text from the select box: [" + elementName + "]");
 			HtmlReporter
 
@@ -692,7 +692,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			HtmlReporter.pass("Select option by Value: [" + value + "] from select box: [" + elementName + "]",
 					takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't select option: [" + value + "] by Value from the select box: [" + elementName + "]");
 			HtmlReporter.fail(
 					"Can't select option: [" + value + "] by Value from the select box: [" + elementName + "]", e,
@@ -727,7 +727,7 @@ public class WebDriverMethod extends WebDriverFactory {
 					"Option: [" + chosenOption + "] is displayed correctly on the select box: [" + elementName + "]",
 					takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 			Log.error("Option: [" + chosenOption + "] is not displayed correctly on the select box : [" + elementName
 					+ "]");
@@ -756,7 +756,7 @@ public class WebDriverMethod extends WebDriverFactory {
 		try {
 			WebElement e = findElement(element);
 			return highlightElement(wait.until(ExpectedConditions.visibilityOf(e)));
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("The element : [" + elementName + "] located by : [" + getElemenLocator(element)
 					+ "] isn't visible. : " + e);
 			HtmlReporter.fail("The element : [" + elementName + "] located by : [" + getElemenLocator(element)
@@ -781,7 +781,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			WebElement e = findElement(element);
 			highlightElement(wait.until(ExpectedConditions.visibilityOf(e)));
 			return true;
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("The element : [" + elementName + "] located by : [" + getElemenLocator(element)
 					+ "] isn't visible. : " + e);
 			HtmlReporter.fail("The element : [" + elementName + "] located by : [" + getElemenLocator(element)
@@ -806,13 +806,13 @@ public class WebDriverMethod extends WebDriverFactory {
 		// findElement, if it throw exception -> no more element -> return
 		try {
 			ele = findElement(element);
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			return;
 		}
 		// if still can find element -> wait until it invisibble
 		try {
 			wait.until(ExpectedConditions.invisibilityOf(ele));
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("The element : [" + elementName + "] located by : [" + getElemenLocator(element)
 					+ "] isn't invisible. : " + e);
 			HtmlReporter.fail("The element : [" + elementName + "] located by : [" + getElemenLocator(element)
@@ -837,7 +837,7 @@ public class WebDriverMethod extends WebDriverFactory {
 		try {
 			return findElement(element);
 			// return wait.until(ExpectedConditions.presenceOf(e));
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("The element : [" + elementName + "] located by : [" + getElemenLocator(element)
 					+ "] isn't present. : " + e);
 			HtmlReporter.fail("The element : [" + elementName + "] located by : [" + getElemenLocator(element)
@@ -862,7 +862,7 @@ public class WebDriverMethod extends WebDriverFactory {
 		try {
 			WebElement e = findElement(element);
 			return highlightElement(wait.until(ExpectedConditions.elementToBeClickable(e)));
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail("The element : [" + elementName + "] located by : [" + getElemenLocator(element)
 					+ "] isn't able to click", e, takeScreenshot());
 			throw e;
@@ -884,7 +884,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			return true;
 		} catch (NoSuchElementException e) {
 			return false;
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			return false;
 		}
 	}
@@ -925,7 +925,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			highlightElement(element);
 			// Log.info("The element : " + by + " is found.");
 			// TestngLogger.writeLog("The element : " + by + " is found.");
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("The element : [" + elementName + "] located by : [" + getElemenLocator(elementInfo)
 					+ "] isn't found. : " + e);
 			HtmlReporter.fail("The element : [" + elementName + "] located by : [" + getElemenLocator(elementInfo)
@@ -971,7 +971,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			highlightElement(listElement);
 			// Log.info("The element : " + by + " is found.");
 			// TestngLogger.writeLog("The element : " + by + " is found.");
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("The list element : [" + elementName + "] located by : [" + getElemenLocator(elementInfo)
 					+ "] isn't found. : " + e);
 			HtmlReporter.fail("The list element : [" + elementName + "] located by : [" + getElemenLocator(elementInfo)
@@ -1063,7 +1063,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			HtmlReporter.pass("verifyContainText for the element [" + elementName + "]: Actual [" + txt
 					+ "], containText [" + containText + "]", takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("The text of element: [" + elementName + "] does not contain [" + containText + "]");
 			HtmlReporter.fail("The text of element: [" + elementName + "]: Actual [" + txt + "] does not contain ["
 					+ containText + "]", e, takeScreenshot());
@@ -1118,7 +1118,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			Log.info("Hidden element [" + elementName + "] has a correct text [" + actualText + "]");
 			HtmlReporter.pass("Hidden element [" + elementName + "] has a correct text [" + actualText + "]",
 					takeScreenshot());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("The hidden element: [" + elementName + "] is not correct");
 			HtmlReporter.fail("The hidden element: [" + elementName + "] is not correct ", e, takeScreenshot());
 			throw (e);
@@ -1144,7 +1144,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			Assert.assertEquals(title, expectedTitle);
 			Log.info("The title is correct: [" + title + "]");
 			HtmlReporter.pass("The title is correct: [" + title + "]", takeScreenshot());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("The title [" + title + "] is incorrect");
 			HtmlReporter.fail("The title [" + title + "] is incorrect", e, takeScreenshot());
 			throw (e);
@@ -1179,7 +1179,7 @@ public class WebDriverMethod extends WebDriverFactory {
 				 * HtmlReporter.pass("Upload file [" + url + "] to the element [" + elementName
 				 * + "]", takeScreenshot());
 				 * 
-				 * } catch (Exception e) { Log.error(elementName + " uploaded fail ");
+				 * } catch (Error | Exception e) { Log.error(elementName + " uploaded fail ");
 				 * HtmlReporter.fail(elementName + " uploaded fail ", e, takeScreenshot());
 				 * throw (e); } }
 				 */
@@ -1208,7 +1208,7 @@ public class WebDriverMethod extends WebDriverFactory {
 		 * 
 		 * HtmlReporter.pass("Upload file [" + strFilePath + "]", takeScreenshot());
 		 * 
-		 * } catch (Exception e) { Log.error("Uploaded fail ");
+		 * } catch (Error | Exception e) { Log.error("Uploaded fail ");
 		 * HtmlReporter.fail("Uploaded fail ", e, takeScreenshot());
 		 * 
 		 * throw (e); } }
@@ -1291,7 +1291,7 @@ public class WebDriverMethod extends WebDriverFactory {
 
 			HtmlReporter.pass("Upload file [" + filePath + "]", takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("uploaded fail ");
 			HtmlReporter.fail("Uploaded fail ", e, takeScreenshot());
 
@@ -1317,7 +1317,7 @@ public class WebDriverMethod extends WebDriverFactory {
 
 			HtmlReporter.pass("Open new tab", takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Open tab failed ");
 			HtmlReporter.fail("Open tab failed", e, takeScreenshot());
 
@@ -1353,7 +1353,7 @@ public class WebDriverMethod extends WebDriverFactory {
 					+ "] is verified, Actual [" + attributeValue + "], Expected [" + verifyAttribute + "]",
 					takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't verify the attribute [" + attribute + "] of element: [" + elementName + "]");
 			HtmlReporter
 
@@ -1388,7 +1388,7 @@ public class WebDriverMethod extends WebDriverFactory {
 					+ attributeValue + "], Expected [" + verifyAttribute + "]");
 			HtmlReporter.pass("The css [" + cssAttribute + "] of element: [" + elementName + "] is verified, Actual ["
 					+ attributeValue + "], Expected [" + verifyAttribute + "]", takeScreenshot());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't verify the css value [" + cssAttribute + "] of element: [" + elementName + "]");
 			HtmlReporter.fail("Can't verify the css value [" + cssAttribute + "] of element: [" + elementName + "]", e,
 					takeScreenshot());
@@ -1422,7 +1422,7 @@ public class WebDriverMethod extends WebDriverFactory {
 				driver.switchTo().alert().accept();
 				HtmlReporter.pass("Accept Alert", takeScreenshot());
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't accept Alert");
 			HtmlReporter.fail("Can't accept Alert", e, takeScreenshot());
 
@@ -1443,7 +1443,7 @@ public class WebDriverMethod extends WebDriverFactory {
 		try {
 			waitForVisibilityOfElementLocated(element, DEFAULT_WAITTIME_SECONDS);
 			check = findElement(element).isDisplayed();
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			check = false;
 		}
 		return check;
@@ -1461,7 +1461,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			WebElement element = driver.findElement(by);
 			executeJavascript("arguments[0].style.visibility='hidden'", element);
 			waitForPageLoad();
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			throw e;
 		}
 	}
@@ -1484,7 +1484,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			action.moveToElement(findElement(element)).perform();
 			Log.info("mouseHover [" + elementName + "] successfully");
 			HtmlReporter.pass("mouseHover [" + elementName + "] successfully", takeScreenshot());
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("mouseHover [" + elementName + "] failed");
 			HtmlReporter.fail("mouseHover [" + elementName + "] failed", e, takeScreenshot());
 
@@ -1509,7 +1509,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			Log.info("Scroll into [" + elementName + "] successfully");
 			HtmlReporter.pass("Scroll into [" + elementName + "] successfully", takeScreenshot());
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can not scroll into [" + elementName + "]");
 			HtmlReporter.fail("Can not scroll into [" + elementName + "]", e, takeScreenshot());
 
@@ -1540,7 +1540,7 @@ public class WebDriverMethod extends WebDriverFactory {
 				return screenShotDirector + File.separator + failureImageFileName;
 			}
 			return "";
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			return "";
 		}
 
@@ -1569,7 +1569,7 @@ public class WebDriverMethod extends WebDriverFactory {
 			} else {
 				return "";
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't capture the screenshot");
 			Log.error(e.getMessage());
 			throw e;
@@ -1596,7 +1596,7 @@ public class WebDriverMethod extends WebDriverFactory {
 				fileDir = "";
 			}
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't capture the screenshot");
 			Log.error(e.getMessage());
 			throw e;
@@ -1623,7 +1623,7 @@ public class WebDriverMethod extends WebDriverFactory {
 				ImageIO.write(screenshot.getImage(), "jpg", new File(fileDir));
 			}
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't capture the screenshot");
 			Log.error(e.getMessage());
 			throw e;
@@ -1662,7 +1662,7 @@ public class WebDriverMethod extends WebDriverFactory {
 					throw new Exception("The actual screenshot doesn't match with the baseline");
 				}
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			throw e;
 		}
 	}*/
@@ -1699,7 +1699,7 @@ public class WebDriverMethod extends WebDriverFactory {
 				}
 
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			throw e;
 		}
 	}*/
@@ -1721,7 +1721,7 @@ public class WebDriverMethod extends WebDriverFactory {
 				HtmlReporter.fail("Cannot find any window with title: " + title + " to switch", takeScreenshot());
 				Log.error("Cannot find any window with title: " + title + " to switch");
 			}
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail("Switched to Window with title:" + title, takeScreenshot());
 			Log.error("Switched to Window with title:" + title + "\n" + e);
 		}

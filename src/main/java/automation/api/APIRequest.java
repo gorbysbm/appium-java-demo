@@ -180,7 +180,7 @@ public class APIRequest {
 				request.addHeader(header.getKey(), header.getValue());
 			}
 			response = httpClient.execute(request);
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.getTest().fail(MarkupHelper.createAPIRequestStep(request, e));
 			throw e;
 		}

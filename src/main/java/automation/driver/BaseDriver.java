@@ -36,7 +36,7 @@ public class BaseDriver {
 		try {
 			driver.get(url);
 			HtmlReporter.pass(">>Navigating to: " + url);
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't navigate to the url: " + url);
 			HtmlReporter.fail("Can't navigate to the url: " + url);
 			throw (e);
@@ -48,7 +48,7 @@ public class BaseDriver {
 		try {
 			waitForClickable(element);
 			element.click();
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail(String.format(">>Can't click on element [%s]", element.toString()));
 			throw e;
 		}
@@ -60,7 +60,7 @@ public class BaseDriver {
 			waitForVisibilityOfElement(element);
 			element.clear();
 			element.sendKeys(text);
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail(String.format(">>Can't clear / type text of element [%s]", element.toString()));
 			throw e;
 		}
@@ -72,7 +72,7 @@ public class BaseDriver {
 			WebElement el = waitForVisibilityOfElement(elementBy);
 			el.clear();
 			el.sendKeys(text);
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			HtmlReporter.fail(String.format(">>Can't clear / type text of element [%s]", elementBy.toString()));
 			throw e;
 		}
@@ -153,7 +153,7 @@ public class BaseDriver {
 			ddl.selectByVisibleText(text);
 			Log.info(String.format("Select [%s] option from dropdown list [%s]", text, element.toString()));
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 			Log.error(String.format("Can't select [%s] option from dropdown list [%s]", text, element.toString()));
 			throw e;
@@ -219,7 +219,7 @@ public class BaseDriver {
 				element.click();
 			}
 			Log.info(String.format("The element [%s] is selected", element.toString()));
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error(String.format("The element [%s] is not selected", element.toString()));
 			throw (e);
 		}
@@ -233,7 +233,7 @@ public class BaseDriver {
 			}
 			Log.info(String.format("The element [%s] is selected", element.toString()));
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error(String.format("The element [%s] is not selected", element.toString()));
 			throw (e);
 		}
@@ -347,7 +347,7 @@ public class BaseDriver {
 			}
 			Log.info(String.format("The element [%s] is de-selected", element.toString()));
 
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 
 			Log.error(String.format("The element [%s] is not de-selected", element.toString()));
 			throw (e);
@@ -395,7 +395,7 @@ public class BaseDriver {
 			((JavascriptExecutor) driver).executeScript(jsFunction);
 			Log.info("Excecuting the java script: " + jsFunction);
 			HtmlReporter.pass("Excecuting the java script: " + jsFunction);
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't excecute the java script: " + jsFunction);
 			Log.error(e.getMessage());
 			HtmlReporter.fail("Failed to excecuting the java script: " + jsFunction);
@@ -420,7 +420,7 @@ public class BaseDriver {
 			((JavascriptExecutor) driver).executeScript(jsFunction, object);
 			Log.info("Excecuting the java script: " + jsFunction);
 			HtmlReporter.pass("Excecuting the java script: " + jsFunction + "for object: " + object);
-		} catch (Exception e) {
+		} catch (Error | Exception e) {
 			Log.error("Can't excecute the java script: " + jsFunction + " for the object: " + object);
 			Log.error(e.getMessage());
 			HtmlReporter.fail("Can't excecute the java script: " + jsFunction + " for the object: " + object);

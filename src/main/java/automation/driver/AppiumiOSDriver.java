@@ -1,6 +1,7 @@
 package automation.driver;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.Properties;
@@ -10,6 +11,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.ios.IOSElement;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -23,9 +25,8 @@ public class AppiumiOSDriver extends AppiumBaseDriver{
 
 	}
 
-	public AppiumDriver createDriverWithCapabilities(String config_file, String environment, Method method, ITestContext context) throws Exception {
-		JSONParser parser = new JSONParser();
-		JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/" + config_file));
+	public AppiumDriver createDriverWithCapabilities(String configFile, String environment, Method method, ITestContext context) throws Exception {
+		JSONObject config = parseConfigFile(configFile);
 		DesiredCapabilities capabilities = getDesiredCapabilities(environment, config);
 
 		if (environment.equalsIgnoreCase("LocaliOS")) {
@@ -45,4 +46,5 @@ public class AppiumiOSDriver extends AppiumBaseDriver{
 		}
 		return driver;
 	}
+
 }

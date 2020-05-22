@@ -3,39 +3,42 @@
 <suite name="Remote Browsers" parallel="tests" configfailurepolicy="continue">
     <listeners>
         <listener class-name="automation.utility.RetryListener"/>
+        <listener class-name="automation.utility.ExtentTestNgFormatter" />
     </listeners>
 
-    <test name="Chrome Test" parallel="classes">
+    <test name="Chrome Test" parallel="classes" thread-count="4">
         <parameter name="config" value=""/>
-        <parameter name="environment" value="RemoteChrome"/>
+        <parameter name="environment" value="Desktop_Remote_Chrome"/>
         <groups>
             <run>
                 <include name="functional"/>
                 <include name="validFlightRegistration"/>
             </run>
         </groups>
-        <classes>
-            <class name="automation.tests.selenium.CoinFlipTests1"/>
-            <class name="automation.tests.selenium.LoginTests"/>
-            <class name="automation.tests.selenium.RegistrationTests"/>
-            <class name="automation.tests.selenium.FlightFinderTests"/>
-        </classes>
+        <packages>
+            <package name="automation.tests.selenium.examplesuite"/>
+        </packages>
+<!--        <classes>-->
+<!--            <class name="automation.tests.selenium.CoinFlipTests1"/>-->
+<!--        </classes>-->
     </test>
 
-    <test name="Firefox Test" parallel="classes">
+    <test name="Firefox Test" parallel="classes" thread-count="4">
         <parameter name="config" value=""/>
-        <parameter name="environment" value="RemoteFirefox"/>
+        <parameter name="environment" value="Desktop_Remote_Firefox"/>
         <groups>
             <run>
                 <include name="functional"/>
                 <include name="validFlightRegistration"/>
             </run>
         </groups>
-        <classes>
-            <class name="automation.tests.selenium.CoinFlipTests1"/>
-            <class name="automation.tests.selenium.LoginTests"/>
-            <class name="automation.tests.selenium.RegistrationTests"/>
-            <class name="automation.tests.selenium.FlightFinderTests"/>
-        </classes>
+        <packages>
+            <package name="automation.tests.selenium.examplesuite"/>
+        </packages>
+<!--        <classes>-->
+<!--            <class name="automation.tests.selenium.CoinFlipTests1"/>-->
+<!--        </classes>-->
+
     </test>
+
 </suite>

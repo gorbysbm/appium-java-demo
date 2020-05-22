@@ -3,6 +3,8 @@ package automation.driver;
 import automation.report.HtmlReporter;
 import automation.report.Log;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -11,6 +13,8 @@ import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,8 +38,8 @@ public class BaseDriver {
 
 	public void openUrl(String url) throws Exception {
 		try {
+			HtmlReporter.info(">>Navigating to: " + url);
 			driver.get(url);
-			HtmlReporter.pass(">>Navigating to: " + url);
 		} catch (Error | Exception e) {
 			Log.error("Can't navigate to the url: " + url);
 			HtmlReporter.fail("Can't navigate to the url: " + url);
@@ -52,6 +56,11 @@ public class BaseDriver {
 			HtmlReporter.fail(String.format(">>Can't click on element [%s]", element.toString()));
 			throw e;
 		}
+	}
+
+	public void click (By elementBy) {
+		HtmlReporter.info(String.format(">>Clicking on element By locator: [%s]", elementBy.toString()));
+		waitForClickable(elementBy).click();
 	}
 
 	public void clearAndTypeText(WebElement element, String text) {
@@ -76,6 +85,30 @@ public class BaseDriver {
 			HtmlReporter.fail(String.format(">>Can't clear / type text of element [%s]", elementBy.toString()));
 			throw e;
 		}
+	}
+
+	public WebElement waitForVisibilityOfElement(By elementBy) {
+		HtmlReporter.info(String.format(">>Waiting for visibility of element By locator: [%s]", elementBy.toString()));
+		WebElement el;
+		try{
+		el = getExplicitWait().until(ExpectedConditions.visibilityOfElementLocated(elementBy));
+	} catch (Error | Exception e) {
+		HtmlReporter.fail(String.format(">>FAILED waiting for visibility of element By locator: [%s]", elementBy.toString()));
+		throw e;
+	}
+		return el;
+	}
+
+	//Wait for Clickability of element before proceeding with action
+	public WebElement waitForClickable(By elementBy) {
+		WebElement el;
+		try{
+			el = getExplicitWait().until(ExpectedConditions.elementToBeClickable(elementBy));
+		} catch (Error | Exception e) {
+			HtmlReporter.fail(String.format(">>FAILED waiting for clickability of element By locator: [%s]", elementBy.toString()));
+			throw e;
+		}
+		return el;
 	}
 
 	public Boolean waitForPresenceOfTextinElement(WebElement element, String text) {
@@ -106,20 +139,10 @@ public class BaseDriver {
 		return getExplicitWait().until(ExpectedConditions.visibilityOf(element));
 	}
 
-	public WebElement waitForVisibilityOfElement(By elementBy) {
-		return getExplicitWait().until(ExpectedConditions.visibilityOfElementLocated(elementBy));
-	}
 
 	public void waitForInvincibility(By elementBy){
 		getExplicitWait().until(ExpectedConditions.invisibilityOfElementLocated(elementBy));
 	}
-
-	//Wait for Clickability of element before proceeding with action
-	public void waitForClickable(By elementBy) {
-		getExplicitWait().until(ExpectedConditions.elementToBeClickable(elementBy));
-	}
-
-
 
 	public void waitForSelected(WebElement element){
 		getExplicitWait().until(ExpectedConditions.elementToBeSelected(element));
@@ -128,13 +151,6 @@ public class BaseDriver {
 	public Boolean waitForTextUpdate(By elementBy, String expectedText){
 		return getExplicitWait().until(ExpectedConditions.textToBe(elementBy, expectedText));
 	}
-
-	public void click (By elementBy) {
-		waitForClickable(elementBy);
-		driver.findElement(elementBy).click();
-	}
-
-
 
 	public void mouseOver (By elementBy) {
 		Actions action = new Actions(driver);
@@ -461,5 +477,10 @@ public class BaseDriver {
 			}
 		}
 		return capabilities;
+	}
+
+	protected JSONObject parseConfigFile(String configFile) throws IOException, ParseException {
+		JSONParser parser = new JSONParser();
+		return (JSONObject) parser.parse(new FileReader("src/test/resources/" + configFile));
 	}
 }

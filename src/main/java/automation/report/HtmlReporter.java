@@ -126,8 +126,7 @@ public class HtmlReporter {
 	 *            The node name
 	 * @return ExtentTest session
 	 */
-	public static synchronized ExtentTest createNode(String strClassName, String strTestMethodName,
-			String strTestMethodDesc) {
+	public static synchronized ExtentTest createNode(String strClassName, String strTestMethodName, String strTestMethodDesc) {
 		ExtentTest test = getParent();
 		if (test == null) {
 			test = createTest(strClassName);

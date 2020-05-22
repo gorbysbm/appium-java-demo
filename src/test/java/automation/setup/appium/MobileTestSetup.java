@@ -38,10 +38,7 @@ public class MobileTestSetup extends BaseTestSetup {
 		}
 
 		finally {
-			if (getDriver() != null){
-				HtmlReporter.info(">>ENDING TEST: "+ctx.getCurrentXmlTest().getName()+"::" +result.getMethod().getQualifiedName());
-				getDriver().quit();
-			}
+			super.quitDriver(getDriver(),result, ctx);
 		}
 	}
 

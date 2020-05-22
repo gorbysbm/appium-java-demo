@@ -20,7 +20,7 @@ public class TestNGDebugTests1 {
 	public void beforeSuite(ITestContext ctx) throws Exception {
 		FilePaths.initReportFolder();
 		HtmlReporter.setReporter(FilePaths.getReportFilePath(), AnalysisStrategy.CLASS, ctx );
-		Log.info("Before suite: "+ Thread.currentThread().getId());
+		Log.info("Before examplesuite: "+ Thread.currentThread().getId());
 	}
 
 	@BeforeClass(alwaysRun = true)
@@ -90,7 +90,7 @@ public class TestNGDebugTests1 {
 
 	@AfterSuite(alwaysRun = true)
 	public void afterSuite() throws Exception {
-		Log.info("After suite: "+ Thread.currentThread().getId());
+		Log.info("After examplesuite: "+ Thread.currentThread().getId());
 		HtmlReporter.flush();
 	}
 

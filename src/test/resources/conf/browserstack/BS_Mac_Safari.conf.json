@@ -1,0 +1,21 @@
+{
+  "server": "hub-cloud.browserstack.com",
+  "user": "BROWSERSTACK_USER",
+  "key": "BROWSERSTACK_ACCESS_KEY",
+  "apiRoute": "api.browserstack.com/automate",
+
+  "capabilities": {
+    "build": "",
+    "name": "",
+    "browserstack.debug": true,
+    "os": "OS X",
+    "os_version": "Catalina"
+  },
+
+  "environments": {
+    "Desktop_BS_Mac_Safari13": {
+      "browser": "Safari",
+      "browser_version": "13"
+    }
+  }
+}

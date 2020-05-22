@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="Local Chrome" thread-count="3" configfailurepolicy="continue">
+<suite name="Single Test" parallel="tests" configfailurepolicy="continue">
     <listeners>
         <listener class-name="automation.utility.RetryListener"/>
         <listener class-name="automation.utility.ExtentTestNgFormatter" />
     </listeners>
 
-    <test name="Chrome Test" parallel="classes">
+    <test name="Test" parallel="classes" thread-count="2">
         <parameter name="config" value=""/>
         <parameter name="environment" value="Desktop_Local_Chrome"/>
         <groups>
             <run>
                 <include name="functional"/>
-                <include name="validFlightRegistration"/>
             </run>
         </groups>
         <classes>
+            <class name="automation.tests.selenium.CoinFlipTests1"/>
             <class name="automation.tests.selenium.examplesuite.SuiteTest01"/>
-
-<!--                        <class name="automation.tests.selenium.CoinFlipTests1"/>-->
-            <class name="automation.tests.selenium.LoginTests"/>
-            <class name="automation.tests.selenium.RegistrationTests"/>
-            <class name="automation.tests.selenium.FlightFinderTests"/>
+            <class name="automation.tests.selenium.examplesuite.SuiteTest02"/>
         </classes>
 
     </test>

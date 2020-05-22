@@ -1,17 +1,10 @@
 package automation.driver;
 
 
-import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.safari.SafariDriver;
 import org.testng.ITestContext;
 
 import java.lang.reflect.Method;
-import java.net.URL;
 
 public class DriverHandler {
 
@@ -25,18 +18,9 @@ public class DriverHandler {
 			AppiumiOSDriver ios = new AppiumiOSDriver();
 			driver = ios.createDriverWithCapabilities(configFile, environment, method, context);
 		}
-		////////////////////////LOCAL DESKTOP///////////////////////////////
-		else if (environment.contains("LocalChrome")) {
-			driver = new ChromeDriver();
-		} else if (environment.contains("LocalFirefox")) {
-			driver = new FirefoxDriver();
-		} else if (environment.contains("LocalSafari")) {
-			driver = new SafariDriver();
-		} else if (environment.contains("LocalEdge")) {
-			driver = new EdgeDriver();
-		}
+
 		////////////////////////REMOTE DESKTOP///////////////////////////////
-		else if (environment.startsWith("Remote")) {
+		else if (environment.startsWith("Desktop")) {
 			SeleniumDriver selenium = new SeleniumDriver();
 			driver = selenium.createDriverWithCapabilities(configFile, environment, method, context);
 		}

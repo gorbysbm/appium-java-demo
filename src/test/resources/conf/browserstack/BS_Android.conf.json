@@ -2,12 +2,13 @@
   "server": "hub-cloud.browserstack.com",
   "user": "BROWSERSTACK_USER",
   "key": "BROWSERSTACK_ACCESS_KEY",
+  "apiRoute": "api-cloud.browserstack.com/app-automate",
 
   "capabilities": {
     "build": "",
     "name": "",
     "browserstack.debug": true,
-    "app": "bs://563995fb5099af13308bc8d54e9c5b627e74007c",
+    "app": "bs://c5307cfabdbb85ecc19baea505d8f8c5647533e3",
     "autoGrantPermissions": "true"
   },
 

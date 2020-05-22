@@ -1,2 +1,2 @@
 description,firstName,surName,phoneNumber,email,streetAddress,city,state,postCode,country, password
-TC: create user - valid inputs,SamuelFn,TesterLn,4155551212,gbm@hotmail.com,123 10th ave,San Francisco,CA,90210,UNITED STATES, Testuser12345!
+TC: create user - valid inputs,SamuelFn,TesterLn,4155551212,@hotmail.com,123 10th ave,San Francisco,CA,90210,UNITED STATES, Testuser12345!

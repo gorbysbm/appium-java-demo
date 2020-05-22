@@ -20,8 +20,7 @@ public class AppiumAndroidDriver extends AppiumBaseDriver {
 	}
 
 	public AppiumDriver createDriverWithCapabilities(String configFile, String environment, Method method, ITestContext context) throws Exception {
-		JSONParser parser = new JSONParser();
-		JSONObject config = (JSONObject) parser.parse(new FileReader("src/test/resources/" + configFile));
+		JSONObject config = parseConfigFile(configFile);
 		DesiredCapabilities capabilities = getDesiredCapabilities(environment, config);
 
 		if (environment.equalsIgnoreCase("LocalAndroid")) {

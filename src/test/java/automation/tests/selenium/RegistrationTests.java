@@ -30,7 +30,6 @@ public class RegistrationTests extends WebTestSetup {
     public void testRegisterUser(String description,String firstName,String lastName,String phoneNumber,String email,
                                  String streetAddress,String city,String state,String postCode,String country, String password) throws Exception {
         WebDriver driver = DriverCreator.getCurrentWebDriver();
-        FlightFinderPage flightFinderPage = new FlightFinderPage(driver);
         LoginPage loginPage = new LoginPage(driver);
         RegistrationPage regPage = new RegistrationPage(driver);
         TopNav topNav = new TopNav(driver);

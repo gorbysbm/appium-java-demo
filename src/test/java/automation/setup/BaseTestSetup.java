@@ -34,19 +34,18 @@ public class BaseTestSetup {
 	}
 
 	public void beforeClass(ITestContext ctx) throws Exception {
-		Common.currentTest = this.getClass().getSimpleName();
 		HtmlReporter.createTest(ctx.getName()+" :: "+this.getClass().getSimpleName(), "");
 	}
 
 	public void beforeMethod(String configFile, String environment, Method method, ITestContext ctx) throws Exception {
 		String sessionId = DriverCreator.getCurrentSessionId();
 		try {
-			HtmlReporter.createNode(this.getClass().getSimpleName(),
+			HtmlReporter.createNode(method.getDeclaringClass().getSimpleName(),
 					method.getName()+ " :: " + sessionId, "");
-			HtmlReporter.info(">>STARTING TEST: " + ctx.getName()+"::"+this.getClass().getSimpleName()+":"
+			HtmlReporter.info(">>STARTING TEST: " + ctx.getName()+"::"+method.getDeclaringClass().getSimpleName()+"."
 					+method.getName() + " session ID: "+ sessionId);
 		} catch (Error | Exception e) {
-			HtmlReporter.createNode(this.getClass().getSimpleName(), method.getName()+ " :: NULL Driver", "");
+			HtmlReporter.createNode(method.getDeclaringClass().getSimpleName(), method.getName()+ " :: NULL Driver", "");
 			HtmlReporter.info(">>FAIL: The current driver is null so cannot start test");
 			throw new Exception(e);
 		}
@@ -65,7 +64,7 @@ public class BaseTestSetup {
 			case ITestResult.SUCCESS:
 				message = String.format(">>The test [%s] [%s]: PASSED for session: %s", testInfo.getName(), result.getName(), sessionId);
 				HtmlReporter.pass(message);
-				if(environment.startsWith("BS_")){
+				if(environment.contains("BS_")){
 					BrowserStackCapabilities bsCaps = new BrowserStackCapabilities();
 					bsCaps.markTests("passed",  "all good", sessionId, result);
 				}
@@ -80,7 +79,7 @@ public class BaseTestSetup {
 				message = String.format(">>The test [%s] [%s]: FAILED for session: %s", testInfo.getName(),
 						result.getName(), sessionId);
 				HtmlReporter.fail(message, result.getThrowable(), CaptureArtifact.takeScreenshot(driver));;
-				if(environment.startsWith("BS_")){
+				if(environment.contains("BS_")){
 					BrowserStackCapabilities bsCaps = new BrowserStackCapabilities();
 					bsCaps.markTests("failed",  result.getThrowable().toString(), sessionId, result );
 				}
@@ -122,5 +121,12 @@ public class BaseTestSetup {
 		List<String[]> found = csvReader.readAll();
 		Object[][] dataProviderObj = found.toArray(new Object[found.size()][]);
 		return dataProviderObj;
+	}
+
+	protected void quitDriver(WebDriver driver, ITestResult result, ITestContext ctx) {
+		if (driver != null){
+			HtmlReporter.info(">>ENDING TEST: "+ctx.getCurrentXmlTest().getName()+"::" +result.getMethod().getQualifiedName());
+			driver.quit();
+		}
 	}
 }

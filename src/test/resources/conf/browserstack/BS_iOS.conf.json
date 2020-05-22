@@ -2,6 +2,7 @@
   "server": "hub-cloud.browserstack.com",
   "user": "BROWSERSTACK_USER",
   "key": "BROWSERSTACK_ACCESS_KEY",
+  "apiRoute": "api-cloud.browserstack.com/app-automate",
 
   "capabilities": {
     "build": "",

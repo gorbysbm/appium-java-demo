@@ -23,6 +23,7 @@ public class BrowserStackCapabilities {
     private JSONObject config;
     private DesiredCapabilities capabilities;
     private ITestContext context;
+    private static String apiRoute;
     private static String username = System.getenv("BROWSERSTACK_USER");
     private static String accessKey = System.getenv("BROWSERSTACK_ACCESS_KEY");
 
@@ -46,6 +47,7 @@ public class BrowserStackCapabilities {
 
     public BrowserStackCapabilities invoke() throws Exception {
         String app = System.getenv("BROWSERSTACK_APP_ID");
+        apiRoute =  (String) config.get("apiRoute");
 
         if(username == null) {
             username = (String) config.get("user");
@@ -60,13 +62,13 @@ public class BrowserStackCapabilities {
         }
 
         if (capabilities.getCapability("name").toString().isEmpty()){
-            capabilities.setCapability("name", method.getDeclaringClass().getSimpleName()+" :: "
-                    +method.getName());
+            capabilities.setCapability("name", method.getDeclaringClass().getSimpleName()+"." +method.getName());
         }
 
         if (capabilities.getCapability("build").toString().isEmpty()){
             capabilities.setCapability("build", context.getSuite().getName());
         }
+//TODO add BS Local support
 
 //        if(capabilities.getCapability("browserstack.local") != null
 //                && capabilities.getCapability("browserstack.local") == "true"){
@@ -79,14 +81,14 @@ public class BrowserStackCapabilities {
     }
 
     public void markTests(String status, String reason, String sessionId, ITestResult result) throws URISyntaxException, UnsupportedEncodingException, IOException {
+        String testName = result.getTestClass().getRealClass().getSimpleName()+"."+result.getMethod().getMethodName();
         Log.info(">>Session id: "+sessionId);
-        URI uri = new URI("https://"+username+":"+accessKey+"@api-cloud.browserstack.com/app-automate/sessions/"+sessionId+".json");
+        URI uri = new URI("https://"+username+":"+accessKey+"@"+apiRoute+"/sessions/"+sessionId+".json");
         HttpPut putRequest = new HttpPut(uri);
 
         ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
         nameValuePairs.add((new BasicNameValuePair("status", status)));
         nameValuePairs.add((new BasicNameValuePair("reason", reason)));
-        nameValuePairs.add((new BasicNameValuePair("name",    result.getMethod().getQualifiedName() +" :: " +sessionId)));
         putRequest.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
         HttpClientBuilder.create().build().execute(putRequest);

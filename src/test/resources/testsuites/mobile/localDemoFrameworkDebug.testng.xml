@@ -19,9 +19,9 @@
 <!--        </classes>-->
 <!--    </test>-->
 
-    <test name="Single iOS Device">
-        <parameter name="config" value="conf/local/localios.conf.json"/>
-        <parameter name="environment" value="LocaliOS"/>
+    <test name="Single Android Device">
+        <parameter name="config" value="conf/local/localAndroid.conf.json"/>
+        <parameter name="environment" value="LocalAndroid"/>
         <classes>
             <class name="automation.tests.appium.CoinFlipTests1"/>
         </classes>
